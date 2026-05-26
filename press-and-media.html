@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press &amp; Media – Streamline Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      color: #333333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    :root {
+      --primary: #275e76;
+      --top-bar-bg: #0c5a8d;
+      --footer-bg: #f7f7f7;
+      --divider: #c8c8c8;
+      --white: #ffffff;
+      --body-text: #333333;
+      --nav-h: 80px;
+      --topbar-h: 38px;
+      --transition: 0.25s ease;
+    }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background-color: var(--top-bar-bg);
+      height: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+      overflow: hidden;
+    }
+    .top-bar.hidden { height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; }
+    .top-bar a, .top-bar span {
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .top-bar a:hover, .top-bar span:hover { opacity: 0.75; }
+    .top-bar-right { display: flex; gap: 28px; align-items: center; }
+    .top-bar-divider { color: rgba(255,255,255,0.4); }
+
+    /* ===== STICKY HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      padding: 0 40px;
+      background: #fff;
+    }
+    .nav-logo { display: flex; flex-direction: column; gap: 2px; min-width: 160px; cursor: pointer; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.82; }
+    .nav-logo img { height: 34px; width: auto; }
+    .nav-logo-tagline { font-size: 9px; color: #999; letter-spacing: 0.3px; font-weight: 400; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 0; flex: 1; justify-content: center; }
+    .nav-links > li { position: static; }
+    .nav-links > li > a {
+      display: block;
+      padding: 0 16px;
+      height: var(--nav-h);
+      line-height: var(--nav-h);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      white-space: nowrap;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links > li > a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 16px; right: 16px;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: center;
+    }
+    .nav-links > li:hover > a { color: #1a4a60; }
+    .nav-links > li:hover > a::after { transform: scaleX(1); }
+
+    /* Dropdown */
+    /* ── MEGA MENU ── */
+    .navbar { position: relative; }
+
+    .mega-menu {
+      position: absolute;
+      top: var(--nav-h);
+      left: 30px; right: 30px;
+      background: #fff;
+      border-top: 2px solid var(--primary);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      display: flex;
+      align-items: stretch;
+    }
+    .nav-links > li:hover .mega-menu,
+    .mega-menu:hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Left content area */
+    .mega-content {
+      flex: 1;
+      display: flex;
+      gap: 48px;
+      padding: 36px 48px;
+      border-right: 1px solid #eef2f4;
+    }
+    .mega-col { min-width: 160px; }
+    .mega-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .mega-col ul { list-style: none; padding: 0; margin: 0; }
+    .mega-col ul li { margin-bottom: 0; }
+    .mega-col ul li a {
+      display: block;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      letter-spacing: 0.2px;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.18s, padding-left 0.18s;
+      border-bottom: none;
+      text-transform: none;
+    }
+    .mega-col ul li a:hover {
+      color: var(--primary);
+      padding-left: 6px;
+    }
+
+    /* Right image panel */
+    .mega-img {
+      width: 460px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      align-self: stretch;
+      min-height: 240px;
+    }
+    .mega-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .mega-menu:hover .mega-img img { transform: scale(1.06); }
+    /* Gradient overlay for premium label presentation */
+    .mega-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.52) 0%,
+        rgba(0,0,0,0.18) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+    .mega-img-label {
+      position: absolute;
+      bottom: 18px; left: 22px;
+      background: transparent;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      z-index: 2;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.30);
+    }
+
+    /* Simple mega (no columns — single link list) */
+    .mega-simple .mega-content { gap: 0; }
+    .mega-simple .mega-col ul li a { font-size: 13px; }
+
+    /* ── NAV RIGHT ICONS ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      min-width: 280px;
+      justify-content: flex-end;
+    }
+
+    /* ── Expanding search bar ── */
+    /* ── Collapsed search icon trigger (always visible) ── */
+    .nav-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 36px;
+    }
+    .nav-search-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px; width: 36px;
+      border: 1.5px solid #d4e2e8;
+      border-radius: 50px;
+      background: #f6fafc;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .nav-search-pill:hover {
+      border-color: var(--primary);
+      background: #eef5f8;
+      box-shadow: 0 2px 10px rgba(39,94,118,0.10);
+    }
+    .nav-search-trigger {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: none; border: none; cursor: pointer;
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0; transition: color 0.2s;
+    }
+    .nav-search-trigger:hover { color: #1a4a60; }
+    .nav-search-trigger svg { width: 16px; height: 16px; }
+    /* Hide old inline input/camera — replaced by takeover */
+    .nav-search-input, .nav-camera-btn { display: none; }
+
+    /* ── SEARCH TAKEOVER — full-navbar overlay ── */
+    .search-takeover {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      /* Frosted glass over entire navbar */
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px) saturate(1.9);
+      -webkit-backdrop-filter: blur(18px) saturate(1.9);
+      border-bottom: 1px solid rgba(39,94,118,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      gap: 16px;
+      /* Hidden by default */
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1),
+                  transform 0.3s cubic-bezier(.4,0,.2,1);
+      z-index: 300;
+    }
+    .site-header.search-open .search-takeover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    /* Dim the navbar content underneath */
+    .site-header.search-open .navbar > *:not(.search-takeover) {
+      opacity: 0.18;
+      transition: opacity 0.28s ease;
+      pointer-events: none;
+    }
+
+    /* Search bar inside takeover */
+    .st-bar {
+      flex: 1;
+      max-width: 680px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.96);
+      border: 1.5px solid var(--primary);
+      border-radius: 50px;
+      box-shadow: 0 4px 28px rgba(39,94,118,0.18),
+                  0 0 0 5px rgba(39,94,118,0.06);
+      padding: 0 6px 0 20px;
+      gap: 10px;
+      transition: box-shadow 0.22s ease;
+    }
+    .st-bar:focus-within {
+      box-shadow: 0 6px 36px rgba(39,94,118,0.26),
+                  0 0 0 5px rgba(39,94,118,0.10);
+    }
+    /* Search icon inside bar */
+    .st-icon {
+      flex-shrink: 0;
+      color: var(--primary); opacity: 0.6;
+      display: flex; align-items: center;
+    }
+    .st-icon svg { width: 17px; height: 17px; }
+    /* Input */
+    .st-input {
+      flex: 1;
+      border: none; outline: none; background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: 0.2px;
+    }
+    .st-input::placeholder { color: #aac4ce; font-size: 12px; font-weight: 400; }
+    /* Camera icon */
+    .st-camera {
+      flex-shrink: 0;
+      background: none; border: none; cursor: pointer;
+      color: var(--primary); opacity: 0.55;
+      display: flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 50%;
+      transition: opacity 0.18s, background 0.18s;
+    }
+    .st-camera:hover { opacity: 1; background: rgba(39,94,118,0.08); }
+    .st-camera svg { width: 15px; height: 15px; }
+    /* Divider between camera and clear/close */
+    .st-div {
+      width: 1px; height: 22px;
+      background: #d4e2e8; flex-shrink: 0;
+    }
+    /* Clear button */
+    .st-clear {
+      flex-shrink: 0;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--primary); opacity: 0;
+      pointer-events: none;
+      padding: 4px 8px; border-radius: 20px;
+      transition: opacity 0.18s ease, background 0.18s ease;
+    }
+    .st-clear.visible { opacity: 0.7; pointer-events: auto; }
+    .st-clear.visible:hover { opacity: 1; background: rgba(39,94,118,0.07); }
+    /* Close (X) button */
+    .st-close {
+      flex-shrink: 0;
+      background: rgba(39,94,118,0.08);
+      border: none; border-radius: 50%; cursor: pointer;
+      color: var(--primary);
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      margin-left: 4px;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+    .st-close:hover {
+      background: rgba(39,94,118,0.16);
+      transform: rotate(90deg);
+    }
+    .st-close svg { width: 14px; height: 14px; }
+
+    /* Icon buttons (wishlist, cart, user) */
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transition: background 0.18s, color 0.18s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-icon-btn:hover { background: rgba(39,94,118,0.08); color: #1a4a60; }
+    .nav-icon-btn svg { width: 19px; height: 19px; }
+
+    /* Cart badge */
+    .nav-cart-badge {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 13px; height: 13px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 7.5px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      pointer-events: none;
+    }
+
+    /* Search button (kept for overlay trigger fallback) */
+    .nav-search-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--primary); transition: opacity 0.2s; min-width: 36px; display: none;
+    }
+    .nav-search-btn:hover { opacity: 0.7; }
+    .nav-search-btn svg { width: 20px; height: 20px; }
+
+    /* Search overlay */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 120px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .search-overlay.active { opacity: 1; pointer-events: auto; }
+    .search-box {
+      background: #fff; width: 600px; max-width: 90%; padding: 28px; border-radius: 2px;
+      transform: translateY(-20px); transition: transform 0.25s;
+    }
+    .search-overlay.active .search-box { transform: translateY(0); }
+    .search-box-inner {
+      display: flex; border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px; gap: 10px; align-items: center;
+    }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: 16px;
+      color: var(--body-text); background: transparent;
+    }
+    .search-input::placeholder { color: #aaa; font-size: 14px; }
+    .search-submit {
+      background: none; border: none; cursor: pointer;
+      color: var(--primary); font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .search-close {
+      display: block; text-align: right; margin-top: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+      color: #888; cursor: pointer; text-transform: uppercase;
+    }
+    .search-close:hover { color: var(--primary); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--primary); transition: 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 85%; max-width: 320px; height: 100vh; background: #fff;
+      z-index: 3000; padding: 24px 0; overflow-y: auto;
+      transform: translateX(-100%); transition: transform 0.3s ease;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 2999; opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-menu-overlay.show { opacity: 1; }
+    .mobile-menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 20px; border-bottom: 1px solid #eee;
+    }
+    .mobile-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--primary); line-height: 1; }
+    .mobile-nav a {
+      display: block; padding: 14px 24px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--primary); border-bottom: 1px solid #f0f0f0; transition: background 0.2s;
+    }
+    .mobile-nav a:hover { background: #f8f8f8; }
+    .mobile-nav .mobile-nav-secondary { font-weight: 500; color: #555; letter-spacing: 0.6px; font-size: 11px; }
+
+    /* ===== HERO ===== */
+    .hero-section {
+      margin: 0 30px;          /* left/right outer spacing */
+      position: relative;
+      overflow: hidden;
+      line-height: 0;
+      border-radius: 2px;
+    }
+    .hero-section a { display: block; width: 100%; }
+    .hero-section img { width: 100%; height: auto; display: block; transition: transform 0.6s ease; }
+    .hero-section:hover img { transform: scale(1.01); }
+
+    /* ===== SECTION HEADING ===== */
+    .section-heading {
+      text-align: center; font-size: 22px; font-weight: 700;
+      letter-spacing: 2.4px; text-transform: uppercase;
+      color: var(--primary); padding: 48px 0 30px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights-section { padding: 0 30px 50px; max-width: 1440px; margin: 0 auto; }
+    .highlights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .highlight-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .highlight-card-img { overflow: hidden; position: relative; aspect-ratio: 5/6; }
+    .highlight-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+    .highlight-card:hover .highlight-card-img img { transform: scale(1.05); }
+    .highlight-card-label {
+      text-align: center; padding: 14px 8px 6px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .highlight-card:hover .highlight-card-label { color: #1a4a60; }
+
+    /* ===== DIVIDER ===== */
+    .section-divider { margin: 0 30px; border: none; border-top: 1px solid var(--divider); }
+
+    /* ===== CATALOGS ===== */
+    .catalogs-section { padding: 0 60px 50px; max-width: 1440px; margin: 0 auto; }
+    .catalogs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px; }
+    .catalog-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .catalog-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .catalog-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .catalog-card:hover .catalog-card-img img { transform: scale(1.04); }
+    .catalog-card-label {
+      text-align: center; padding: 12px 8px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .catalog-card:hover .catalog-card-label { color: #1a4a60; }
+
+    /* ===== FEATURED ARTISTS ===== */
+    .artists-section { padding: 0 30px 60px; max-width: 1440px; margin: 0 auto; }
+    .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .artist-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .artist-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .artist-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .artist-card:hover .artist-card-img img { transform: scale(1.04); }
+    .artist-card-label {
+      text-align: center; padding: 14px 8px 4px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .artist-card:hover .artist-card-label { color: #1a4a60; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); padding: 36px 40px 0; }
+    .footer-main {
+      display: grid; grid-template-columns: 200px 1fr 1fr 1fr; column-gap: 40px;
+      max-width: 1440px; margin: 0 auto; padding-bottom: 28px;
+    }
+    .footer-logo { height: 38px; width: auto; margin-bottom: 6px; }
+    .footer-brand { padding-right: 24px; }
+    .footer-tagline { font-size: 10px; color: #888; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .footer-address { font-size: 12px; color: var(--body-text); line-height: 1.5; margin-bottom: 6px; }
+    .footer-info-group { margin-top: 8px; }
+    .footer-address a { color: var(--primary); font-size: 12px; letter-spacing: 0.4px; font-weight: 500; }
+    .footer-address a:hover { text-decoration: underline; }
+    .footer-social { display: flex; gap: 12px; margin-top: 10px; }
+    .footer-social a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: #e0e0e0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .footer-social a:hover { background: var(--primary); transform: scale(1.1); }
+    .footer-social a:hover svg { color: #fff; }
+    .footer-social svg { width: 18px; height: 18px; color: var(--primary); transition: color 0.25s; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid #ddd;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s, padding-left 0.2s; display: inline-block;
+    }
+    .footer-col ul li a:hover { color: #1a4a60; padding-left: 4px; }
+    .footer-bottom {
+      border-top: 1px solid #ddd; padding: 16px 0;
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copyright { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #888; }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: #1a4a60; }
+
+    /* ===== GO UP ===== */
+    .go-up-btn {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 56px; height: 56px; background: var(--primary); color: #fff;
+      border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.3;
+      z-index: 500; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    }
+    .go-up-btn.visible { opacity: 1; transform: translateY(0); }
+    .go-up-btn:hover { background: #1a4a60; }
+    .go-up-btn svg { width: 16px; height: 16px; margin-bottom: 2px; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Row-based reveal: whole grid row enters together ── */
+    .reveal-row {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-row.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .nav-links > li > a { padding: 0 11px; font-size: 11px; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .mobile-menu-overlay { display: block; }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); }
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .top-bar { padding: 0 20px; }
+      .navbar { padding: 0 20px; }
+      .highlights-section, .catalogs-section, .artists-section { padding-left: 16px; padding-right: 16px; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .artists-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .section-heading { font-size: 16px; letter-spacing: 2px; padding: 32px 0 20px; }
+      .site-footer { padding: 28px 20px 0; }
+    }
+  
+
+    /* ===== INNER PAGE ===== */
+    .page-hero {
+      background: #f2f5f7;
+      padding: 52px 40px 44px;
+      text-align: center;
+      border-bottom: 1px solid #e0e5e8;
+    }
+    .page-hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .page-hero p {
+      font-size: 13px;
+      color: #666;
+      letter-spacing: 0.4px;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .page-breadcrumb {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 40px;
+      font-size: 11px;
+      color: #999;
+      letter-spacing: 0.6px;
+    }
+    .page-breadcrumb a { color: var(--primary); font-weight: 600; }
+    .page-breadcrumb a:hover { text-decoration: underline; }
+    .page-body {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 48px 40px 72px;
+    }
+    .coming-soon-box {
+      text-align: center;
+      padding: 80px 40px;
+      background: #fafafa;
+      border: 1px dashed #d0d8de;
+      border-radius: 2px;
+    }
+    .coming-soon-box svg {
+      width: 48px; height: 48px;
+      color: #b0bec5;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .coming-soon-box h3 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .coming-soon-box p {
+      font-size: 12px;
+      color: #888;
+      letter-spacing: 0.4px;
+      line-height: 1.8;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .page-card {
+      background: #fff;
+      border: 1px solid #e8edf0;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .page-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+    .page-card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #e8edf0;
+      overflow: hidden;
+    }
+    .page-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .page-card:hover .page-card-img img { transform: scale(1.05); }
+    .page-card-info {
+      padding: 14px 16px;
+    }
+    .page-card-info h4 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .page-card-info p {
+      font-size: 11px;
+      color: #888;
+      letter-spacing: 0.3px;
+    }
+    .prose {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .prose h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e5e8;
+    }
+    .prose p {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.9;
+      margin-bottom: 18px;
+      letter-spacing: 0.2px;
+    }
+    .prose ul {
+      list-style: disc;
+      padding-left: 24px;
+      margin-bottom: 18px;
+    }
+    .prose ul li {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.9;
+      margin-bottom: 6px;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-form label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+      margin-top: 18px;
+    }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #d0d8de;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      color: #333;
+      outline: none;
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--primary); }
+    .contact-form textarea { height: 130px; resize: vertical; }
+    .btn-primary {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 36px;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #1a4a60; }
+    .faq-item {
+      border-bottom: 1px solid #e8edf0;
+      padding: 20px 0;
+    }
+    .faq-question {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+    .faq-question svg { flex-shrink: 0; transition: transform 0.25s; }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); }
+    .faq-answer {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.8;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+      padding-top: 0;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; padding-top: 12px; }
+    @media (max-width: 900px) {
+      .page-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      .page-hero { padding: 36px 20px 28px; }
+      .page-body { padding: 32px 20px 48px; }
+      .page-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .page-breadcrumb { padding: 12px 20px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar">
+  <a href="contact-us.html">CONTACT US</a>
+  <div class="top-bar-right">
+    <a href="https://www.streamlineart.com/customer/account/create/">BECOME A CUSTOMER</a>
+    <span class="top-bar-divider">|</span>
+    <a href="#" onclick="return false;" style="cursor:default;">LOGIN</a>
+  </div>
+</div>
+
+<!-- STICKY HEADER -->
+<header class="site-header" id="siteHeader">
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Go to homepage">
+      <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+    </a>
+    <ul class="nav-links">
+
+      <!-- IN STOCK ART -->
+      <li>
+        <a href="plp-in-stock-art.html">IN STOCK ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">By Theme</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">New Releases</a></li>
+                <li><a href="plp-in-stock-art.html">Abstract</a></li>
+                <li><a href="plp-in-stock-art.html">Western</a></li>
+                <li><a href="plp-in-stock-art.html">Coastal &amp; Tropical</a></li>
+                <li><a href="plp-in-stock-art.html">Florals &amp; Botanicals</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Gallery Wall Art</a></li>
+                <li><a href="plp-in-stock-art.html">Birds &amp; Butterflies</a></li>
+                <li><a href="plp-in-stock-art.html">Lakes &amp; Mountains</a></li>
+                <li><a href="plp-in-stock-art.html">Farmhouse Chic</a></li>
+                <li><a href="plp-in-stock-art.html">Small Accent Art</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">By Frame</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Floating Frame</a></li>
+                <li><a href="plp-in-stock-art.html">Shadow Box</a></li>
+                <li><a href="plp-in-stock-art.html">Canvas Wrap</a></li>
+                <li><a href="plp-in-stock-art.html">Barnwood</a></li>
+                <li><a href="plp-in-stock-art.html">Champagne</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-1.jpg" alt="In Stock Art" />
+            <span class="mega-img-label">In Stock Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- PRINT ON DEMAND ART -->
+      <li>
+        <a href="print-on-demand-art.html">PRINT ON DEMAND ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Featured Artists</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">Ronald West</a></li>
+                <li><a href="print-on-demand-art.html">Lucia Heffernan</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">All Print on Demand</a></li>
+                <li><a href="print-on-demand-art.html">State Posters</a></li>
+                <li><a href="print-on-demand-art.html">Canvas Prints</a></li>
+                <li><a href="print-on-demand-art.html">Holiday</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-2.jpg" alt="Print on Demand Art" />
+            <span class="mega-img-label">Print on Demand</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- CHRISTMAS ART -->
+      <li>
+        <a href="christmas-art.html">CHRISTMAS ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Christmas Art</p>
+              <ul>
+                <li><a href="christmas-art.html">All Christmas Art</a></li>
+                <li><a href="christmas-art.html">LED Light Up Art</a></li>
+                <li><a href="christmas-art.html">Holiday Canvas</a></li>
+                <li><a href="christmas-art.html">Seasonal Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-3.jpg" alt="Christmas Art" />
+            <span class="mega-img-label">Christmas Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- JUVENILE ART -->
+      <li>
+        <a href="juvenile-art.html">JUVENILE ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Juvenile Art</p>
+              <ul>
+                <li><a href="juvenile-art.html">All Juvenile Art</a></li>
+                <li><a href="juvenile-art.html">Animals</a></li>
+                <li><a href="juvenile-art.html">Nature &amp; Landscapes</a></li>
+                <li><a href="juvenile-art.html">Inspirational</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-4.jpg" alt="Juvenile Art" />
+            <span class="mega-img-label">Juvenile Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- LAST CALL ART -->
+      <li>
+        <a href="last-call-art.html">LAST CALL ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Last Call</p>
+              <ul>
+                <li><a href="last-call-art.html">All Last Call Art</a></li>
+                <li><a href="last-call-art.html">Clearance Canvas</a></li>
+                <li><a href="last-call-art.html">Discounted Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-5.jpg" alt="Last Call Art" />
+            <span class="mega-img-label">Last Call Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- ACCESSORY ITEMS -->
+      <li>
+        <a href="accessory-items.html">ACCESSORY ITEMS</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Accessories</p>
+              <ul>
+                <li><a href="accessory-items.html">All Accessories</a></li>
+                <li><a href="accessory-items.html">Hanging Hardware</a></li>
+                <li><a href="accessory-items.html">Display Tools</a></li>
+                <li><a href="accessory-items.html">Packaging</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-6.jpg" alt="Accessory Items" />
+            <span class="mega-img-label">Accessory Items</span>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <!-- NAV RIGHT: search + icons -->
+    <div class="nav-right">
+      <!-- Expanding search bar -->
+      <div class="nav-search-wrap" id="navSearchWrap">
+        <div class="nav-search-pill">
+          <!-- Left: search trigger -->
+          <button class="nav-search-trigger" id="navSearchTrigger" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </button>
+          <!-- Camera icon — LEFT side, before input -->
+          <button class="nav-camera-btn" id="navCameraBtn" title="Search by image" aria-label="Search by image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </button>
+          <!-- Input -->
+          <input
+            class="nav-search-input"
+            type="text"
+            placeholder="Search products..."
+            id="navSearchField"
+            autocomplete="off"
+          />
+
+        </div>
+      </div>
+      <!-- Wishlist -->
+      <button class="nav-icon-btn" title="Wishlist" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <!-- Cart -->
+      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="nav-cart-badge" id="navCartBadge">0</span>
+      </button>
+      <!-- Account -->
+      <button class="nav-icon-btn" title="My Account" aria-label="My Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <!-- ── SEARCH TAKEOVER OVERLAY ── -->
+    <div class="search-takeover" id="searchTakeover" role="search">
+      <div class="st-bar">
+        <!-- Search icon -->
+        <span class="st-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <!-- Input -->
+        <input class="st-input" id="stInput" type="text"
+               placeholder="Search products, artists, collections…"
+               autocomplete="off" />
+        <!-- Camera / image search -->
+        <button class="st-camera" title="Search by image" aria-label="Search by image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
+        <div class="st-div"></div>
+        <!-- Clear text -->
+        <button class="st-clear" id="stClear" aria-label="Clear search">Clear</button>
+        <!-- Close / X -->
+        <button class="st-close" id="stClose" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-box-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#275e76" stroke-width="2" width="20" height="20">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search-input" type="text" placeholder="Search by keyword or item number..." id="searchInput" />
+      <button class="search-submit">Search</button>
+    </div>
+    <span class="search-close" id="searchClose">x Close</span>
+  </div>
+</div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" style="height:28px;width:auto;" />
+    <button class="mobile-close" id="mobileClose">x</button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="plp-in-stock-art.html">In Stock Art</a>
+    <a href="print-on-demand-art.html">Print on Demand Art</a>
+    <a href="christmas-art.html">Christmas Art</a>
+    <a href="juvenile-art.html">Juvenile Art</a>
+    <a href="last-call-art.html">Last Call Art</a>
+    <a href="accessory-items.html">Accessory Items</a>
+    <a href="contact-us.html" class="mobile-nav-secondary">Contact Us</a>
+    <a href="https://www.streamlineart.com/customer/account/create/" class="mobile-nav-secondary">Become a Customer</a>
+    <a href="#" onclick="return false;" class="mobile-nav-secondary" style="cursor:default;">Login</a>
+  </nav>
+</div>
+
+<main id="contentarea">
+  <nav class="page-breadcrumb">
+    <a href="index.html">Home</a> &rsaquo; Our Company &rsaquo; Press &amp; Media
+  </nav>
+  <div class="page-hero">
+    <h1>Press &amp; Media</h1>
+    <p>News, media coverage, and brand resources for press and editorial teams.</p>
+  </div>
+  <div class="page-body">
+  <div class="prose">
+    <h2>Press Inquiries</h2>
+    <p>For all press and media inquiries, please contact our communications team at <a href='mailto:sales@streamlineart.com' style='color:var(--primary)'>sales@streamlineart.com</a>.</p>
+    <p>We welcome editorial features, product placement inquiries, and brand collaboration discussions.</p>
+    <h2>Brand Assets</h2>
+    <p>High-resolution logos, product imagery, and brand guidelines are available upon request for verified press and media contacts.</p>
+    <h2>Recent Coverage</h2>
+    <p>Streamline Art &amp; Frame has been featured in leading home décor and trade publications across North America. Our seasonal collections consistently reflect the most current trends in residential and commercial interior design.</p>
+  </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img class="footer-logo" src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+      <div class="footer-address">
+        1040 Ronsa Court,<br/>
+        Mississauga, ON, Canada L4W 3Y4
+        <p class="footer-info-group">Hours of operation: M to F, 8 A.M. &#8211; 4:30 P.M. EST</p>
+        <p class="footer-info-group">1.800.656.6408<br/>
+        <a href="mailto:sales@streamlineart.com">SALES@STREAMLINEART.COM</a></p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/streamlineartandframe" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/StreamlineArtTrends/" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/streamline-art-frame/" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Our Company</div>
+      <ul>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="showrooms-and-events.html">Showrooms and Events</a></li>
+        <li><a href="loyalty-program.html">Loyalty Program</a></li>
+        <li><a href="press-and-media.html">Press &amp; Media</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Customer Care</div>
+      <ul>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="claims-and-credit-forms.html">Claims and Credit Forms</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Resources / Tools</div>
+      <ul>
+        <li><a href="rep-locator.html">Rep Locator</a></li>
+        <li><a href="selling-programs.html">Selling Programs</a></li>
+        <li><a href="freight-programs.html">Freight Programs</a></li>
+        <li><a href="freight-calculator.html">Canadian Dropship Freight Calculator</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">Streamline Art &amp; Frame. All Rights Reserved</span>
+    <div class="footer-legal">
+      <a href="https://www.streamlineart.com/sitemap/">Site Map</a>
+      <a href="https://www.streamlineart.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.streamlineart.com/cookies-policy">Cookies Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- GO UP BUTTON -->
+<button class="go-up-btn" id="goUpBtn" aria-label="Go to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+  GO<br/>UP
+</button>
+
+<script>
+
+(function () {
+  var topBar = document.getElementById('topBar');
+  var goUpBtn = document.getElementById('goUpBtn');
+  var searchToggle = document.getElementById('searchToggle');
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchClose = document.getElementById('searchClose');
+  var searchInput = document.getElementById('searchInput');
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileOverlay = document.getElementById('mobileOverlay');
+  var mobileClose = document.getElementById('mobileClose');
+
+  // Scroll behavior
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    topBar.classList.toggle('hidden', y > 60);
+    goUpBtn.classList.toggle('visible', y > 300);
+  }, { passive: true });
+
+  // Search overlay (searchToggle may be absent if replaced by inline search pill)
+  function closeSearch() {
+    if (searchOverlay) searchOverlay.classList.remove('active');
+    if (searchInput)   searchInput.value = '';
+  }
+  if (searchToggle) {
+    searchToggle.addEventListener('click', function () {
+      searchOverlay.classList.add('active');
+      setTimeout(function () { searchInput.focus(); }, 200);
+    });
+  }
+  if (searchClose)   searchClose.addEventListener('click', closeSearch);
+  if (searchOverlay) searchOverlay.addEventListener('click', function (e) { if (e.target === searchOverlay) closeSearch(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeSearch(); closeMobile(); } });
+
+  // Mobile menu
+  function openMobile() {
+    mobileMenu.classList.add('open');
+    mobileOverlay.classList.add('show');
+    hamburgerBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    mobileOverlay.classList.remove('show');
+    hamburgerBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  hamburgerBtn.addEventListener('click', openMobile);
+  mobileClose.addEventListener('click', closeMobile);
+  mobileOverlay.addEventListener('click', closeMobile);
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal, .reveal-row');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { obs.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+})();
+
+/* ── Futuristic search takeover ── */
+(function() {
+  var header   = document.getElementById('siteHeader');
+  var trigger  = document.getElementById('navSearchTrigger');
+  var takeover = document.getElementById('searchTakeover');
+  var input    = document.getElementById('stInput');
+  var clearBtn = document.getElementById('stClear');
+  var closeBtn = document.getElementById('stClose');
+  if (!header || !trigger || !takeover || !input) return;
+
+  function openSearch() {
+    header.classList.add('search-open');
+    setTimeout(function() { input.focus(); }, 80);
+    updateClear();
+  }
+
+  function closeSearch() {
+    header.classList.remove('search-open');
+    input.value = '';
+    updateClear();
+  }
+
+  function updateClear() {
+    if (clearBtn) clearBtn.classList.toggle('visible', input.value.length > 0);
+  }
+
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openSearch();
+  });
+
+  var pill = document.querySelector('.nav-search-pill');
+  if (pill) {
+    pill.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openSearch();
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      input.value = '';
+      input.focus();
+      updateClear();
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeSearch();
+    });
+  }
+
+  input.addEventListener('input', updateClear);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && header.classList.contains('search-open')) {
+      closeSearch();
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (header.classList.contains('search-open') && !takeover.contains(e.target) && e.target !== trigger) {
+      closeSearch();
+    }
+  });
+})();
+
+// FAQ accordion (used on FAQ page)
+document.querySelectorAll('.faq-question').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    item.classList.toggle('open');
+  });
+});
+
+
+
+// FAQ accordion (used on FAQ page)
+document.querySelectorAll('.faq-question').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    item.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
