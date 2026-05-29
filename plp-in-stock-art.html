@@ -1,0 +1,2844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>In Stock Art – Streamline Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      color: #333333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    :root {
+      --primary: #275e76;
+      --footer-bg: #f7f7f7;
+      --divider: #c8c8c8;
+      --white: #ffffff;
+      --body-text: #333333;
+      --nav-h: 80px;
+      --transition: 0.25s ease;
+    }
+
+
+    /* ===== STICKY HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      padding: 0 40px;
+      background: #fff;
+    }
+    .nav-logo { display: flex; flex-direction: column; gap: 2px; min-width: 160px; cursor: pointer; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.82; }
+    .nav-logo img { height: 34px; width: auto; }
+    .nav-logo-tagline { font-size: 9px; color: #999; letter-spacing: 0.3px; font-weight: 400; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 0; flex: 1; justify-content: center; }
+    .nav-links > li { position: static; }
+    .nav-links > li > a {
+      display: block;
+      padding: 0 16px;
+      height: var(--nav-h);
+      line-height: var(--nav-h);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      white-space: nowrap;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links > li > a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 16px; right: 16px;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: center;
+    }
+    .nav-links > li:hover > a { color: #1a4a60; }
+    .nav-links > li:hover > a::after { transform: scaleX(1); }
+
+    /* Dropdown */
+    /* ── MEGA MENU ── */
+    .navbar { position: relative; }
+
+    .mega-menu {
+      position: absolute;
+      top: var(--nav-h);
+      left: 30px; right: 30px;
+      background: #fff;
+      border-top: 2px solid var(--primary);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      display: flex;
+      align-items: stretch;
+    }
+    .nav-links > li:hover .mega-menu,
+    .mega-menu:hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Left content area */
+    .mega-content {
+      flex: 1;
+      display: flex;
+      gap: 48px;
+      padding: 36px 48px;
+      border-right: 1px solid #eef2f4;
+    }
+    .mega-col { min-width: 160px; }
+    .mega-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .mega-col ul { list-style: none; padding: 0; margin: 0; }
+    .mega-col ul li { margin-bottom: 0; }
+    .mega-col ul li a {
+      display: block;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      letter-spacing: 0.2px;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.18s, padding-left 0.18s;
+      border-bottom: none;
+      text-transform: none;
+    }
+    .mega-col ul li a:hover {
+      color: var(--primary);
+      padding-left: 6px;
+    }
+
+    /* Right image panel */
+    .mega-img {
+      width: 460px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      align-self: stretch;
+      min-height: 240px;
+    }
+    .mega-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .mega-menu:hover .mega-img img { transform: scale(1.06); }
+    /* Gradient overlay for premium label presentation */
+    .mega-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.52) 0%,
+        rgba(0,0,0,0.18) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+    .mega-img-label {
+      position: absolute;
+      bottom: 18px; left: 22px;
+      background: transparent;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      z-index: 2;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.30);
+    }
+
+    /* Simple mega (no columns — single link list) */
+    .mega-simple .mega-content { gap: 0; }
+    .mega-simple .mega-col ul li a { font-size: 13px; }
+
+    /* ── NAV RIGHT ICONS ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      min-width: 280px;
+      justify-content: flex-end;
+    }
+
+    /* ── Simple search pill ── */
+    .nav-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-search-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 16px;
+      border: 1.5px solid #d4e2e8;
+      border-radius: 50px;
+      background: #f6fafc;
+      cursor: text;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .nav-search-pill:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(39,94,118,0.10);
+    }
+    .nav-search-pill svg {
+      flex-shrink: 0;
+      color: #8aacba;
+      width: 15px; height: 15px;
+    }
+    .nav-search-pill input {
+      border: none; outline: none; background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: #333;
+      width: 148px;
+    }
+    .nav-search-pill input::placeholder { color: #9bb8c4; }
+    .nav-search-pill { cursor: pointer; }
+
+    /* ── SEARCH TAKEOVER — full-navbar overlay ── */
+    .search-takeover {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(18px) saturate(1.9);
+      -webkit-backdrop-filter: blur(18px) saturate(1.9);
+      border-bottom: 1px solid rgba(39,94,118,0.12);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 40px; gap: 16px;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+      z-index: 300;
+    }
+    .site-header.search-open .search-takeover { opacity:1; pointer-events:auto; transform:translateY(0); }
+    .site-header.search-open .navbar > *:not(.search-takeover) { opacity:0.18; transition:opacity 0.28s ease; pointer-events:none; }
+    .st-bar {
+      flex:1; max-width:680px; height:48px;
+      display:flex; align-items:center;
+      background:rgba(255,255,255,0.96);
+      border:1.5px solid var(--primary); border-radius:50px;
+      box-shadow:0 4px 28px rgba(39,94,118,0.18),0 0 0 5px rgba(39,94,118,0.06);
+      padding:0 6px 0 20px; gap:10px; transition:box-shadow 0.22s ease;
+    }
+    .st-bar:focus-within { box-shadow:0 6px 36px rgba(39,94,118,0.26),0 0 0 5px rgba(39,94,118,0.10); }
+    .st-icon { flex-shrink:0; color:var(--primary); opacity:0.6; display:flex; align-items:center; }
+    .st-icon svg { width:17px; height:17px; }
+    .st-input { flex:1; border:none; outline:none; background:transparent; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:500; color:#1a1a1a; letter-spacing:0.2px; }
+    .st-input::placeholder { color:#aac4ce; font-size:12px; font-weight:400; }
+    .st-div { width:1px; height:22px; background:#d4e2e8; flex-shrink:0; }
+    .st-clear { flex-shrink:0; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--primary); opacity:0; pointer-events:none; padding:4px 8px; border-radius:20px; transition:opacity 0.18s ease,background 0.18s ease; }
+    .st-clear.visible { opacity:0.7; pointer-events:auto; }
+    .st-clear.visible:hover { opacity:1; background:rgba(39,94,118,0.07); }
+    .st-close { flex-shrink:0; background:rgba(39,94,118,0.08); border:none; border-radius:50%; cursor:pointer; color:var(--primary); width:32px; height:32px; display:flex; align-items:center; justify-content:center; margin-left:4px; transition:background 0.18s ease,transform 0.18s ease; }
+    .st-close:hover { background:rgba(39,94,118,0.16); transform:rotate(90deg); }
+    .st-close svg { width:14px; height:14px; }
+    .st-camera { flex-shrink:0; background:none; border:none; cursor:pointer; color:var(--primary); opacity:0.55; display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; transition:opacity 0.18s,background 0.18s; }
+    .st-camera:hover { opacity:1; background:rgba(39,94,118,0.08); }
+    .st-camera svg { width:15px; height:15px; }
+
+
+    /* Icon buttons (wishlist, cart, user) */
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transition: background 0.18s, color 0.18s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-icon-btn:hover { background: rgba(39,94,118,0.08); color: #1a4a60; }
+    .nav-icon-btn svg { width: 19px; height: 19px; }
+
+    /* Cart badge */
+    .nav-cart-badge {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 13px; height: 13px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 7.5px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      pointer-events: none;
+    }
+
+    /* Search button (kept for overlay trigger fallback) */
+    .nav-search-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--primary); transition: opacity 0.2s; min-width: 36px; display: none;
+    }
+    .nav-search-btn:hover { opacity: 0.7; }
+    .nav-search-btn svg { width: 20px; height: 20px; }
+
+    /* Search overlay */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 120px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .search-overlay.active { opacity: 1; pointer-events: auto; }
+    .search-box {
+      background: #fff; width: 600px; max-width: 90%; padding: 28px; border-radius: 2px;
+      transform: translateY(-20px); transition: transform 0.25s;
+    }
+    .search-overlay.active .search-box { transform: translateY(0); }
+    .search-box-inner {
+      display: flex; border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px; gap: 10px; align-items: center;
+    }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: 16px;
+      color: var(--body-text); background: transparent;
+    }
+    .search-input::placeholder { color: #aaa; font-size: 14px; }
+    .search-submit {
+      background: none; border: none; cursor: pointer;
+      color: var(--primary); font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .search-close {
+      display: block; text-align: right; margin-top: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+      color: #888; cursor: pointer; text-transform: uppercase;
+    }
+    .search-close:hover { color: var(--primary); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--primary); transition: 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 85%; max-width: 320px; height: 100vh; background: #fff;
+      z-index: 3000; padding: 24px 0; overflow-y: auto;
+      transform: translateX(-100%); transition: transform 0.3s ease;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 2999; opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-menu-overlay.show { opacity: 1; }
+    .mobile-menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 20px; border-bottom: 1px solid #eee;
+    }
+    .mobile-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--primary); line-height: 1; }
+    .mobile-nav a {
+      display: block; padding: 14px 24px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--primary); border-bottom: 1px solid #f0f0f0; transition: background 0.2s;
+    }
+    .mobile-nav a:hover { background: #f8f8f8; }
+    .mobile-nav .mobile-nav-secondary { font-weight: 500; color: #555; letter-spacing: 0.6px; font-size: 11px; }
+
+    /* ===== HERO ===== */
+    .hero-section {
+      margin: 0 30px;          /* left/right outer spacing */
+      position: relative;
+      overflow: hidden;
+      line-height: 0;
+      border-radius: 2px;
+    }
+    .hero-section a { display: block; width: 100%; }
+    .hero-section img { width: 100%; height: auto; display: block; transition: transform 0.6s ease; }
+    .hero-section:hover img { transform: scale(1.01); }
+
+    /* ===== SECTION HEADING ===== */
+    .section-heading {
+      text-align: center; font-size: 22px; font-weight: 700;
+      letter-spacing: 2.4px; text-transform: uppercase;
+      color: var(--primary); padding: 48px 0 30px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights-section { padding: 0 30px 50px; max-width: 1440px; margin: 0 auto; }
+    .highlights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .highlight-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .highlight-card-img { overflow: hidden; position: relative; aspect-ratio: 5/6; }
+    .highlight-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+    .highlight-card:hover .highlight-card-img img { transform: scale(1.05); }
+    .highlight-card-label {
+      text-align: center; padding: 14px 8px 6px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .highlight-card:hover .highlight-card-label { color: #1a4a60; }
+
+    /* ===== DIVIDER ===== */
+    .section-divider { margin: 0 30px; border: none; border-top: 1px solid var(--divider); }
+
+    /* ===== CATALOGS ===== */
+    .catalogs-section { padding: 0 60px 50px; max-width: 1440px; margin: 0 auto; }
+    .catalogs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px; }
+    .catalog-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .catalog-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .catalog-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .catalog-card:hover .catalog-card-img img { transform: scale(1.04); }
+    .catalog-card-label {
+      text-align: center; padding: 12px 8px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .catalog-card:hover .catalog-card-label { color: #1a4a60; }
+
+    /* ===== FEATURED ARTISTS ===== */
+    .artists-section { padding: 0 30px 60px; max-width: 1440px; margin: 0 auto; }
+    .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .artist-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .artist-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .artist-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .artist-card:hover .artist-card-img img { transform: scale(1.04); }
+    .artist-card-label {
+      text-align: center; padding: 14px 8px 4px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .artist-card:hover .artist-card-label { color: #1a4a60; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); padding: 36px 40px 0; }
+    .footer-main {
+      display: grid; grid-template-columns: 200px 1fr 1fr 1fr; column-gap: 40px;
+      max-width: 1440px; margin: 0 auto; padding-bottom: 28px;
+    }
+    .footer-logo { height: 38px; width: auto; margin-bottom: 6px; }
+    .footer-brand { padding-right: 24px; }
+    .footer-tagline { font-size: 10px; color: #888; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .footer-address { font-size: 12px; color: var(--body-text); line-height: 1.5; margin-bottom: 6px; }
+    .footer-info-group { margin-top: 8px; }
+    .footer-address a { color: var(--primary); font-size: 12px; letter-spacing: 0.4px; font-weight: 500; }
+    .footer-address a:hover { text-decoration: underline; }
+    .footer-social { display: flex; gap: 12px; margin-top: 10px; }
+    .footer-social a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: #e0e0e0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .footer-social a:hover { background: var(--primary); transform: scale(1.1); }
+    .footer-social a:hover svg { color: #fff; }
+    .footer-social svg { width: 18px; height: 18px; color: var(--primary); transition: color 0.25s; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid #ddd;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s, padding-left 0.2s; display: inline-block;
+    }
+    .footer-col ul li a:hover { color: #1a4a60; padding-left: 4px; }
+    .footer-bottom {
+      border-top: 1px solid #ddd; padding: 16px 0;
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copyright { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #888; }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: #1a4a60; }
+
+    /* ===== GO UP ===== */
+    .go-up-btn {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 56px; height: 56px; background: var(--primary); color: #fff;
+      border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.3;
+      z-index: 500; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    }
+    .go-up-btn.visible { opacity: 1; transform: translateY(0); }
+    .go-up-btn:hover { background: #1a4a60; }
+    .go-up-btn svg { width: 16px; height: 16px; margin-bottom: 2px; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Row-based reveal: whole grid row enters together ── */
+    .reveal-row {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-row.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .nav-links > li > a { padding: 0 11px; font-size: 11px; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .mobile-menu-overlay { display: block; }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); }
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .navbar { padding: 0 20px; }
+      .highlights-section, .catalogs-section, .artists-section { padding-left: 16px; padding-right: 16px; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .artists-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .section-heading { font-size: 16px; letter-spacing: 2px; padding: 32px 0 20px; }
+      .site-footer { padding: 28px 20px 0; }
+    }
+  
+
+    /* ===================================================
+       PLP – LAYOUT FROM REFERENCE (COASTLINEART.NET)
+       Branding/Colors from Streamline Art
+    =================================================== */
+    :root { --plp-accent: #275e76; }
+
+    .plp-wrap { max-width: 1440px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* Breadcrumb */
+    .plp-breadcrumb {
+      padding: 18px 32px 0;
+      max-width: 1440px; margin: 0 auto;
+      font-size: 12px; color: #888; letter-spacing: 0.4px;
+    }
+    .plp-breadcrumb a { color: var(--plp-accent); font-weight: 600; }
+    .plp-breadcrumb a:hover { text-decoration: underline; }
+    .plp-breadcrumb span { margin: 0 6px; color: #bbb; }
+
+    /* ── Filter / Sort bar ── */
+    .plp-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0 0; border-bottom: 1px solid #e8edf0; margin-bottom: 14px;
+      position: relative;
+    }
+    .plp-bar-left { display: flex; align-items: center; gap: 12px; }
+    .plp-bar-right { display: flex; align-items: center; gap: 14px; }
+
+    /* Inline filter pills */
+    .plp-filter-pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border: 1px solid #d0d8de; border-radius: 4px;
+      background: #fff; font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: #333;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .plp-filter-pill:hover { border-color: var(--plp-accent); }
+    .plp-filter-pill.active { border-color: var(--plp-accent); background: #f0f6f8; }
+    .plp-filter-pill svg { transition: transform 0.2s; }
+    .plp-filter-pill.open svg { transform: rotate(180deg); }
+
+    /* Inline dropdown panel */
+    .plp-inline-dropdown {
+      position: absolute; top: calc(100% + 8px); left: 0;
+      background: #fff; border: 1px solid #e0e8ec; border-radius: 4px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10); z-index: 300;
+      padding: 20px; min-width: 280px;
+      opacity: 0; pointer-events: none; transform: translateY(-8px);
+      transition: opacity 0.22s, transform 0.22s;
+    }
+    .plp-inline-dropdown.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    /* Filter icon button */
+    .plp-funnel-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px; text-transform: none;
+      font-family: 'Montserrat', sans-serif; color: #888;
+    }
+    .plp-funnel-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 0.5px; color: #333;
+      padding: 6px 4px; transition: color 0.2s;
+    }
+    .plp-funnel-btn:hover { color: var(--plp-accent); }
+
+    /* Sort button */
+    .plp-sort-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 0.4px; color: #333;
+      position: relative; padding: 6px 4px;
+    }
+    .plp-sort-label { color: #888; font-weight: 500; margin-right: 2px; }
+    .plp-sort-btn:hover .plp-sort-val { color: var(--plp-accent); }
+    .plp-sort-dropdown {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: #fff; border: 1px solid #e0e8ec; border-radius: 4px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10); z-index: 300;
+      min-width: 200px; padding: 8px 0;
+      opacity: 0; pointer-events: none; transform: translateY(-8px);
+      transition: opacity 0.22s, transform 0.22s;
+    }
+    .plp-sort-dropdown.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .plp-sort-option {
+      display: block; width: 100%; text-align: left; padding: 9px 18px;
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: 0.4px; color: #333;
+      background: none; border: none; cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .plp-sort-option:hover { background: #f0f6f8; color: var(--plp-accent); }
+    .plp-sort-option.selected { color: var(--plp-accent); font-weight: 700; }
+
+    /* Count */
+    .plp-count {
+      font-size: 12px; color: #888; letter-spacing: 0.3px;
+      padding: 10px 0 18px;
+    }
+
+    /* ── Product grid (4 columns) ── */
+    .plp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px 24px;
+    }
+
+    /* ── Product card ── */
+    .plp-card { display: flex; flex-direction: column; cursor: pointer; }
+
+    .plp-card-img-wrap {
+      position: relative; overflow: hidden; background: #f5f5f5;
+      aspect-ratio: 4/3; margin-bottom: 0;
+    }
+    .plp-card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; transition: transform 0.45s ease;
+    }
+    .plp-card:hover .plp-card-img-wrap img { transform: scale(1.04); }
+
+    /* Out-of-stock badge */
+    .plp-badge-oos {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(0,0,0,0.6); color: #fff;
+      font-size: 9px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 8px; border-radius: 2px;
+    }
+
+    /* Wishlist heart – top right of image */
+    .plp-wishlist {
+      position: absolute; top: 10px; right: 10px;
+      background: #fff; border: none; border-radius: 50%;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .plp-wishlist:hover { transform: scale(1.12); box-shadow: 0 3px 10px rgba(0,0,0,0.18); }
+
+    /* Quick View button — slides up on hover */
+    .plp-qv-btn {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(39,94,118,0.92);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      color: #fff; border: none; padding: 11px 0;
+      font-family: 'Montserrat', sans-serif; font-size: 10px;
+      font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      cursor: pointer;
+      transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(0.34,1.1,0.64,1);
+      z-index: 10;
+    }
+    .plp-card-img-wrap:hover .plp-qv-btn { transform: translateY(0); }
+
+    /* ── Quick View Modal ── */
+    .qv-overlay {
+      position: fixed; inset: 0;
+      background: rgba(10,20,30,0.60);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      z-index: 4000; display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .qv-overlay.open { opacity: 1; pointer-events: auto; }
+    .qv-modal {
+      background: #fff; border-radius: 16px;
+      width: 960px; max-width: 96vw; max-height: 90vh;
+      overflow-y: auto; position: relative;
+      transform: scale(0.92) translateY(24px); opacity: 0;
+      transition: transform 0.32s cubic-bezier(.34,1.4,.64,1), opacity 0.28s ease;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.28);
+    }
+    .qv-overlay.open .qv-modal { transform: scale(1) translateY(0); opacity: 1; }
+    .qv-close-btn {
+      position: absolute; top: 14px; right: 16px; z-index: 10;
+      background: rgba(255,255,255,0.95); border: none; border-radius: 50%;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #555;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.14); transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .qv-close-btn:hover { background: #fff; color: #111; transform: rotate(90deg); }
+
+    /* Two-col layout */
+    .qv-inner { display: grid; grid-template-columns: 1fr 1fr; }
+
+    /* Image column */
+    .qv-img-col {
+      border-radius: 16px 0 0 0; overflow: hidden;
+      aspect-ratio: 1/1; background: #f2f4f5; position: relative;
+    }
+    .qv-img-col img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Availability badge on image */
+    .qv-avail-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 3px;
+    }
+    .qv-avail-badge.in-stock  { background: #e8f5e9; color: #2e7d32; }
+    .qv-avail-badge.out-stock { background: #fce4e4; color: #c0392b; }
+
+    /* Info column */
+    .qv-info-col {
+      padding: 36px 36px 28px;
+      display: flex; flex-direction: column; gap: 0;
+      border-left: 1px solid #f0f2f4;
+    }
+
+    /* SKU */
+    .qv-sku-tag {
+      font-size: 9px; font-weight: 700; color: #b0bec5;
+      letter-spacing: 1.8px; text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif; margin-bottom: 8px;
+    }
+
+    /* Title */
+    .qv-title {
+      font-size: 20px; font-weight: 700; color: #0f1f2a; line-height: 1.3;
+      font-family: 'Montserrat', sans-serif; margin: 0 0 14px;
+    }
+
+    /* Price row */
+    .qv-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+    .qv-price  { font-size: 22px; font-weight: 700; color: var(--plp-accent); font-family: 'Montserrat', sans-serif; }
+    .qv-sale   { font-size: 22px; font-weight: 700; color: #c0392b; font-family: 'Montserrat', sans-serif; }
+    .qv-orig   { font-size: 15px; color: #c0c8cc; text-decoration: line-through; font-family: 'Montserrat', sans-serif; }
+
+    /* Attribute chips strip */
+    .qv-attrs {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 18px;
+      padding: 16px; background: #f7f9fa;
+      border-radius: 10px; border: 1px solid #eaeff2;
+    }
+    .qv-attr-item { display: flex; flex-direction: column; gap: 3px; }
+    .qv-attr-label {
+      font-family: 'Montserrat', sans-serif; font-size: 8px;
+      font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #a0b5be;
+    }
+    .qv-attr-val {
+      font-family: 'Montserrat', sans-serif; font-size: 11.5px;
+      font-weight: 600; color: #1a3040;
+    }
+    .qv-attr-val.in-stock  { color: #2e7d32; }
+    .qv-attr-val.out-stock { color: #c0392b; }
+
+    /* Description */
+    .qv-desc-text {
+      font-size: 12.5px; color: #677; line-height: 1.7;
+      font-family: 'Montserrat', sans-serif; margin: 0 0 20px; flex: 1;
+    }
+
+    /* Action buttons row */
+    .qv-actions {
+      display: flex; gap: 10px; margin-bottom: 14px;
+    }
+    .qv-cart-btn {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--plp-accent); color: #fff; border: none; border-radius: 8px;
+      padding: 13px 18px; font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s, transform 0.18s;
+    }
+    .qv-cart-btn:hover:not(:disabled) { background: #1a4a60; transform: translateY(-1px); }
+    .qv-cart-btn:disabled { background: #c5d0d5; cursor: not-allowed; }
+    .qv-cart-btn.added { background: #2e7d32; }
+
+    /* Wishlist button */
+    .qv-wish-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      background: none; border: 1.5px solid #d0dde2; border-radius: 8px;
+      padding: 13px 16px; cursor: pointer; color: #666;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .qv-wish-btn:hover { border-color: #e53935; color: #e53935; background: #fff5f5; }
+    .qv-wish-btn.active { border-color: #e53935; color: #e53935; background: #fff0f0; }
+    .qv-wish-btn.active svg { fill: #e53935; }
+
+    /* View Full Product link */
+    .qv-cta-btn {
+      display: block; text-align: center; text-decoration: none;
+      background: transparent; color: var(--plp-accent);
+      border: 1.5px solid var(--plp-accent); border-radius: 8px;
+      padding: 12px 24px; font-family: 'Montserrat', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+    }
+    .qv-cta-btn:hover { background: var(--plp-accent); color: #fff; transform: translateY(-1px); }
+
+    /* Related rail */
+    .qv-related { padding: 18px 28px 24px; border-top: 1px solid #eef2f4; }
+    .qv-related-heading {
+      font-size: 9.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+      color: #9fb3bb; font-family: 'Montserrat', sans-serif; margin: 0 0 14px;
+    }
+    .qv-rel-rail {
+      display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px;
+      scrollbar-width: thin; scrollbar-color: #d8e4e8 transparent;
+    }
+    .qv-rel-rail::-webkit-scrollbar { height: 3px; }
+    .qv-rel-rail::-webkit-scrollbar-thumb { background: #d0dde2; border-radius: 2px; }
+    .qv-rel-item {
+      flex-shrink: 0; width: 116px; cursor: pointer; transition: transform 0.2s;
+    }
+    .qv-rel-item:hover { transform: translateY(-3px); }
+    .qv-rel-item img {
+      width: 116px; height: 116px; object-fit: cover; border-radius: 8px;
+      display: block; margin-bottom: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .qv-rel-name {
+      font-size: 10px; font-weight: 600; color: #333; font-family: 'Montserrat', sans-serif;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .qv-rel-price { font-size: 10px; color: #888; font-family: 'Montserrat', sans-serif; margin-top: 2px; }
+
+    /* Mobile */
+    @media (max-width: 720px) {
+      .qv-inner { grid-template-columns: 1fr; }
+      .qv-img-col { border-radius: 16px 16px 0 0; aspect-ratio: 4/3; }
+      .qv-info-col { padding: 22px 20px 18px; border-left: none; border-top: 1px solid #f0f2f4; }
+      .qv-modal { border-radius: 16px 16px 0 0; margin-top: auto; max-height: 93vh; }
+      .qv-overlay { align-items: flex-end; padding: 0; }
+      .qv-attrs { grid-template-columns: 1fr 1fr; }
+      .qv-actions { flex-direction: column; }
+    }
+
+    /* Card info */
+    .plp-card-info { padding: 12px 0 4px; }
+    .plp-sku {
+      font-size: 10px; font-weight: 700; color: #aaa; letter-spacing: 0.8px;
+      text-transform: uppercase; margin-bottom: 4px; font-family: 'Montserrat', sans-serif;
+    }
+    .plp-product-name {
+      font-size: 13px; font-weight: 700; color: #1a1a1a; letter-spacing: 0.2px;
+      margin-bottom: 5px; line-height: 1.45; font-family: 'Montserrat', sans-serif;
+    }
+    .plp-desc {
+      font-size: 11.5px; color: #666; line-height: 1.5; letter-spacing: 0.2px;
+      margin-bottom: 8px; font-family: 'Montserrat', sans-serif;
+    }
+    .plp-price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .plp-price-group { display: flex; align-items: center; gap: 8px; }
+    .plp-price { font-size: 13px; font-weight: 700; color: #222; }
+    .plp-orig-price { font-size: 13px; font-weight: 500; color: #aaa; text-decoration: line-through; }
+    .plp-sale-price { font-size: 13px; font-weight: 700; color: #c0392b; }
+    .plp-dims { font-size: 11px; color: #888; letter-spacing: 0.3px; white-space: nowrap; }
+
+    /* Add to Cart button */
+    .plp-add-to-cart {
+      display: block; width: 100%; padding: 10px 0;
+      background: var(--plp-accent); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      border: 2px solid var(--plp-accent); border-radius: 3px;
+      cursor: pointer; transition: background 0.2s, color 0.2s;
+    }
+    .plp-add-to-cart:hover:not(:disabled) { background: #fff; color: var(--plp-accent); }
+    .plp-add-to-cart:disabled {
+      background: #e8edf0; color: #aaa; border-color: #e8edf0; cursor: not-allowed;
+    }
+    .plp-add-to-cart.added {
+      background: #2e7d32; border-color: #2e7d32; color: #fff;
+    }
+
+    /* ── FILTER SIDEBAR ── */
+    .plp-sidebar-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .plp-sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .plp-sidebar {
+      position: fixed; top: 0; right: 0; height: 100vh; width: 400px; max-width: 92vw;
+      background: #fff; z-index: 2001; display: flex; flex-direction: column;
+      transform: translateX(100%); transition: transform 0.32s cubic-bezier(.4,0,.2,1);
+      box-shadow: -4px 0 30px rgba(0,0,0,0.14);
+    }
+    .plp-sidebar.open { transform: translateX(0); }
+
+    .plp-sidebar-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 22px 16px; border-bottom: 1px solid #e8edf0;
+      flex-shrink: 0;
+    }
+    .plp-sidebar-title {
+      font-size: 15px; font-weight: 700; letter-spacing: 0.6px; color: #222;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .plp-sidebar-head-right { display: flex; align-items: center; gap: 16px; }
+    .plp-clear-all {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.4px; color: #888;
+      background: none; border: none; cursor: pointer; transition: color 0.2s;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .plp-clear-all:hover { color: var(--plp-accent); }
+    .plp-sidebar-close {
+      background: none; border: none; cursor: pointer; color: #555;
+      display: flex; align-items: center; padding: 4px; transition: color 0.2s;
+    }
+    .plp-sidebar-close:hover { color: #111; }
+
+    .plp-sidebar-body { flex: 1; overflow-y: auto; padding: 0 22px 20px; }
+
+    /* Sidebar section */
+    .plp-filter-section { border-bottom: 1px solid #e8edf0; padding: 18px 0; }
+    .plp-filter-section:last-child { border-bottom: none; }
+    .plp-filter-section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; margin-bottom: 16px;
+    }
+    .plp-filter-section-head h4 {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.6px; color: #222;
+      font-family: 'Montserrat', sans-serif; text-transform: none;
+    }
+    .plp-section-arrow { transition: transform 0.22s; }
+    .plp-filter-section.collapsed .plp-section-arrow { transform: rotate(180deg); }
+    .plp-filter-section-body { overflow: hidden; transition: max-height 0.3s ease; }
+    .plp-filter-section.collapsed .plp-filter-section-body { max-height: 0 !important; }
+
+    /* Price range slider */
+    .plp-price-range { padding: 4px 0 16px; }
+    .plp-range-track {
+      position: relative; height: 4px; background: #e0e8ec;
+      border-radius: 2px; margin: 10px 0 20px;
+    }
+    .plp-range-fill {
+      position: absolute; height: 100%; background: var(--plp-accent);
+      border-radius: 2px; left: 0%; right: 0%;
+    }
+    .plp-range-input {
+      position: absolute; width: 100%; height: 4px;
+      -webkit-appearance: none; appearance: none;
+      background: transparent; pointer-events: none; top: 0; left: 0;
+    }
+    .plp-range-input::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--plp-accent); cursor: pointer;
+      pointer-events: auto; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--plp-accent);
+    }
+    .plp-range-input::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--plp-accent); cursor: pointer; border: none;
+      pointer-events: auto; box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--plp-accent);
+    }
+    .plp-price-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .plp-price-input-wrap label {
+      display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+      text-transform: uppercase; color: #888; margin-bottom: 5px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .plp-price-input-inner {
+      display: flex; align-items: center; border: 1px solid #d0d8de;
+      border-radius: 3px; overflow: hidden;
+    }
+    .plp-price-input-inner span {
+      padding: 8px 10px; font-size: 12px; color: #888; background: #f8f8f8;
+      border-right: 1px solid #d0d8de; font-family: 'Montserrat', sans-serif;
+    }
+    .plp-price-input-inner input {
+      flex: 1; border: none; outline: none; padding: 8px 10px;
+      font-size: 12px; font-family: 'Montserrat', sans-serif; color: #333;
+      width: 100%;
+    }
+
+    /* Filter search */
+    .plp-filter-search {
+      display: flex; align-items: center; gap: 8px;
+      border: 1px solid #d0d8de; border-radius: 3px; padding: 8px 12px;
+      margin-bottom: 14px;
+    }
+    .plp-filter-search input {
+      flex: 1; border: none; outline: none; font-size: 12px;
+      font-family: 'Montserrat', sans-serif; color: #333; background: transparent;
+    }
+    .plp-filter-search input::placeholder { color: #aaa; }
+    .plp-filter-search svg { color: #aaa; flex-shrink: 0; }
+
+    /* Checkboxes */
+    .plp-checkbox-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 0; cursor: pointer;
+    }
+    .plp-checkbox-left { display: flex; align-items: center; gap: 10px; }
+    .plp-checkbox-row input[type="checkbox"] {
+      width: 16px; height: 16px; accent-color: var(--plp-accent); cursor: pointer;
+    }
+    .plp-checkbox-label {
+      font-size: 12px; font-weight: 600; color: #333;
+      font-family: 'Montserrat', sans-serif; letter-spacing: 0.3px;
+    }
+    .plp-checkbox-count { font-size: 11px; color: #aaa; }
+
+    /* Apply button */
+    .plp-apply-btn {
+      display: block; width: 100%; margin-top: 16px;
+      padding: 11px; background: var(--plp-accent); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; border: none; cursor: pointer;
+      border-radius: 3px; transition: background 0.2s;
+    }
+    .plp-apply-btn:hover { background: #1a4a60; }
+
+    /* Show Results sticky footer */
+    .plp-sidebar-footer {
+      padding: 16px 22px; border-top: 1px solid #e8edf0; flex-shrink: 0;
+    }
+    .plp-show-results {
+      display: block; width: 100%; padding: 14px;
+      background: var(--plp-accent); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase; border: none; cursor: pointer;
+      border-radius: 3px; transition: background 0.2s;
+    }
+    .plp-show-results:hover { background: #1a4a60; }
+
+    /* No results */
+    .plp-no-results {
+      grid-column: 1 / -1; text-align: center; padding: 60px 20px;
+      font-size: 13px; color: #888; letter-spacing: 0.4px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .plp-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 800px) {
+      .plp-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 16px; }
+      .plp-wrap { padding: 0 16px 60px; }
+      .plp-breadcrumb { padding: 14px 16px 0; }
+      .plp-sidebar { width: 100%; max-width: 100%; }
+    }
+    @media (max-width: 500px) {
+      .plp-bar { flex-wrap: wrap; gap: 10px; }
+      .plp-bar-left { flex-wrap: wrap; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<header class="site-header" id="siteHeader">
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Go to homepage">
+      <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+    </a>
+    <ul class="nav-links">
+
+      <!-- IN STOCK ART -->
+      <li>
+        <a href="plp-in-stock-art.html">IN STOCK ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">By Theme</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">New Releases</a></li>
+                <li><a href="plp-in-stock-art.html">Abstract</a></li>
+                <li><a href="plp-in-stock-art.html">Western</a></li>
+                <li><a href="plp-in-stock-art.html">Coastal &amp; Tropical</a></li>
+                <li><a href="plp-in-stock-art.html">Florals &amp; Botanicals</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Gallery Wall Art</a></li>
+                <li><a href="plp-in-stock-art.html">Birds &amp; Butterflies</a></li>
+                <li><a href="plp-in-stock-art.html">Lakes &amp; Mountains</a></li>
+                <li><a href="plp-in-stock-art.html">Farmhouse Chic</a></li>
+                <li><a href="plp-in-stock-art.html">Small Accent Art</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">By Frame</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Floating Frame</a></li>
+                <li><a href="plp-in-stock-art.html">Shadow Box</a></li>
+                <li><a href="plp-in-stock-art.html">Canvas Wrap</a></li>
+                <li><a href="plp-in-stock-art.html">Barnwood</a></li>
+                <li><a href="plp-in-stock-art.html">Champagne</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-1.jpg" alt="In Stock Art" />
+            <span class="mega-img-label">In Stock Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- PRINT ON DEMAND ART -->
+      <li>
+        <a href="print-on-demand-art.html">PRINT ON DEMAND ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Featured Artists</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">Ronald West</a></li>
+                <li><a href="print-on-demand-art.html">Lucia Heffernan</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">All Print on Demand</a></li>
+                <li><a href="print-on-demand-art.html">State Posters</a></li>
+                <li><a href="print-on-demand-art.html">Canvas Prints</a></li>
+                <li><a href="print-on-demand-art.html">Holiday</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-2.jpg" alt="Print on Demand Art" />
+            <span class="mega-img-label">Print on Demand</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- CHRISTMAS ART -->
+      <li>
+        <a href="christmas-art.html">CHRISTMAS ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Christmas Art</p>
+              <ul>
+                <li><a href="christmas-art.html">All Christmas Art</a></li>
+                <li><a href="christmas-art.html">LED Light Up Art</a></li>
+                <li><a href="christmas-art.html">Holiday Canvas</a></li>
+                <li><a href="christmas-art.html">Seasonal Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-3.jpg" alt="Christmas Art" />
+            <span class="mega-img-label">Christmas Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- JUVENILE ART -->
+      <li>
+        <a href="juvenile-art.html">JUVENILE ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Juvenile Art</p>
+              <ul>
+                <li><a href="juvenile-art.html">All Juvenile Art</a></li>
+                <li><a href="juvenile-art.html">Animals</a></li>
+                <li><a href="juvenile-art.html">Nature &amp; Landscapes</a></li>
+                <li><a href="juvenile-art.html">Inspirational</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-4.jpg" alt="Juvenile Art" />
+            <span class="mega-img-label">Juvenile Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- LAST CALL ART -->
+      <li>
+        <a href="last-call-art.html">LAST CALL ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Last Call</p>
+              <ul>
+                <li><a href="last-call-art.html">All Last Call Art</a></li>
+                <li><a href="last-call-art.html">Clearance Canvas</a></li>
+                <li><a href="last-call-art.html">Discounted Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-5.jpg" alt="Last Call Art" />
+            <span class="mega-img-label">Last Call Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- ACCESSORY ITEMS -->
+      <li>
+        <a href="accessory-items.html">ACCESSORY ITEMS</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Accessories</p>
+              <ul>
+                <li><a href="accessory-items.html">All Accessories</a></li>
+                <li><a href="accessory-items.html">Hanging Hardware</a></li>
+                <li><a href="accessory-items.html">Display Tools</a></li>
+                <li><a href="accessory-items.html">Packaging</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-6.jpg" alt="Accessory Items" />
+            <span class="mega-img-label">Accessory Items</span>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <!-- NAV RIGHT: search + icons -->
+    <div class="nav-right">
+      <!-- Search pill -->
+      <div class="nav-search-wrap">
+        <div class="nav-search-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Search Products" autocomplete="off" aria-label="Search products" />
+        </div>
+      </div>
+      <!-- Wishlist -->
+      <button class="nav-icon-btn" title="Wishlist" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <!-- Cart -->
+      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="nav-cart-badge" id="navCartBadge">0</span>
+      </button>
+      <!-- Account -->
+      <button class="nav-icon-btn" title="My Account" aria-label="My Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+
+    <!-- SEARCH TAKEOVER OVERLAY -->
+    <div class="search-takeover" id="searchTakeover" role="search">
+      <div class="st-bar">
+        <span class="st-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input class="st-input" id="stInput" type="text" placeholder="Search products, artists, collections..." autocomplete="off" />
+        <button class="st-camera" title="Search by image" aria-label="Search by image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
+                <div class="st-div"></div>
+        <button class="st-clear" id="stClear" aria-label="Clear search">Clear</button>
+        <button class="st-close" id="stClose" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-box-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#275e76" stroke-width="2" width="20" height="20">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search-input" type="text" placeholder="Search by keyword or item number..." id="searchInput" />
+      <button class="search-submit">Search</button>
+    </div>
+    <span class="search-close" id="searchClose">x Close</span>
+  </div>
+</div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" style="height:28px;width:auto;" />
+    <button class="mobile-close" id="mobileClose">x</button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="plp-in-stock-art.html">In Stock Art</a>
+    <a href="print-on-demand-art.html">Print on Demand Art</a>
+    <a href="christmas-art.html">Christmas Art</a>
+    <a href="juvenile-art.html">Juvenile Art</a>
+    <a href="last-call-art.html">Last Call Art</a>
+    <a href="accessory-items.html">Accessory Items</a>
+    <a href="contact-us.html" class="mobile-nav-secondary">Contact Us</a>
+    <a href="https://www.streamlineart.com/customer/account/create/" class="mobile-nav-secondary">Become a Customer</a>
+    <a href="#" onclick="return false;" class="mobile-nav-secondary" style="cursor:default;">Login</a>
+  </nav>
+</div>
+
+<main id="contentarea">
+
+  <!-- Breadcrumb -->
+  <nav class="plp-breadcrumb">
+    <a href="index.html">Home</a>
+    <span>&rsaquo;</span>
+    <span style="color:#333; font-weight:600;">In Stock Art</span>
+  </nav>
+
+  <div class="plp-wrap">
+
+    <!-- ── Filter / Sort Bar ── -->
+    <div class="plp-bar">
+      <!-- Left: inline filter pills -->
+      <div class="plp-bar-left">
+
+        <!-- Price pill -->
+        <div style="position:relative;">
+          <button class="plp-filter-pill" id="pricePill" onclick="togglePricePill()">
+            Price
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="plp-inline-dropdown" id="priceDropdown">
+            <div style="height:4px;position:relative;background:#e0e8ec;border-radius:2px;margin-bottom:20px;">
+              <div id="pilFill" style="position:absolute;height:100%;background:var(--plp-accent);border-radius:2px;left:0%;right:0%;"></div>
+              <input type="range" class="plp-range-input" id="pilMin" min="50" max="500" value="50" oninput="syncPillSliders()">
+              <input type="range" class="plp-range-input" id="pilMax" min="50" max="500" value="500" oninput="syncPillSliders()">
+            </div>
+            <div class="plp-price-inputs">
+              <div class="plp-price-input-wrap">
+                <label>Min Value</label>
+                <div class="plp-price-input-inner"><span>$</span><input type="number" id="pilMinVal" value="50" min="50" max="500" oninput="syncPillInputs('min')"></div>
+              </div>
+              <div class="plp-price-input-wrap">
+                <label>Max Value</label>
+                <div class="plp-price-input-inner"><span>$</span><input type="number" id="pilMaxVal" value="500" min="50" max="500" oninput="syncPillInputs('max')"></div>
+              </div>
+            </div>
+            <button class="plp-apply-btn" onclick="applyFilters(); closePricePill();">Apply</button>
+          </div>
+        </div>
+
+        <!-- Inventory Status pill -->
+        <div style="position:relative;">
+          <button class="plp-filter-pill" id="invPill" onclick="toggleInvPill()">
+            Inventory Status
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="plp-inline-dropdown" id="invDropdown">
+            <div class="plp-filter-search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <input type="text" placeholder="Search options..." />
+            </div>
+            <label class="plp-checkbox-row">
+              <div class="plp-checkbox-left">
+                <input type="checkbox" id="filterAll" onchange="toggleAllInv(this)" />
+                <span class="plp-checkbox-label">Select All</span>
+              </div>
+            </label>
+            <label class="plp-checkbox-row">
+              <div class="plp-checkbox-left">
+                <input type="checkbox" id="filterInStock" class="inv-cb" onchange="syncSelectAll()" />
+                <span class="plp-checkbox-label">In Stock</span>
+              </div>
+              <span class="plp-checkbox-count">(12)</span>
+            </label>
+            <button class="plp-apply-btn" onclick="applyFilters(); closeInvPill();">Apply</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: funnel + sort -->
+      <div class="plp-bar-right">
+        <button class="plp-funnel-btn" onclick="openSidebar()" title="All Filters">
+          <span class="plp-funnel-label">Filters</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+        </button>
+
+        <div style="position:relative;">
+          <button class="plp-sort-btn" id="sortBtn" onclick="toggleSort()">
+            <span class="plp-sort-label">Sort By:</span>
+            <span class="plp-sort-val" id="sortVal">SKU ID Descending</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/>
+              <polyline points="17 14 21 18 17 22"/>
+            </svg>
+          </button>
+          <div class="plp-sort-dropdown" id="sortDropdown">
+            <button class="plp-sort-option selected" onclick="setSort(this, 'SKU ID Descending')">SKU ID Descending</button>
+            <button class="plp-sort-option" onclick="setSort(this, 'SKU ID Ascending')">SKU ID Ascending</button>
+            <button class="plp-sort-option" onclick="setSort(this, 'Price: Low to High')">Price: Low to High</button>
+            <button class="plp-sort-option" onclick="setSort(this, 'Price: High to Low')">Price: High to Low</button>
+            <button class="plp-sort-option" onclick="setSort(this, 'Newest First')">Newest First</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Count -->
+    <div class="plp-count" id="plpCount">Showing 1–12 of 12 Products</div>
+
+    <!-- ── Product Grid ── -->
+    <div class="plp-grid" id="plpGrid">
+        <div class="plp-card" data-price="248.00" data-stock="in" data-name="Ochre Embers" data-sku="WDO26243" data-img="https://www.streamlineart.com/media/catalog/category/ABSTRACT_4.jpg" data-dims="40 x 60 in" data-frame="Chocolate Floating Frame" data-medium="Canvas" data-finish="Hand Embellished & Textured" data-desc="Hand embellished & heavily textured canvas art in a Chocolate floating frame" data-pdp="pdp-wdo26243.html" data-orig="$248.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-wdo26243.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/ABSTRACT_4.jpg" alt="Ochre Embers" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: WDO26243</p>
+            <h3 class="plp-product-name"><a href="pdp-wdo26243.html" style="color:inherit;text-decoration:none;">Ochre Embers</a></h3>
+            <p class="plp-desc">Hand embellished & heavily textured canvas art in a Chocolate floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$248.00</span></div>
+              <span class="plp-dims">40 x 60 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="235.00" data-stock="in" data-name="Verdant Radiance" data-sku="CHY26129" data-img="https://www.streamlineart.com/media/catalog/category/COASTAL_AND_TROPICAL_TH.jpg" data-dims="40 x 60 in" data-frame="Champagne Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Champagne floating frame" data-pdp="pdp-chy26129.html" data-orig="$235.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-chy26129.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/COASTAL_AND_TROPICAL_TH.jpg" alt="Verdant Radiance" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist active" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="#e53935" stroke="#e53935" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: CHY26129</p>
+            <h3 class="plp-product-name"><a href="pdp-chy26129.html" style="color:inherit;text-decoration:none;">Verdant Radiance</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Champagne floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$235.00</span></div>
+              <span class="plp-dims">40 x 60 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="185.00" data-stock="in" data-name="River Dance" data-sku="WBG25581" data-img="https://www.streamlineart.com/media/catalog/category/FARMHOUSE_CHIC.jpg" data-dims="40 x 50 in" data-frame="Champagne Floating Frame" data-medium="Burlap" data-finish="Printed" data-desc="Printed on Burlap and framed in a Champagne floating frame" data-pdp="pdp-wbg25581.html" data-orig="$185.00" data-sale="$148.00">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-wbg25581.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/FARMHOUSE_CHIC.jpg" alt="River Dance" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist active" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="#e53935" stroke="#e53935" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: WBG25581</p>
+            <h3 class="plp-product-name"><a href="pdp-wbg25581.html" style="color:inherit;text-decoration:none;">River Dance</a></h3>
+            <p class="plp-desc">Printed on Burlap and framed in a Champagne floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-orig-price">$185.00</span><span class="plp-sale-price">$148.00</span></div>
+              <span class="plp-dims">40 x 50 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="138.00" data-stock="in" data-name="Teal Petals" data-sku="FRC26161" data-img="https://www.streamlineart.com/media/catalog/category/SMALL_ACCENT_ART_1.jpg" data-dims="24 x 36 in" data-frame="Chocolate Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Chocolate floating frame" data-pdp="pdp-frc26161.html" data-orig="$138.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-frc26161.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/SMALL_ACCENT_ART_1.jpg" alt="Teal Petals" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: FRC26161</p>
+            <h3 class="plp-product-name"><a href="pdp-frc26161.html" style="color:inherit;text-decoration:none;">Teal Petals</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Chocolate floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$138.00</span></div>
+              <span class="plp-dims">24 x 36 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="215.00" data-stock="in" data-name="Lovely Pair I" data-sku="AGF44513" data-img="https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg" data-dims="32 x 48 in" data-frame="Champagne Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Champagne floating frame" data-pdp="pdp-agf44513.html" data-orig="$215.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-agf44513.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg" alt="Lovely Pair I" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: AGF44513</p>
+            <h3 class="plp-product-name"><a href="pdp-agf44513.html" style="color:inherit;text-decoration:none;">Lovely Pair I</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Champagne floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$215.00</span></div>
+              <span class="plp-dims">32 x 48 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="155.00" data-stock="in" data-name="Reach Upwards I" data-sku="AFF00664" data-img="https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg" data-dims="18 x 36 in" data-frame="Barnwood Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Barnwood floating frame" data-pdp="pdp-aff00664.html" data-orig="$155.00" data-sale="$124.00">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-aff00664.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg" alt="Reach Upwards I" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: AFF00664</p>
+            <h3 class="plp-product-name"><a href="pdp-aff00664.html" style="color:inherit;text-decoration:none;">Reach Upwards I</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Barnwood floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-orig-price">$155.00</span><span class="plp-sale-price">$124.00</span></div>
+              <span class="plp-dims">18 x 36 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="295.00" data-stock="out" data-name="Falling Fragments" data-sku="SUN26201" data-img="https://www.streamlineart.com/media/.renditions/catalog/category/trends2026a_1.jpg" data-dims="50 x 50 in" data-frame="Oak Floating Frame" data-medium="Canvas" data-finish="Hand Embellished & Textured" data-desc="Hand embellished & heavily textured canvas art in an Oak floating frame" data-pdp="pdp-sun26201.html" data-orig="$295.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-sun26201.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/.renditions/catalog/category/trends2026a_1.jpg" alt="Falling Fragments" loading="lazy" />
+            </a>
+            <span class="plp-badge-oos">Out of Stock</span>
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: SUN26201</p>
+            <h3 class="plp-product-name"><a href="pdp-sun26201.html" style="color:inherit;text-decoration:none;">Falling Fragments</a></h3>
+            <p class="plp-desc">Hand embellished & heavily textured canvas art in an Oak floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$295.00</span></div>
+              <span class="plp-dims">50 x 50 in</span>
+            </div>
+            <button class="plp-add-to-cart" disabled onclick="addToCart(this)">Out of Stock</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="148.00" data-stock="in" data-name="Each Morning II" data-sku="AFF00257" data-img="https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg" data-dims="24 x 30 in" data-frame="Champagne Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Champagne floating frame" data-pdp="pdp-aff00257.html" data-orig="$148.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-aff00257.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg" alt="Each Morning II" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: AFF00257</p>
+            <h3 class="plp-product-name"><a href="pdp-aff00257.html" style="color:inherit;text-decoration:none;">Each Morning II</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Champagne floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$148.00</span></div>
+              <span class="plp-dims">24 x 30 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="210.00" data-stock="in" data-name="Sky Lake" data-sku="WBG24332" data-img="https://www.streamlineart.com/media/wysiwyg/ronald.jpg" data-dims="40 x 50 in" data-frame="Brown Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Brown floating frame" data-pdp="pdp-wbg24332.html" data-orig="$210.00" data-sale="$168.00">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-wbg24332.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/wysiwyg/ronald.jpg" alt="Sky Lake" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist active" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="#e53935" stroke="#e53935" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: WBG24332</p>
+            <h3 class="plp-product-name"><a href="pdp-wbg24332.html" style="color:inherit;text-decoration:none;">Sky Lake</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Brown floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-orig-price">$210.00</span><span class="plp-sale-price">$168.00</span></div>
+              <span class="plp-dims">40 x 50 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="192.00" data-stock="in" data-name="Mystical Horse" data-sku="WBG24279" data-img="https://www.streamlineart.com/media/catalog/category/lucia.jpg" data-dims="36 x 48 in" data-frame="White Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a White floating frame" data-pdp="pdp-wbg24279.html" data-orig="$192.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-wbg24279.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/lucia.jpg" alt="Mystical Horse" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: WBG24279</p>
+            <h3 class="plp-product-name"><a href="pdp-wbg24279.html" style="color:inherit;text-decoration:none;">Mystical Horse</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a White floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$192.00</span></div>
+              <span class="plp-dims">36 x 48 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="172.00" data-stock="in" data-name="Christmas Time" data-sku="LED0441" data-img="https://www.streamlineart.com/media/.renditions/wysiwyg/Gallery_Wall_Art_COVER.jpg" data-dims="24 x 36 in" data-frame="Classic Black Frame" data-medium="Canvas / LED" data-finish="LED Illuminated" data-desc="LED Light Up Art in a Classic Black frame — illuminated holiday accent" data-pdp="pdp-led0441.html" data-orig="$172.00" data-sale="$138.00">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-led0441.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/.renditions/wysiwyg/Gallery_Wall_Art_COVER.jpg" alt="Christmas Time" loading="lazy" />
+            </a>
+            
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: LED0441</p>
+            <h3 class="plp-product-name"><a href="pdp-led0441.html" style="color:inherit;text-decoration:none;">Christmas Time</a></h3>
+            <p class="plp-desc">LED Light Up Art in a Classic Black frame — illuminated holiday accent</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-orig-price">$172.00</span><span class="plp-sale-price">$138.00</span></div>
+              <span class="plp-dims">24 x 36 in</span>
+            </div>
+            <button class="plp-add-to-cart" onclick="addToCart(this)">Add to Cart</button>
+          </div>
+        </div>
+        <div class="plp-card" data-price="168.00" data-stock="out" data-name="Serene Passage" data-sku="NWF25874" data-img="https://www.streamlineart.com/media/catalog/category/ANIMALS_1.jpg" data-dims="28 x 36 in" data-frame="Natural Wood Floating Frame" data-medium="Canvas" data-finish="Hand Embellished" data-desc="Hand embellished canvas art in a Natural Wood floating frame" data-pdp="pdp-nwf25874.html" data-orig="$168.00" data-sale="">
+          <div class="plp-card-img-wrap">
+            <a href="pdp-nwf25874.html" class="plp-img-link">
+              <img src="https://www.streamlineart.com/media/catalog/category/ANIMALS_1.jpg" alt="Serene Passage" loading="lazy" />
+            </a>
+            <span class="plp-badge-oos">Out of Stock</span>
+            <button class="plp-wishlist" aria-label="Add to wishlist" onclick="toggleWishlist(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.8" width="20" height="20">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
+
+            <button class="plp-qv-btn" onclick="openQV(this.closest('.plp-card'))">Quick View</button>
+          </div>
+
+          <div class="plp-card-info">
+            <p class="plp-sku">SKU: NWF25874</p>
+            <h3 class="plp-product-name"><a href="pdp-nwf25874.html" style="color:inherit;text-decoration:none;">Serene Passage</a></h3>
+            <p class="plp-desc">Hand embellished canvas art in a Natural Wood floating frame</p>
+            <div class="plp-price-row">
+              <div class="plp-price-group"><span class="plp-price">$168.00</span></div>
+              <span class="plp-dims">28 x 36 in</span>
+            </div>
+            <button class="plp-add-to-cart" disabled onclick="addToCart(this)">Out of Stock</button>
+          </div>
+        </div>
+    </div>
+
+  </div><!-- /plp-wrap -->
+
+</main>
+
+<!-- ── QUICK VIEW MODAL ── -->
+<div class="qv-overlay" id="qvOverlay" onclick="if(event.target===this)closeQV()">
+  <div class="qv-modal" id="qvModal">
+    <button class="qv-close-btn" onclick="closeQV()" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="qv-inner">
+      <!-- Image -->
+      <div class="qv-img-col">
+        <img id="qvImg" src="" alt="" />
+        <span class="qv-avail-badge" id="qvBadge"></span>
+      </div>
+      <!-- Info -->
+      <div class="qv-info-col">
+        <div id="qvSku" class="qv-sku-tag"></div>
+        <h2 id="qvName" class="qv-title"></h2>
+        <div id="qvPriceRow" class="qv-price-row"></div>
+
+        <!-- Attribute grid -->
+        <div class="qv-attrs" id="qvAttrs">
+          <div class="qv-attr-item">
+            <span class="qv-attr-label">Dimensions</span>
+            <span class="qv-attr-val" id="qvDimsVal">—</span>
+          </div>
+          <div class="qv-attr-item">
+            <span class="qv-attr-label">Frame Type</span>
+            <span class="qv-attr-val" id="qvFrameVal">—</span>
+          </div>
+          <div class="qv-attr-item">
+            <span class="qv-attr-label">Medium</span>
+            <span class="qv-attr-val" id="qvMediumVal">—</span>
+          </div>
+          <div class="qv-attr-item">
+            <span class="qv-attr-label">Finish</span>
+            <span class="qv-attr-val" id="qvFinishVal">—</span>
+          </div>
+        </div>
+
+        <p id="qvDesc" class="qv-desc-text"></p>
+
+        <!-- Actions -->
+        <div class="qv-actions">
+          <button class="qv-cart-btn" id="qvCartBtn" onclick="qvAddToCart(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            Add to Cart
+          </button>
+          <button class="qv-wish-btn" id="qvWishBtn" onclick="qvToggleWishlist(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" width="14" height="14">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            Save
+          </button>
+        </div>
+
+        <a id="qvCta" href="#" class="qv-cta-btn">View Full Product</a>
+      </div>
+    </div>
+    <!-- Related rail -->
+    <div class="qv-related">
+      <p class="qv-related-heading">You May Also Like</p>
+      <div class="qv-rel-rail" id="qvRelRail"></div>
+    </div>
+  </div>
+</div>
+<!-- ── FILTER SIDEBAR OVERLAY ── -->
+<div class="plp-sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── FILTER SIDEBAR ── -->
+<aside class="plp-sidebar" id="filterSidebar" aria-label="Filters">
+  <div class="plp-sidebar-head">
+    <span class="plp-sidebar-title">All Filters</span>
+    <div class="plp-sidebar-head-right">
+      <button class="plp-clear-all" onclick="clearAllFilters()">Clear All</button>
+      <button class="plp-sidebar-close" onclick="closeSidebar()" aria-label="Close filters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="plp-sidebar-body">
+
+    <!-- Price filter -->
+    <div class="plp-filter-section" id="priceSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('priceSec')">
+        <h4>Price</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:300px;">
+        <div class="plp-price-range">
+          <div class="plp-range-track">
+            <div class="plp-range-fill" id="sbFill"></div>
+            <input type="range" class="plp-range-input" id="sbMin" min="50" max="500" value="50" oninput="syncSbSliders()">
+            <input type="range" class="plp-range-input" id="sbMax" min="50" max="500" value="500" oninput="syncSbSliders()">
+          </div>
+          <div class="plp-price-inputs">
+            <div class="plp-price-input-wrap">
+              <label>Min Value</label>
+              <div class="plp-price-input-inner"><span>$</span><input type="number" id="sbMinVal" value="50" min="50" max="500" oninput="syncSbInputs('min')"></div>
+            </div>
+            <div class="plp-price-input-wrap">
+              <label>Max Value</label>
+              <div class="plp-price-input-inner"><span>$</span><input type="number" id="sbMaxVal" value="500" min="50" max="500" oninput="syncSbInputs('max')"></div>
+            </div>
+          </div>
+          <button class="plp-apply-btn" onclick="applyFilters()">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Status filter -->
+    <div class="plp-filter-section" id="invSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('invSec')">
+        <h4>Inventory Status</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
+          <polyline points="18 15 12 9 6 15"/>
+        </svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:300px;">
+        <div class="plp-filter-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Search options..." oninput="filterOptions(this)" />
+        </div>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" id="sbFilterAll" onchange="toggleAllInvSb(this)" />
+            <span class="plp-checkbox-label">Select All</span>
+          </div>
+        </label>
+        <label class="plp-checkbox-row" id="sbInStockRow">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" id="sbFilterInStock" class="sb-inv-cb" onchange="syncSelectAllSb()" />
+            <span class="plp-checkbox-label">In Stock</span>
+          </div>
+          <span class="plp-checkbox-count">(12)</span>
+        </label>
+        <button class="plp-apply-btn" onclick="applyFilters()">Apply</button>
+      </div>
+    </div>
+
+    <!-- Category filter -->
+    <div class="plp-filter-section collapsed" id="catSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('catSec')">
+        <h4>Category</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="In Stock Art" />
+            <span class="plp-checkbox-label">In Stock Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="Print on Demand" />
+            <span class="plp-checkbox-label">Print on Demand</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="Christmas Art" />
+            <span class="plp-checkbox-label">Christmas Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="Juvenile Art" />
+            <span class="plp-checkbox-label">Juvenile Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="Last Call Art" />
+            <span class="plp-checkbox-label">Last Call Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="cat" data-value="Accessory Items" />
+            <span class="plp-checkbox-label">Accessory Items</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+    <!-- Theme / Subject filter -->
+    <div class="plp-filter-section collapsed" id="themeSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('themeSec')">
+        <h4>Theme / Subject</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Abstract" />
+            <span class="plp-checkbox-label">Abstract</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Western" />
+            <span class="plp-checkbox-label">Western</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Coastal &amp; Tropical" />
+            <span class="plp-checkbox-label">Coastal &amp; Tropical</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Florals &amp; Botanicals" />
+            <span class="plp-checkbox-label">Florals &amp; Botanicals</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Birds &amp; Butterflies" />
+            <span class="plp-checkbox-label">Birds &amp; Butterflies</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Lakes &amp; Mountains" />
+            <span class="plp-checkbox-label">Lakes &amp; Mountains</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Gallery Wall Art" />
+            <span class="plp-checkbox-label">Gallery Wall Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Farmhouse Chic" />
+            <span class="plp-checkbox-label">Farmhouse Chic</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Landscapes" />
+            <span class="plp-checkbox-label">Landscapes</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="theme" data-value="Small Accent Art" />
+            <span class="plp-checkbox-label">Small Accent Art</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+    <!-- Frame Type filter -->
+    <div class="plp-filter-section collapsed" id="frameSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('frameSec')">
+        <h4>Frame Type</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Champagne Floater" />
+            <span class="plp-checkbox-label">Champagne Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Chocolate Floater" />
+            <span class="plp-checkbox-label">Chocolate Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Barnwood Floater" />
+            <span class="plp-checkbox-label">Barnwood Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Oak Floater" />
+            <span class="plp-checkbox-label">Oak Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Brown Floater" />
+            <span class="plp-checkbox-label">Brown Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="White Floater" />
+            <span class="plp-checkbox-label">White Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Natural Wood Floater" />
+            <span class="plp-checkbox-label">Natural Wood Floater</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Classic Black" />
+            <span class="plp-checkbox-label">Classic Black</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Canvas Wrap" />
+            <span class="plp-checkbox-label">Canvas Wrap</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="frame" data-value="Shadow Box" />
+            <span class="plp-checkbox-label">Shadow Box</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+    <!-- Medium / Material filter -->
+    <div class="plp-filter-section collapsed" id="mediumSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('mediumSec')">
+        <h4>Medium / Material</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="medium" data-value="Hand Embellished Canvas" />
+            <span class="plp-checkbox-label">Hand Embellished Canvas</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="medium" data-value="Print on Burlap" />
+            <span class="plp-checkbox-label">Print on Burlap</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="medium" data-value="LED Light Up Art" />
+            <span class="plp-checkbox-label">LED Light Up Art</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="medium" data-value="Canvas Wrap" />
+            <span class="plp-checkbox-label">Canvas Wrap</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="medium" data-value="Fine Art Print" />
+            <span class="plp-checkbox-label">Fine Art Print</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+    <!-- Artist filter -->
+    <div class="plp-filter-section collapsed" id="artistSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('artistSec')">
+        <h4>Artist</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="artist" data-value="Studio Collection" />
+            <span class="plp-checkbox-label">Studio Collection</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="artist" data-value="Ronald West" />
+            <span class="plp-checkbox-label">Ronald West</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="artist" data-value="Lucia Heffernan" />
+            <span class="plp-checkbox-label">Lucia Heffernan</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="artist" data-value="Heather Gauthier" />
+            <span class="plp-checkbox-label">Heather Gauthier</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+    <!-- Size filter -->
+    <div class="plp-filter-section collapsed" id="sizeSec">
+      <div class="plp-filter-section-head" onclick="toggleSection('sizeSec')">
+        <h4>Size</h4>
+        <svg class="plp-section-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div class="plp-filter-section-body" style="max-height:0;">
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="size" data-value="Small (under 24")" />
+            <span class="plp-checkbox-label">Small (under 24")</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="size" data-value="Medium (24"–36")" />
+            <span class="plp-checkbox-label">Medium (24"–36")</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="size" data-value="Large (36"–50")" />
+            <span class="plp-checkbox-label">Large (36"–50")</span>
+          </div>
+          
+        </label>
+        <label class="plp-checkbox-row">
+          <div class="plp-checkbox-left">
+            <input type="checkbox" class="sb-filter-cb" data-filter="size" data-value="Extra Large (50"+)" />
+            <span class="plp-checkbox-label">Extra Large (50"+)</span>
+          </div>
+          
+        </label>
+      </div>
+    </div>
+
+  </div><!-- /sidebar-body -->
+
+  <div class="plp-sidebar-footer">
+    <button class="plp-show-results" onclick="applyFilters(); closeSidebar();" id="showResultsBtn">
+      Show Results
+    </button>
+  </div>
+</aside>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img class="footer-logo" src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+      <div class="footer-address">
+        1040 Ronsa Court,<br/>
+        Mississauga, ON, Canada L4W 3Y4
+        <p class="footer-info-group">Hours of operation: M to F, 8 A.M. &#8211; 4:30 P.M. EST</p>
+        <p class="footer-info-group">1.800.656.6408<br/>
+        <a href="mailto:sales@streamlineart.com">SALES@STREAMLINEART.COM</a></p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/streamlineartandframe" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/StreamlineArtTrends/" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/streamline-art-frame/" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Our Company</div>
+      <ul>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="showrooms-and-events.html">Showrooms and Events</a></li>
+        <li><a href="loyalty-program.html">Loyalty Program</a></li>
+        <li><a href="press-and-media.html">Press &amp; Media</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Customer Care</div>
+      <ul>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="claims-and-credit-forms.html">Claims and Credit Forms</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Resources / Tools</div>
+      <ul>
+        <li><a href="rep-locator.html">Rep Locator</a></li>
+        <li><a href="selling-programs.html">Selling Programs</a></li>
+        <li><a href="freight-programs.html">Freight Programs</a></li>
+        <li><a href="freight-calculator.html">Canadian Dropship Freight Calculator</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">Streamline Art &amp; Frame. All Rights Reserved</span>
+    <div class="footer-legal">
+      <a href="https://www.streamlineart.com/sitemap/">Site Map</a>
+      <a href="https://www.streamlineart.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.streamlineart.com/cookies-policy">Cookies Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- GO UP BUTTON -->
+<button class="go-up-btn" id="goUpBtn" aria-label="Go to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+  GO<br/>UP
+</button>
+
+<script>
+
+(function () {
+  var goUpBtn = document.getElementById('goUpBtn');
+  var searchToggle = document.getElementById('searchToggle');
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchClose = document.getElementById('searchClose');
+  var searchInput = document.getElementById('searchInput');
+  var hamburgerBtn = document.getElementById('hamburgerBtn');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var mobileOverlay = document.getElementById('mobileOverlay');
+  var mobileClose = document.getElementById('mobileClose');
+
+  // Scroll behavior
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    goUpBtn.classList.toggle('visible', y > 300);
+  }, { passive: true });
+
+  // Search overlay (searchToggle may be absent if replaced by inline search pill)
+  function closeSearch() {
+    if (searchOverlay) searchOverlay.classList.remove('active');
+    if (searchInput)   searchInput.value = '';
+  }
+  if (searchToggle) {
+    searchToggle.addEventListener('click', function () {
+      searchOverlay.classList.add('active');
+      setTimeout(function () { searchInput.focus(); }, 200);
+    });
+  }
+  if (searchClose)   searchClose.addEventListener('click', closeSearch);
+  if (searchOverlay) searchOverlay.addEventListener('click', function (e) { if (e.target === searchOverlay) closeSearch(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeSearch(); closeMobile(); } });
+
+  // Mobile menu
+  function openMobile() {
+    mobileMenu.classList.add('open');
+    mobileOverlay.classList.add('show');
+    hamburgerBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    mobileOverlay.classList.remove('show');
+    hamburgerBtn.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  hamburgerBtn.addEventListener('click', openMobile);
+  mobileClose.addEventListener('click', closeMobile);
+  mobileOverlay.addEventListener('click', closeMobile);
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal, .reveal-row');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { obs.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+})();
+
+
+
+/* Search takeover — pill click opens overlay */
+(function() {
+  var header   = document.getElementById('siteHeader');
+  var pill     = document.querySelector('.nav-search-pill');
+  var takeover = document.getElementById('searchTakeover');
+  var input    = document.getElementById('stInput');
+  var clearBtn = document.getElementById('stClear');
+  var closeBtn = document.getElementById('stClose');
+  if (!header || !pill || !takeover || !input) return;
+
+  function openSearch() { header.classList.add('search-open'); setTimeout(function(){ input.focus(); }, 80); updateClear(); }
+  function closeSearch() { header.classList.remove('search-open'); input.value = ''; updateClear(); }
+  function updateClear() { if (clearBtn) clearBtn.classList.toggle('visible', input.value.length > 0); }
+
+  pill.addEventListener('click', function(e) { e.stopPropagation(); openSearch(); });
+  if (clearBtn) clearBtn.addEventListener('click', function(e) { e.stopPropagation(); input.value=''; input.focus(); updateClear(); });
+  if (closeBtn) closeBtn.addEventListener('click', function(e) { e.stopPropagation(); closeSearch(); });
+  input.addEventListener('input', updateClear);
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape' && header.classList.contains('search-open')) closeSearch(); });
+  document.addEventListener('click', function(e) { if (header.classList.contains('search-open') && !takeover.contains(e.target) && e.target !== pill) closeSearch(); });
+})();
+
+// FAQ accordion (used on FAQ page)
+document.querySelectorAll('.faq-question').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = this.closest('.faq-item');
+    item.classList.toggle('open');
+  });
+});
+
+
+
+/* ── PLP JavaScript ───────────────────────────── */
+
+// Close dropdowns on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#pricePill') && !e.target.closest('#priceDropdown')) closePricePill();
+  if (!e.target.closest('#invPill')   && !e.target.closest('#invDropdown'))   closeInvPill();
+  if (!e.target.closest('#sortBtn')   && !e.target.closest('#sortDropdown'))  closeSortDrop();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeSidebar(); closePricePill(); closeInvPill(); closeSortDrop(); closeQV(); }
+});
+
+// ── Price pill ──
+function togglePricePill() {
+  var d = document.getElementById('priceDropdown');
+  var p = document.getElementById('pricePill');
+  var open = d.classList.contains('open');
+  closePricePill(); closeInvPill(); closeSortDrop();
+  if (!open) { d.classList.add('open'); p.classList.add('open'); }
+}
+function closePricePill() {
+  document.getElementById('priceDropdown').classList.remove('open');
+  document.getElementById('pricePill').classList.remove('open');
+}
+
+// ── Inventory pill ──
+function toggleInvPill() {
+  var d = document.getElementById('invDropdown');
+  var p = document.getElementById('invPill');
+  var open = d.classList.contains('open');
+  closePricePill(); closeInvPill(); closeSortDrop();
+  if (!open) { d.classList.add('open'); p.classList.add('open'); }
+}
+function closeInvPill() {
+  document.getElementById('invDropdown').classList.remove('open');
+  document.getElementById('invPill').classList.remove('open');
+}
+
+// ── Sort ──
+function toggleSort() {
+  var d = document.getElementById('sortDropdown');
+  var open = d.classList.contains('open');
+  closePricePill(); closeInvPill();
+  d.classList.toggle('open', !open);
+}
+function closeSortDrop() { document.getElementById('sortDropdown').classList.remove('open'); }
+function setSort(el, label) {
+  document.getElementById('sortVal').textContent = label;
+  document.querySelectorAll('.plp-sort-option').forEach(function(o){ o.classList.remove('selected'); });
+  el.classList.add('selected');
+  closeSortDrop();
+}
+
+// ── Sidebar ──
+function openSidebar() {
+  document.getElementById('filterSidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('filterSidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Collapsible filter sections ──
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+
+// ── Price slider (pill) ──
+function syncPillSliders() {
+  var minV = +document.getElementById('pilMin').value;
+  var maxV = +document.getElementById('pilMax').value;
+  if (minV > maxV) { var t = minV; minV = maxV; maxV = t; }
+  document.getElementById('pilMinVal').value = minV;
+  document.getElementById('pilMaxVal').value = maxV;
+  var pct1 = ((minV - 50) / 450) * 100;
+  var pct2 = ((maxV - 50) / 450) * 100;
+  document.getElementById('pilFill').style.left  = pct1 + '%';
+  document.getElementById('pilFill').style.right = (100 - pct2) + '%';
+}
+function syncPillInputs(which) {
+  var minV = +document.getElementById('pilMinVal').value;
+  var maxV = +document.getElementById('pilMaxVal').value;
+  document.getElementById('pilMin').value = minV;
+  document.getElementById('pilMax').value = maxV;
+  syncPillSliders();
+}
+
+// ── Price slider (sidebar) ──
+function syncSbSliders() {
+  var minV = +document.getElementById('sbMin').value;
+  var maxV = +document.getElementById('sbMax').value;
+  if (minV > maxV) { var t = minV; minV = maxV; maxV = t; }
+  document.getElementById('sbMinVal').value = minV;
+  document.getElementById('sbMaxVal').value = maxV;
+  var pct1 = ((minV - 50) / 450) * 100;
+  var pct2 = ((maxV - 50) / 450) * 100;
+  document.getElementById('sbFill').style.left  = pct1 + '%';
+  document.getElementById('sbFill').style.right = (100 - pct2) + '%';
+}
+function syncSbInputs(which) {
+  document.getElementById('sbMin').value = document.getElementById('sbMinVal').value;
+  document.getElementById('sbMax').value = document.getElementById('sbMaxVal').value;
+  syncSbSliders();
+}
+
+// ── Checkbox helpers ──
+function toggleAllInv(cb) { document.getElementById('filterInStock').checked = cb.checked; }
+function syncSelectAll() {
+  var all = Array.from(document.querySelectorAll('.inv-cb')).every(function(c){ return c.checked; });
+  document.getElementById('filterAll').checked = all;
+}
+function toggleAllInvSb(cb) { document.getElementById('sbFilterInStock').checked = cb.checked; }
+function syncSelectAllSb() {
+  var all = Array.from(document.querySelectorAll('.sb-inv-cb')).every(function(c){ return c.checked; });
+  document.getElementById('sbFilterAll').checked = all;
+}
+function filterOptions(input) {
+  var q = input.value.toLowerCase();
+  document.getElementById('sbInStockRow').style.display = 'In Stock'.toLowerCase().includes(q) ? '' : 'none';
+}
+
+// ── Apply filters ──
+function applyFilters() {
+  var minP = +document.getElementById('sbMin').value || +document.getElementById('pilMin').value;
+  var maxP = +document.getElementById('sbMax').value || +document.getElementById('pilMax').value;
+  var inStockOnly = document.getElementById('sbFilterInStock').checked || document.getElementById('filterInStock').checked;
+  var cards = document.querySelectorAll('.plp-card');
+  var visible = 0;
+  cards.forEach(function(card) {
+    var price = +card.dataset.price;
+    var stock = card.dataset.stock;
+    var show = price >= minP && price <= maxP;
+    if (inStockOnly && stock !== 'in') show = false;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var total = cards.length;
+  document.getElementById('plpCount').textContent = 'Showing 1–9' + visible + ' of ' + total + ' Products';
+  document.getElementById('showResultsBtn').textContent = 'Show ' + visible + ' Results';
+}
+
+// ── Clear all filters ──
+function clearAllFilters() {
+  ['sbMin','pilMin'].forEach(function(id){ document.getElementById(id).value = 50; });
+  ['sbMax','pilMax'].forEach(function(id){ document.getElementById(id).value = 500; });
+  ['sbMinVal','pilMinVal'].forEach(function(id){ document.getElementById(id).value = 50; });
+  ['sbMaxVal','pilMaxVal'].forEach(function(id){ document.getElementById(id).value = 500; });
+  document.querySelectorAll('input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
+  document.querySelectorAll('.plp-card').forEach(function(c){ c.style.display = ''; });
+  document.getElementById('plpCount').textContent = 'Showing 1–12 of 12 Products';
+  document.getElementById('showResultsBtn').textContent = 'Show Results';
+  syncPillSliders(); syncSbSliders();
+}
+
+// ── Wishlist toggle ──
+function toggleWishlist(btn) {
+  btn.classList.toggle('active');
+  var active = btn.classList.contains('active');
+  var path = btn.querySelector('svg path');
+  if (path) {
+    path.setAttribute('fill',   active ? '#e53935' : 'none');
+    path.setAttribute('stroke', active ? '#e53935' : '#333');
+  }
+  // Animate the heart
+  btn.style.transform = 'scale(1.28)';
+  setTimeout(function() { btn.style.transform = ''; }, 220);
+  // Show toast
+  var msg = active ? '♥ Added to Wishlist' : '♡ Removed from Wishlist';
+  showToast(msg);
+}
+
+function showToast(msg) {
+  var t = document.getElementById('plpToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'plpToast';
+    t.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(12px);background:#275e76;color:#fff;padding:10px 22px;border-radius:50px;font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.5px;opacity:0;transition:opacity 0.22s,transform 0.22s;z-index:9999;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(12px)';
+  }, 2000);
+}
+
+// ── Add to Cart ──
+function addToCart(btn) {
+  var origText = btn.textContent.trim();
+  btn.disabled = true;
+  btn.classList.add('added');
+  btn.textContent = '✓ Added';
+  var badge = document.getElementById('cartBadge');
+  if (badge) {
+    var cur = +(badge.textContent) || 0;
+    badge.textContent = cur + 1;
+    badge.style.display = 'flex';
+    badge.style.transform = 'scale(1.4)';
+    setTimeout(function(){ badge.style.transform = ''; }, 300);
+  }
+  showToast('Added to cart');
+  setTimeout(function() {
+    btn.disabled = false;
+    btn.classList.remove('added');
+    btn.textContent = origText;
+  }, 1800);
+}
+
+// ── Quick View Modal ──
+var _qvCard = null;
+
+function openQV(card) {
+  _qvCard = card;
+  var o = document.getElementById('qvOverlay');
+  if (!o || !card) return;
+
+  // Image + availability badge
+  var img = document.getElementById('qvImg');
+  img.src = card.dataset.img || '';
+  img.alt = card.dataset.name || '';
+  var inStock = card.dataset.stock === 'in';
+  var badge = document.getElementById('qvBadge');
+  badge.textContent = inStock ? 'In Stock' : 'Out of Stock';
+  badge.className = 'qv-avail-badge ' + (inStock ? 'in-stock' : 'out-stock');
+
+  // Header fields
+  document.getElementById('qvSku').textContent = 'SKU: ' + (card.dataset.sku || '');
+  document.getElementById('qvName').textContent = card.dataset.name || '';
+
+  // Price
+  var orig = card.dataset.orig || '';
+  var sale = card.dataset.sale || '';
+  document.getElementById('qvPriceRow').innerHTML = sale
+    ? '<span class="qv-orig">' + orig + '</span><span class="qv-sale">' + sale + '</span>'
+    : '<span class="qv-price">' + orig + '</span>';
+
+  // Attribute grid
+  document.getElementById('qvDimsVal').textContent   = card.dataset.dims   || '—';
+  document.getElementById('qvFrameVal').textContent  = card.dataset.frame  || 'Floating Frame';
+  document.getElementById('qvMediumVal').textContent = card.dataset.medium || 'Canvas';
+  document.getElementById('qvFinishVal').textContent = card.dataset.finish || '—';
+
+  // Description
+  document.getElementById('qvDesc').textContent = card.dataset.desc || '';
+
+  // Cart button
+  var cartBtn = document.getElementById('qvCartBtn');
+  cartBtn.disabled = !inStock;
+  cartBtn.innerHTML = inStock
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Add to Cart'
+    : 'Out of Stock';
+
+  // Wishlist — sync with card heart
+  var wishBtn = document.getElementById('qvWishBtn');
+  var cardHeart = card.querySelector('.plp-wishlist');
+  var isWished = cardHeart && cardHeart.classList.contains('active');
+  wishBtn.classList.toggle('active', isWished);
+  var heartSvgFilled   = '<svg viewBox="0 0 24 24" fill="#e53935" stroke="#e53935" stroke-width="1.9" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  var heartSvgEmpty    = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  wishBtn.innerHTML = (isWished ? heartSvgFilled + ' Saved' : heartSvgEmpty + ' Save');
+
+  // CTA
+  document.getElementById('qvCta').href = card.dataset.pdp || '#';
+
+  // Related products rail
+  var rail = document.getElementById('qvRelRail');
+  rail.innerHTML = '';
+  var allCards = Array.from(document.querySelectorAll('.plp-card'));
+  var others = allCards.filter(function(c){ return c !== card; });
+  others.sort(function(){ return 0.5 - Math.random(); }).slice(0, 5).forEach(function(c) {
+    var item = document.createElement('div');
+    item.className = 'qv-rel-item';
+    var priceDisplay = c.dataset.sale
+      ? '<span style="color:#c0392b;font-weight:700;">' + c.dataset.sale + '</span>'
+      : c.dataset.orig;
+    item.innerHTML =
+      '<img src="' + c.dataset.img + '" alt="' + c.dataset.name + '" loading="lazy" />' +
+      '<div class="qv-rel-name">' + c.dataset.name + '</div>' +
+      '<div class="qv-rel-price">' + priceDisplay + '</div>';
+    item.addEventListener('click', function(){ openQV(c); });
+    rail.appendChild(item);
+  });
+
+  o.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeQV() {
+  var o = document.getElementById('qvOverlay');
+  if (o) o.classList.remove('open');
+  document.body.style.overflow = '';
+  _qvCard = null;
+}
+
+function qvAddToCart(btn) {
+  var origHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.classList.add('added');
+  btn.textContent = '✓ Added';
+  var badge = document.getElementById('cartBadge');
+  if (badge) {
+    var cur = +(badge.textContent) || 0;
+    badge.textContent = cur + 1;
+    badge.style.display = 'flex';
+    badge.style.transform = 'scale(1.4)';
+    setTimeout(function(){ badge.style.transform = ''; }, 300);
+  }
+  showToast('Added to cart');
+  setTimeout(function() {
+    btn.disabled = false;
+    btn.classList.remove('added');
+    btn.innerHTML = origHTML;
+  }, 2000);
+}
+
+function qvToggleWishlist(btn) {
+  var active = btn.classList.toggle('active');
+  var heartSvgFilled = '<svg viewBox="0 0 24 24" fill="#e53935" stroke="#e53935" stroke-width="1.9" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  var heartSvgEmpty  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" width="14" height="14"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+  btn.innerHTML = active ? heartSvgFilled + ' Saved' : heartSvgEmpty + ' Save';
+  btn.style.transform = 'scale(1.18)';
+  setTimeout(function(){ btn.style.transform = ''; }, 200);
+  if (_qvCard) {
+    var cardHeart = _qvCard.querySelector('.plp-wishlist');
+    if (cardHeart) toggleWishlist(cardHeart);
+  }
+  showToast(active ? '♥ Added to Wishlist' : '♡ Removed from Wishlist');
+}
+
+</script>
+</body>
+</html>
