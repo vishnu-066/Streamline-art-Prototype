@@ -1,0 +1,2567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collections | Streamline Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Preload hero banners for instant carousel transitions -->
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      color: #333333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    :root {
+      --primary: #275e76;
+      --footer-bg: #f7f7f7;
+      --divider: #c8c8c8;
+      --white: #ffffff;
+      --body-text: #333333;
+      --nav-h: 80px;
+      --transition: 0.25s ease;
+    }
+
+
+    /* ===== STICKY HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      padding: 0 40px;
+      background: #fff;
+    }
+    .nav-logo { display: flex; flex-direction: column; gap: 2px; min-width: 160px; cursor: pointer; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.82; }
+    .nav-logo img { height: 34px; width: auto; }
+    .nav-logo-tagline { font-size: 9px; color: #999; letter-spacing: 0.3px; font-weight: 400; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 0; flex: 1; justify-content: center; }
+    .nav-links > li { position: static; }
+    .nav-links > li > a {
+      display: block;
+      padding: 0 16px;
+      height: var(--nav-h);
+      line-height: var(--nav-h);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      white-space: nowrap;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links > li > a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 16px; right: 16px;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: center;
+    }
+    .nav-links > li:hover > a { color: #1a4a60; }
+    .nav-links > li:hover > a::after { transform: scaleX(1); }
+
+    /* Dropdown */
+    /* ── MEGA MENU ── */
+    .navbar { position: relative; }
+
+    .mega-menu {
+      position: absolute;
+      top: var(--nav-h);
+      left: 30px; right: 30px;
+      background: #fff;
+      border-top: 2px solid var(--primary);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      display: flex;
+      align-items: stretch;
+    }
+    .nav-links > li:hover .mega-menu,
+    .mega-menu:hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Left content area */
+    .mega-content {
+      flex: 1;
+      display: flex;
+      gap: 48px;
+      padding: 36px 48px;
+      border-right: 1px solid #eef2f4;
+    }
+    .mega-col { min-width: 160px; }
+    .mega-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .mega-col ul { list-style: none; padding: 0; margin: 0; }
+    .mega-col ul li { margin-bottom: 0; }
+    .mega-col ul li a {
+      display: block;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      letter-spacing: 0.2px;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.18s, padding-left 0.18s;
+      border-bottom: none;
+      text-transform: none;
+    }
+    .mega-col ul li a:hover {
+      color: var(--primary);
+      padding-left: 6px;
+    }
+
+    /* Right image panel */
+    .mega-img {
+      width: 460px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      align-self: stretch;
+      min-height: 240px;
+    }
+    .mega-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .mega-menu:hover .mega-img img { transform: scale(1.06); }
+    /* Gradient overlay for premium label presentation */
+    .mega-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.52) 0%,
+        rgba(0,0,0,0.18) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+    .mega-img-label {
+      position: absolute;
+      bottom: 18px; left: 22px;
+      background: transparent;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      z-index: 2;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.30);
+    }
+
+    /* Simple mega (no columns — single link list) */
+    .mega-simple .mega-content { gap: 0; }
+    .mega-simple .mega-col ul li a { font-size: 13px; }
+
+    /* ── NAV RIGHT ICONS ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 360px;
+      justify-content: flex-end;
+    }
+
+    /* ── Simple search pill ── */
+    .nav-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-search-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 16px;
+      border: 1.5px solid #d4e2e8;
+      border-radius: 50px;
+      background: #f6fafc;
+      cursor: text;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .nav-search-pill:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(39,94,118,0.10);
+    }
+    .nav-search-pill svg {
+      flex-shrink: 0;
+      color: #8aacba;
+      width: 15px; height: 15px;
+      pointer-events: none;
+    }
+    .nav-search-pill input {
+      border: none; outline: none; background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: #333;
+      width: 148px;
+      /* Decorative only — clicks pass through to the pill div */
+      pointer-events: none;
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-search-pill input::placeholder { color: #9bb8c4; }
+    .nav-search-pill { cursor: pointer; }
+
+    /* ── SEARCH TAKEOVER — full-navbar overlay ── */
+    .search-takeover {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(18px) saturate(1.9);
+      -webkit-backdrop-filter: blur(18px) saturate(1.9);
+      border-bottom: 1px solid rgba(39,94,118,0.12);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 40px; gap: 16px;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+      z-index: 300;
+    }
+    .site-header.search-open .search-takeover { opacity:1; pointer-events:auto; transform:translateY(0); }
+    .site-header.search-open .navbar > *:not(.search-takeover) { opacity:0.18; transition:opacity 0.28s ease; pointer-events:none; }
+    .st-bar {
+      flex:1; max-width:680px; height:48px;
+      display:flex; align-items:center;
+      background:rgba(255,255,255,0.96);
+      border:1.5px solid var(--primary); border-radius:50px;
+      box-shadow:0 4px 28px rgba(39,94,118,0.18),0 0 0 5px rgba(39,94,118,0.06);
+      padding:0 6px 0 20px; gap:10px; transition:box-shadow 0.22s ease;
+    }
+    .st-bar:focus-within { box-shadow:0 6px 36px rgba(39,94,118,0.26),0 0 0 5px rgba(39,94,118,0.10); }
+    .st-icon { flex-shrink:0; color:var(--primary); opacity:0.6; display:flex; align-items:center; }
+    .st-icon svg { width:17px; height:17px; }
+    .st-input { flex:1; border:none; outline:none; background:transparent; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:500; color:#1a1a1a; letter-spacing:0.2px; }
+    .st-input::placeholder { color:#aac4ce; font-size:12px; font-weight:400; }
+    .st-div { width:1px; height:22px; background:#d4e2e8; flex-shrink:0; }
+    .st-clear { flex-shrink:0; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--primary); opacity:0; pointer-events:none; padding:4px 8px; border-radius:20px; transition:opacity 0.18s ease,background 0.18s ease; }
+    .st-clear.visible { opacity:0.7; pointer-events:auto; }
+    .st-clear.visible:hover { opacity:1; background:rgba(39,94,118,0.07); }
+    .st-close { flex-shrink:0; background:rgba(39,94,118,0.08); border:none; border-radius:50%; cursor:pointer; color:var(--primary); width:32px; height:32px; display:flex; align-items:center; justify-content:center; margin-left:4px; transition:background 0.18s ease,transform 0.18s ease; }
+    .st-close:hover { background:rgba(39,94,118,0.16); transform:rotate(90deg); }
+    .st-close svg { width:14px; height:14px; }
+    .st-camera { flex-shrink:0; background:none; border:none; cursor:pointer; color:var(--primary); opacity:0.55; display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; transition:opacity 0.18s,background 0.18s; }
+    .st-camera:hover { opacity:1; background:rgba(39,94,118,0.08); }
+    .st-camera svg { width:15px; height:15px; }
+
+
+    /* Icon buttons (wishlist, cart, user) */
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transition: background 0.18s, color 0.18s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-icon-btn:hover { background: rgba(39,94,118,0.08); color: #1a4a60; }
+    .nav-icon-btn svg { width: 19px; height: 19px; }
+
+    /* Cart badge */
+    .nav-cart-badge {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 13px; height: 13px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 7.5px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      pointer-events: none;
+    }
+
+    /* Search button (kept for overlay trigger fallback) */
+    .nav-search-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--primary); transition: opacity 0.2s; min-width: 36px; display: none;
+    }
+    .nav-search-btn:hover { opacity: 0.7; }
+    .nav-search-btn svg { width: 20px; height: 20px; }
+
+    /* Search overlay */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 120px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .search-overlay.active { opacity: 1; pointer-events: auto; }
+    .search-box {
+      background: #fff; width: 600px; max-width: 90%; padding: 28px; border-radius: 2px;
+      transform: translateY(-20px); transition: transform 0.25s;
+    }
+    .search-overlay.active .search-box { transform: translateY(0); }
+    .search-box-inner {
+      display: flex; border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px; gap: 10px; align-items: center;
+    }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: 16px;
+      color: var(--body-text); background: transparent;
+    }
+    .search-input::placeholder { color: #aaa; font-size: 14px; }
+    .search-submit {
+      background: none; border: none; cursor: pointer;
+      color: var(--primary); font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .search-close {
+      display: block; text-align: right; margin-top: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+      color: #888; cursor: pointer; text-transform: uppercase;
+    }
+    .search-close:hover { color: var(--primary); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--primary); transition: 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 85%; max-width: 320px; height: 100vh; background: #fff;
+      z-index: 3000; padding: 24px 0; overflow-y: auto;
+      transform: translateX(-100%); transition: transform 0.3s ease;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 2999; opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-menu-overlay.show { opacity: 1; }
+    .mobile-menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 20px; border-bottom: 1px solid #eee;
+    }
+    .mobile-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--primary); line-height: 1; }
+    .mobile-nav a {
+      display: block; padding: 14px 24px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--primary); border-bottom: 1px solid #f0f0f0; transition: background 0.2s;
+    }
+    .mobile-nav a:hover { background: #f8f8f8; }
+    .mobile-nav .mobile-nav-secondary { font-weight: 500; color: #555; letter-spacing: 0.6px; font-size: 11px; }
+
+    /* ===== HERO BANNER ===== */
+    .hero-section {
+      margin: 0 30px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    /* Fixed-ratio wrapper — ALL slides absolutely stacked inside */
+    .hero-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3840 / 1186;   /* matches Banner 1 exact proportions */
+      background: #f0eeeb;
+      overflow: hidden;
+    }
+    /* GPU-composited slides — opacity-only transitions for 60fps */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      will-change: opacity;               /* browser pre-allocates GPU layer */
+      transform: translateZ(0);           /* force own compositing layer */
+      transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .hero-slide a {
+      display: block;
+      width: 100%; height: 100%;
+    }
+    .hero-slide img {
+      width: 100%; height: 100%;
+      max-width: none !important;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      image-rendering: auto;
+      backface-visibility: hidden;
+      /* Smooth scale-ready transition */
+      transform: scale(1.0);
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    /* Subtle zoom on active slide hover — luxury feel without cropping visible area */
+    .hero-section:hover .hero-slide.active img {
+      transform: scale(1.03);
+    }
+    /* Banner 2: use contain to show full painting without cropping */
+    .hero-slide[data-fit="contain"] img {
+      object-fit: contain;
+      background: #f7f5f2;
+    }
+    /* Text overlay */
+    .hero-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 40px 52px 38px;
+      background: linear-gradient(to top, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+      z-index: 5; pointer-events: none;
+    }
+    .hero-overlay a { pointer-events: auto; }
+    .hero-overlay-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(22px, 3vw, 42px);
+      font-weight: 800; color: #fff;
+      letter-spacing: -0.4px; line-height: 1.15;
+      margin-bottom: 8px; max-width: 560px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .hero-overlay-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(12px, 1.2vw, 15px);
+      font-weight: 500; color: rgba(255,255,255,0.88);
+      margin-bottom: 18px; max-width: 480px; line-height: 1.55;
+    }
+    .hero-overlay-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 26px; background: var(--primary); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: 11px;
+      font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: background 0.2s, transform 0.18s;
+      will-change: transform;
+    }
+    .hero-overlay-cta:hover { background: #1a4a60; transform: translateY(-1px); }
+    /* Navigation dots */
+    .hero-dots {
+      position: absolute; bottom: 14px; left: 50%;
+      transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;
+    }
+    .hero-dot {
+      width: 28px; height: 3px; border-radius: 2px;
+      border: none; padding: 0; cursor: pointer;
+      background: rgba(255,255,255,0.40);
+      transition: background 0.3s, width 0.3s;
+    }
+    .hero-dot.active { background: #fff; width: 44px; }
+    /* Arrows */
+    .hero-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      background: rgba(0,0,0,0.18); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; cursor: pointer; z-index: 10;
+      opacity: 0; transition: opacity 0.2s, background 0.2s;
+      will-change: opacity;
+    }
+    .hero-arrow svg { width: 16px; height: 16px; pointer-events: none; }
+    .hero-prev { left: 16px; }
+    .hero-next { right: 16px; }
+    .hero-section:hover .hero-arrow { opacity: 1; }
+    .hero-arrow:hover { background: rgba(0,0,0,0.40); }
+    /* Progress bar */
+    .hero-progress {
+      position: absolute; bottom: 0; left: 0; height: 2px;
+      width: 0%; background: var(--primary); z-index: 10;
+      will-change: width; opacity: 0.85;
+    }
+    @media (max-width: 900px) {
+      .hero-section { margin: 0 16px; }
+      .hero-overlay { padding: 24px 24px 32px; }
+    }
+    @media (max-width: 600px) {
+      .hero-section { margin: 0; border-radius: 0; }
+      .hero-overlay { padding: 18px 16px 26px; }
+      .hero-arrow { display: none; }
+    }
+
+
+    /* ══════════════════════════════════════════════
+       AI SEARCH EXPERIENCE
+    ══════════════════════════════════════════════ */
+
+    /* ── AI Search Bar — matches PLP nav-search-pill style exactly ── */
+    .ai-search-btn {
+      display: flex; align-items: center; gap: 8px;
+      height: 36px; padding: 0 14px 0 14px;
+      border: 1.5px solid #d4e2e8;
+      border-radius: 50px;
+      background: #f6fafc;
+      cursor: pointer; flex-shrink: 0;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .ai-search-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(39,94,118,0.10);
+    }
+    /* Search icon — left, same as PLP pill */
+    .ai-btn-icon {
+      flex-shrink: 0; color: #8aacba;
+      width: 15px; height: 15px; pointer-events: none;
+      transition: color 0.18s;
+    }
+    .ai-search-btn:hover .ai-btn-icon { color: var(--primary); }
+    /* "AI Search" text — same font/size as PLP input placeholder */
+    .ai-btn-text {
+      flex: 1; font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: #9bb8c4; letter-spacing: 0.1px;
+      white-space: nowrap; pointer-events: none;
+      user-select: none; cursor: pointer;
+      width: 130px;
+      transition: color 0.18s;
+    }
+    .ai-search-btn:hover .ai-btn-text { color: #6a9ab0; }
+    /* Small AI spark icon — right side */
+    .ai-btn-spark {
+      flex-shrink: 0; color: var(--primary); opacity: 0.50;
+      width: 13px; height: 13px; pointer-events: none;
+      transition: opacity 0.18s, transform 0.22s;
+    }
+    .ai-search-btn:hover .ai-btn-spark {
+      opacity: 0.90;
+      transform: rotate(15deg) scale(1.1);
+    }
+    /* Active state — search panel open */
+    .ai-search-btn.active {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(39,94,118,0.12);
+      background: #eef6f9;
+    }
+    .ai-search-btn.active .ai-btn-text { color: var(--primary); font-weight: 600; }
+    .ai-search-btn.active .ai-btn-spark { opacity: 1; }
+    /* Mobile — icon only */
+    @media (max-width: 700px) {
+      .ai-search-btn { padding: 0 10px; }
+      .ai-btn-text { display: none; }
+      .ai-btn-spark { display: none; }
+    }
+
+    /* Backdrop */
+    .ai-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(10,20,30,0.45);
+      backdrop-filter: blur(3px);
+      z-index: 1100;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .ai-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    /* Main overlay panel */
+    .ai-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1101;
+      background: #fff;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+      transform: translateY(-100%);
+      transition: transform 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      border-bottom: 1px solid #e4e8ec;
+    }
+    .ai-overlay.open { transform: translateY(0); }
+
+    /* Header bar inside overlay */
+    .ai-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 36px 0;
+      border-bottom: 1px solid #f0f3f5;
+      padding-bottom: 16px;
+    }
+    .ai-spark-wrap {
+      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #275e76, #3a8fa8);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ai-spark-wrap svg { width: 18px; height: 18px; color: #fff; }
+    .ai-input-wrap {
+      flex: 1; position: relative; display: flex; align-items: center;
+    }
+    .ai-input {
+      width: 100%; height: 48px;
+      border: 2px solid #e4e8ec; border-radius: 12px;
+      padding: 0 110px 0 18px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px; font-weight: 500; color: #1a2632;
+      background: #fafbfc; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .ai-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(39,94,118,0.10);
+      background: #fff;
+    }
+    .ai-input::placeholder { color: #9bb8c8; font-weight: 400; }
+    .ai-input-actions {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .ai-camera-btn, .ai-clear-btn {
+      width: 32px; height: 32px; border-radius: 8px; border: none;
+      background: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: #8aa0ae; transition: background 0.15s, color 0.15s;
+    }
+    .ai-camera-btn:hover { background: #e8f2f6; color: var(--primary); }
+    .ai-clear-btn { display: none; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; color: #8aa0ae; }
+    .ai-clear-btn.show { display: flex; }
+    .ai-clear-btn:hover { background: #fce4e4; color: #c0392b; }
+    .ai-camera-btn svg, .ai-clear-btn svg { width: 16px; height: 16px; }
+    .ai-close-btn {
+      width: 36px; height: 36px; border: none; background: #f1f3f5; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: #6b8090; flex-shrink: 0;
+      transition: background 0.15s, color 0.15s, transform 0.18s;
+    }
+    .ai-close-btn:hover { background: #e4e8ec; color: #1a2632; transform: rotate(90deg); }
+    .ai-close-btn svg { width: 16px; height: 16px; }
+
+    /* Filter chips */
+    .ai-chips {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 12px 36px 0;
+    }
+    .ai-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 12px; border-radius: 50px; border: 1.5px solid #d4e0e8;
+      background: #f7f9fa; font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; color: #4a6878; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap; letter-spacing: 0.3px;
+    }
+    .ai-chip:hover, .ai-chip.active {
+      background: var(--primary); border-color: var(--primary); color: #fff;
+    }
+
+    /* Body — suggestions or results */
+    .ai-body { padding: 20px 36px 28px; }
+
+    /* Suggestions state */
+    .ai-suggestions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+    .ai-sugg-group h4 {
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 900;
+      letter-spacing: 1.6px; text-transform: uppercase; color: #8aa0ae;
+      margin-bottom: 12px;
+    }
+    .ai-sugg-list { display: flex; flex-direction: column; gap: 2px; }
+    .ai-sugg-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px; border-radius: 8px; cursor: pointer;
+      transition: background 0.12s;
+    }
+    .ai-sugg-item:hover { background: #f0f6f8; }
+    .ai-sugg-item svg { width: 14px; height: 14px; color: #8aa0ae; flex-shrink: 0; }
+    .ai-sugg-item span { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 500; color: #1a2632; }
+    .ai-sugg-item em { font-style: normal; font-size: 10.5px; color: #8aa0ae; margin-left: auto; }
+
+    /* Category pills */
+    .ai-cat-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .ai-cat-pill {
+      padding: 7px 14px; border-radius: 8px; border: 1.5px solid #e4eef2;
+      font-family: 'Montserrat', sans-serif; font-size: 11.5px; font-weight: 600; color: #275e76;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    }
+    .ai-cat-pill:hover { background: #e8f2f6; border-color: var(--primary); }
+
+    /* Results state */
+    .ai-results { display: none; }
+    .ai-results.show { display: block; }
+    .ai-suggestions.hide { display: none; }
+
+    .ai-results-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .ai-results-label {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: #4a6878;
+    }
+    .ai-thinking {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: var(--primary);
+      padding: 4px 12px; background: #e8f2f6; border-radius: 50px;
+    }
+    .ai-thinking-dots { display: inline-flex; gap: 3px; }
+    .ai-thinking-dots span {
+      width: 4px; height: 4px; border-radius: 50%; background: var(--primary);
+      animation: ai-dot 1.2s infinite; display: inline-block;
+    }
+    .ai-thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .ai-thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes ai-dot { 0%,80%,100%{opacity:.2;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+
+    /* Results grid */
+    .ai-results-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+    }
+    .ai-result-card {
+      border: 1px solid #e8edf0; border-radius: 10px; overflow: hidden;
+      cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+    }
+    .ai-result-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.10); transform: translateY(-2px); }
+    .ai-result-img { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #f5f5f5; }
+    .ai-result-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ai-match-badge {
+      position: absolute; top: 8px; left: 8px;
+      background: linear-gradient(135deg, #275e76, #3a8fa8);
+      color: #fff; font-family: 'Montserrat', sans-serif;
+      font-size: 8px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 4px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .ai-match-badge svg { width: 9px; height: 9px; }
+    .ai-result-info { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .ai-result-cat { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #8aa0ae; }
+    .ai-result-name { font-size: 12px; font-weight: 700; color: #1a2632; line-height: 1.3; }
+    .ai-result-dims { font-size: 10px; color: #8aa0ae; font-weight: 500; }
+    .ai-result-price { font-size: 13px; font-weight: 800; color: var(--primary); margin-top: 4px; }
+    .ai-result-sale { font-size: 11px; color: #bbb; text-decoration: line-through; font-weight: 500; }
+
+    /* No results */
+    .ai-no-results {
+      text-align: center; padding: 32px 0;
+      font-family: 'Montserrat', sans-serif; color: #8aa0ae;
+    }
+    .ai-no-results h3 { font-size: 15px; font-weight: 700; color: #1a2632; margin-bottom: 6px; }
+    .ai-no-results p { font-size: 12px; font-weight: 500; }
+
+    /* Visual search modal */
+    .ai-vs-modal {
+      position: fixed; inset: 0; z-index: 1200;
+      background: rgba(10,20,30,0.6); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+    }
+    .ai-vs-modal.open { display: flex; }
+    .ai-vs-box {
+      background: #fff; border-radius: 20px; padding: 40px;
+      max-width: 480px; width: 92%; box-shadow: 0 30px 80px rgba(0,0,0,0.22);
+      text-align: center;
+    }
+    .ai-vs-icon {
+      width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, #275e76, #3a8fa8);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ai-vs-icon svg { width: 28px; height: 28px; color: #fff; }
+    .ai-vs-title { font-size: 20px; font-weight: 800; color: #1a2632; margin-bottom: 8px; font-family: 'Montserrat', sans-serif; }
+    .ai-vs-sub   { font-size: 13px; color: #6b8090; font-family: 'Montserrat', sans-serif; line-height: 1.6; margin-bottom: 28px; }
+    .ai-vs-drop  {
+      border: 2px dashed #d4e0e8; border-radius: 12px; padding: 32px;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s; margin-bottom: 20px;
+    }
+    .ai-vs-drop:hover { border-color: var(--primary); background: #f0f8fb; }
+    .ai-vs-drop p { font-size: 13px; font-weight: 600; color: #8aa0ae; font-family: 'Montserrat', sans-serif; }
+    .ai-vs-close {
+      border: none; background: #f1f3f5; padding: 10px 24px; border-radius: 8px;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+      color: #6b8090; cursor: pointer; transition: background 0.15s;
+    }
+    .ai-vs-close:hover { background: #e4e8ec; color: #1a2632; }
+
+    @media (max-width: 900px) {
+      .ai-header { padding: 14px 20px; }
+      .ai-body, .ai-chips { padding-left: 20px; padding-right: 20px; }
+      .ai-suggestions { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .ai-results-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .ai-suggestions { grid-template-columns: 1fr; }
+      .ai-results-grid { grid-template-columns: repeat(2, 1fr); }
+      .ai-input { font-size: 14px; }
+    }
+    /* ===== SECTION HEADING ===== */
+    .section-heading {
+      text-align: center; font-size: 22px; font-weight: 700;
+      letter-spacing: 2.4px; text-transform: uppercase;
+      color: var(--primary); padding: 56px 0 36px;
+      font-family: 'Montserrat', sans-serif;
+      display: block; width: 100%;
+    }
+
+    /* ===== SHOP BY COLLECTIONS ===== */
+    .coll-hd-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 56px 30px 36px; max-width: 1440px; margin: 0 auto;
+    }
+    .coll-hd-title {
+      font-size: 22px; font-weight: 700; letter-spacing: 2.4px;
+      text-transform: uppercase; color: var(--primary);
+      font-family: 'Montserrat', sans-serif;
+    }
+    .coll-view-all {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px;
+      text-transform: uppercase; color: var(--primary); text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.2s, color 0.2s; padding-bottom: 2px;
+    }
+    .coll-view-all:hover { color: #1a4a60; border-color: #1a4a60; }
+    .coll-va-arrow { font-size: 14px; display: inline-block; transition: transform 0.2s; }
+    .coll-view-all:hover .coll-va-arrow { transform: translateX(4px); }
+
+    .coll-feat-section { padding: 0 30px 64px; max-width: 1440px; margin: 0 auto; }
+    .coll-feat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .coll-feat-card {
+      display: block; cursor: pointer; overflow: hidden;
+      text-decoration: none; position: relative;
+    }
+    .coll-feat-img {
+      overflow: hidden; position: relative; aspect-ratio: 4/3;
+    }
+    .coll-feat-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease; display: block;
+    }
+    .coll-feat-card:hover .coll-feat-img img { transform: scale(1.06); }
+    .coll-feat-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 38%, rgba(0,0,0,0.64) 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px 18px; transition: background 0.32s;
+    }
+    .coll-feat-card:hover .coll-feat-overlay {
+      background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.74) 100%);
+    }
+    .coll-feat-name {
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase; color: #fff;
+      margin-bottom: 4px;
+    }
+    .coll-feat-count {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.8px; color: rgba(255,255,255,0.75);
+      transition: margin-bottom 0.26s;
+    }
+    .coll-feat-card:hover .coll-feat-count { margin-bottom: 8px; }
+    .coll-feat-cta {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 1.4px; text-transform: uppercase; color: #fff;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.26s, transform 0.26s;
+    }
+    .coll-feat-card:hover .coll-feat-cta { opacity: 1; transform: translateY(0); }
+
+    /* ===== DIVIDER ===== */
+    .section-divider { margin: 0 30px; border: none; border-top: 1px solid var(--divider); }
+
+    /* ===== CATALOGS ===== */
+    .catalogs-section { padding: 0 60px 72px; max-width: 1440px; margin: 0 auto; }
+    .catalogs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-bottom: 28px; }
+    .catalog-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .catalog-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .catalog-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .catalog-card:hover .catalog-card-img img { transform: scale(1.04); }
+    .catalog-card-label {
+      text-align: center; padding: 12px 8px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .catalog-card:hover .catalog-card-label { color: #1a4a60; }
+
+    /* ===== FEATURED ARTISTS ===== */
+    .artists-section { padding: 0 30px 60px; max-width: 1440px; margin: 0 auto; }
+    .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .artist-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .artist-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .artist-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .artist-card:hover .artist-card-img img { transform: scale(1.04); }
+    .artist-card-label {
+      text-align: center; padding: 14px 8px 4px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .artist-card:hover .artist-card-label { color: #1a4a60; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); padding: 36px 40px 0; }
+    .footer-main {
+      display: grid; grid-template-columns: 200px 1fr 1fr 1fr; column-gap: 40px;
+      max-width: 1440px; margin: 0 auto; padding-bottom: 28px;
+    }
+    .footer-logo { height: 38px; width: auto; margin-bottom: 6px; }
+    .footer-brand { padding-right: 24px; }
+    .footer-tagline { font-size: 10px; color: #888; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .footer-address { font-size: 12px; color: var(--body-text); line-height: 1.5; margin-bottom: 6px; }
+    .footer-info-group { margin-top: 8px; }
+    .footer-address a { color: var(--primary); font-size: 12px; letter-spacing: 0.4px; font-weight: 500; }
+    .footer-address a:hover { text-decoration: underline; }
+    .footer-social { display: flex; gap: 12px; margin-top: 10px; }
+    .footer-social a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: #e0e0e0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .footer-social a:hover { background: var(--primary); transform: scale(1.1); }
+    .footer-social a:hover svg { color: #fff; }
+    .footer-social svg { width: 18px; height: 18px; color: var(--primary); transition: color 0.25s; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid #ddd;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s, padding-left 0.2s; display: inline-block;
+    }
+    .footer-col ul li a:hover { color: #1a4a60; padding-left: 4px; }
+    .footer-bottom {
+      border-top: 1px solid #ddd; padding: 16px 0;
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copyright { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #888; }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: #1a4a60; }
+
+    /* ===== GO UP ===== */
+    .go-up-btn {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 56px; height: 56px; background: var(--primary); color: #fff;
+      border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.3;
+      z-index: 500; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    }
+    .go-up-btn.visible { opacity: 1; transform: translateY(0); }
+    .go-up-btn:hover { background: #1a4a60; }
+    .go-up-btn svg { width: 16px; height: 16px; margin-bottom: 2px; }
+
+    /* ===== SCROLL REVEAL ===== */
+    /* Reveal animation — initial hidden state set by JS only for off-screen elements */
+    .reveal,
+    .reveal-row {
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    /* Only elements marked ready-to-animate start hidden */
+    .reveal.will-animate {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .reveal-row.will-animate {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    }
+    .reveal.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    .reveal-row.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .nav-links > li > a { padding: 0 11px; font-size: 11px; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .mobile-menu-overlay { display: block; }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .coll-feat-grid { grid-template-columns: repeat(2, 1fr); }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); }
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .navbar { padding: 0 20px; }
+      .coll-feat-section, .catalogs-section, .artists-section { padding-left: 16px; padding-right: 16px; }
+      .coll-feat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .coll-hd-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 32px 16px 20px; }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .artists-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .section-heading { font-size: 16px; letter-spacing: 2px; padding: 32px 0 20px; }
+      .site-footer { padding: 28px 20px 0; }
+    }
+
+    /* ===== COLLECTIONS PAGE ===== */
+
+    /* ── Compact integrated hero ── */
+    .coll-pg-hero {
+      background: linear-gradient(135deg, #275e76 0%, #1a4460 100%);
+      padding: 52px 30px 44px; text-align: center;
+    }
+    .coll-pg-hero-inner { max-width: 520px; margin: 0 auto; }
+    .coll-pg-hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px; font-weight: 700; letter-spacing: 3.5px;
+      text-transform: uppercase; color: #fff; margin-bottom: 8px;
+    }
+    .coll-pg-hero-count {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+
+    /* ── Search (frosted glass inside hero) ── */
+    .coll-pg-search-wrap {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.11);
+      border: 1.5px solid rgba(255,255,255,0.22);
+      border-radius: 3px; padding: 12px 18px;
+      max-width: 420px; margin: 0 auto;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .coll-pg-search-wrap:focus-within {
+      background: rgba(255,255,255,0.19);
+      border-color: rgba(255,255,255,0.46);
+    }
+    .coll-pg-search-wrap svg { flex-shrink: 0; }
+    .coll-pg-search-wrap input {
+      background: transparent; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: 12.5px;
+      color: #fff; width: 100%; letter-spacing: 0.3px;
+    }
+    .coll-pg-search-wrap input::placeholder { color: rgba(255,255,255,0.44); }
+
+    /* ── Category tabs ── */
+    .coll-pg-tabs {
+      max-width: 1440px; margin: 0 auto;
+      padding: 28px 30px 0;
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .coll-pg-tab {
+      padding: 7px 18px; border-radius: 20px;
+      border: 1.5px solid #d0d8de;
+      font-family: 'Montserrat', sans-serif; font-size: 10.5px;
+      font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+      color: #555; background: #fff; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .coll-pg-tab:hover { border-color: var(--primary); color: var(--primary); }
+    .coll-pg-tab.active {
+      background: var(--primary); color: #fff; border-color: var(--primary);
+    }
+
+    /* ── Grid ── */
+    .coll-pg-wrap {
+      max-width: 1440px; margin: 0 auto;
+      padding: 28px 30px 90px;
+    }
+    .coll-pg-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+
+    /* ── Card – scroll-reveal initial state ── */
+    .coll-pg-card {
+      display: flex; flex-direction: column; text-decoration: none;
+      cursor: pointer; border-radius: 3px; overflow: visible;
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.30s ease;
+    }
+    .coll-pg-card.is-visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .coll-pg-card.is-visible:hover {
+      box-shadow: 0 14px 46px rgba(39,94,118,0.17);
+    }
+
+    /* ── Card visual (image area) ── */
+    .coll-pg-card-visual {
+      position: relative; overflow: hidden;
+      aspect-ratio: 4/3; border-radius: 3px;
+      background: #d0dade;
+    }
+    .coll-pg-card-visual img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.58s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .coll-pg-card:hover .coll-pg-card-visual img { transform: scale(1.09); }
+    .coll-pg-color-bg {
+      width: 100%; height: 100%;
+      transition: transform 0.58s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .coll-pg-card:hover .coll-pg-color-bg { transform: scale(1.09); }
+
+    /* Category badge (top-left of image) */
+    .coll-pg-badge {
+      position: absolute; top: 10px; left: 10px; z-index: 3;
+      padding: 3px 9px; border-radius: 2px;
+      background: rgba(255,255,255,0.90);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 7.5px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--primary);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+
+    /* Hover overlay + centred CTA button */
+    .coll-pg-hover-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: rgba(0,0,0,0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.34s ease;
+    }
+    .coll-pg-card:hover .coll-pg-hover-overlay { background: rgba(0,0,0,0.30); }
+
+    .coll-pg-hover-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: #fff;
+      padding: 9px 20px; border: 1.5px solid rgba(255,255,255,0.80);
+      border-radius: 2px;
+      opacity: 0; transform: scale(0.90);
+      transition: opacity 0.26s ease, transform 0.26s ease;
+    }
+    .coll-pg-card:hover .coll-pg-hover-cta { opacity: 1; transform: scale(1); }
+    .coll-pg-hover-arrow { font-size: 12px; }
+
+    /* ── Card info (below image) ── */
+    .coll-pg-card-info {
+      padding: 13px 2px 4px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .coll-pg-card-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.7px;
+      text-transform: uppercase; color: var(--primary);
+      line-height: 1.4; transition: color 0.22s;
+    }
+    .coll-pg-card:hover .coll-pg-card-name { color: #1a4a60; }
+    .coll-pg-card-count {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3px;
+      color: #999;
+    }
+
+    /* Empty state */
+    .coll-pg-empty {
+      grid-column: 1 / -1; text-align: center; padding: 72px 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; color: #aaa; letter-spacing: 0.4px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .coll-pg-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 800px) {
+      .coll-pg-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .coll-pg-tabs { padding: 20px 16px 0; }
+      .coll-pg-wrap { padding: 20px 16px 60px; }
+      .coll-pg-hero { padding: 40px 16px 36px; }
+      .coll-pg-hero-title { font-size: 20px; }
+      .coll-pg-search-wrap { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .coll-pg-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .coll-pg-card-name { font-size: 10.5px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+   ANNOUNCEMENT BAR  –  Global component
+═══════════════════════════════════════════════ -->
+<style>
+.ann-bar {
+  position: relative; width: 100%; height: 44px;
+  background: #275e76;
+  border-bottom: 1px solid #1a4a60;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; z-index: 1001; user-select: none;
+}
+.ann-bar::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #c9a84c 20%, #e8c870 50%, #c9a84c 80%, transparent 100%);
+  opacity: 0.90;
+}
+.ann-track {
+  position: relative; width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+.ann-slide {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; align-items: center; justify-content: center;
+  gap: 9px; opacity: 0; transform: translateY(6px);
+  transition: opacity 0.52s cubic-bezier(.4,0,.2,1), transform 0.52s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.ann-slide.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.ann-slide.exit-up { opacity: 0; transform: translateY(-6px); }
+.ann-icon { font-size: 14px; line-height: 1; flex-shrink: 0; }
+.ann-msg {
+  font-family: 'Montserrat', sans-serif; font-size: 12.5px;
+  font-weight: 600; letter-spacing: 0.35px; color: rgba(255,255,255,0.90); white-space: nowrap;
+}
+.ann-msg strong { color: #fff; }
+.ann-msg a {
+  color: #e8c870; font-weight: 700; text-decoration: none;
+  border-bottom: 1px solid rgba(232,200,112,0.35); transition: border-color 0.16s, color 0.16s;
+}
+.ann-msg a:hover { color: #fff; border-color: rgba(255,255,255,0.6); }
+.ann-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.25); flex-shrink: 0; margin: 0 4px; }
+.ann-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 28px; border: none; background: transparent;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.55); border-radius: 50%; transition: background 0.16s, color 0.16s; z-index: 2;
+}
+.ann-arrow:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.ann-arrow svg { width: 14px; height: 14px; }
+.ann-prev { left: 14px; }
+.ann-next { right: 14px; }
+.ann-dots {
+  position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 5px; z-index: 2;
+}
+.ann-dot {
+  width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.35);
+  transition: opacity 0.2s, transform 0.2s, background 0.2s; cursor: pointer;
+}
+.ann-dot.active { background: #e8c870; transform: scale(1.4); }
+@media (max-width: 680px) {
+  .ann-bar { height: 40px; }
+  .ann-msg { font-size: 11px; letter-spacing: 0.15px; }
+  .ann-sep { display: none; }
+  .ann-prev { left: 6px; }
+  .ann-next { right: 6px; }
+}
+@media (max-width: 420px) {
+  .ann-icon { display: none; }
+  .ann-msg { white-space: normal; text-align: center; padding: 0 34px; color: rgba(255,255,255,0.88); }
+  .ann-bar { height: auto; min-height: 38px; padding: 7px 0; }
+}
+</style>
+
+<div class="ann-bar" id="annBar">
+  <button class="ann-arrow ann-prev" id="annPrev" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="ann-track" id="annTrack">
+    <div class="ann-slide active" data-index="0">
+      <span class="ann-icon">&#128666;</span>
+      <span class="ann-msg">Free Shipping on Orders Above <strong>$500</strong></span>
+      <span class="ann-sep"></span>
+      <span class="ann-msg" style="color:rgba(255,255,255,0.55);font-weight:500;font-size:11px;">B2B Wholesale Orders</span>
+    </div>
+    <div class="ann-slide" data-index="1">
+      <span class="ann-icon">&#11088;</span>
+      <span class="ann-msg">Earn Exclusive <strong>Loyalty Rewards</strong> with Every Purchase</span>
+      <span class="ann-sep"></span>
+      <span class="ann-msg" style="color:#e8c870;font-weight:700;font-size:11px;">Platinum Member Benefits</span>
+    </div>
+    <div class="ann-slide" data-index="2">
+      <span class="ann-icon">&#128218;</span>
+      <span class="ann-msg">Explore Our New <strong>Seasonal Catalog</strong> Collections</span>
+      <span class="ann-sep"></span>
+      <span class="ann-msg"><a href="forms.html">Download Now &rsaquo;</a></span>
+    </div>
+    <div class="ann-slide" data-index="3">
+      <span class="ann-icon">&#127912;</span>
+      <span class="ann-msg">Need Assistance? Contact Your <strong>Dedicated Account Representative</strong></span>
+      <span class="ann-sep"></span>
+      <span class="ann-msg"><a href="customer-dashboard.html">Contact Rep &rsaquo;</a></span>
+    </div>
+  </div>
+  <button class="ann-arrow ann-next" id="annNext" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="ann-dots" id="annDots">
+    <div class="ann-dot active" data-dot="0"></div>
+    <div class="ann-dot" data-dot="1"></div>
+    <div class="ann-dot" data-dot="2"></div>
+    <div class="ann-dot" data-dot="3"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.ann-slide'),
+      dots=document.querySelectorAll('.ann-dot'),
+      bar=document.getElementById('annBar'),
+      cur=0, total=slides.length, timer=null, INT=4000;
+  function goTo(n){
+    if(n===cur)return;
+    slides[cur].classList.remove('active'); slides[cur].classList.add('exit-up');
+    dots[cur].classList.remove('active');
+    var prev=cur; setTimeout(function(){slides[prev].classList.remove('exit-up');},540);
+    cur=(n+total)%total;
+    slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  }
+  function next(){goTo(cur+1);}
+  function prev(){goTo(cur-1);}
+  function start(){clearInterval(timer);timer=setInterval(next,INT);}
+  function stop(){clearInterval(timer);}
+  document.getElementById('annNext').addEventListener('click',function(){next();start();});
+  document.getElementById('annPrev').addEventListener('click',function(){prev();start();});
+  dots.forEach(function(d){d.addEventListener('click',function(){goTo(+d.dataset.dot);start();});});
+  bar.addEventListener('mouseenter',stop);
+  bar.addEventListener('mouseleave',start);
+  start();
+})();
+</script>
+<!-- ═══════════════════════════════════════════════ -->
+
+
+<!-- STICKY HEADER -->
+<header class="site-header" id="siteHeader">
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Go to homepage">
+      <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+    </a>
+    <ul class="nav-links">
+
+      <!-- IN STOCK ART -->
+      <li>
+        <a href="plp-in-stock-art.html">IN STOCK ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">By Theme</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">New Releases</a></li>
+                <li><a href="plp-in-stock-art.html">Abstract</a></li>
+                <li><a href="plp-in-stock-art.html">Western</a></li>
+                <li><a href="plp-in-stock-art.html">Coastal &amp; Tropical</a></li>
+                <li><a href="plp-in-stock-art.html">Florals &amp; Botanicals</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Gallery Wall Art</a></li>
+                <li><a href="plp-in-stock-art.html">Birds &amp; Butterflies</a></li>
+                <li><a href="plp-in-stock-art.html">Lakes &amp; Mountains</a></li>
+                <li><a href="plp-in-stock-art.html">Farmhouse Chic</a></li>
+                <li><a href="plp-in-stock-art.html">Small Accent Art</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">By Frame</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Floating Frame</a></li>
+                <li><a href="plp-in-stock-art.html">Shadow Box</a></li>
+                <li><a href="plp-in-stock-art.html">Canvas Wrap</a></li>
+                <li><a href="plp-in-stock-art.html">Barnwood</a></li>
+                <li><a href="plp-in-stock-art.html">Champagne</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-1.jpg" alt="In Stock Art" />
+            <span class="mega-img-label">In Stock Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- PRINT ON DEMAND ART -->
+      <li>
+        <a href="print-on-demand-art.html">PRINT ON DEMAND ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Featured Artists</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">Ronald West</a></li>
+                <li><a href="print-on-demand-art.html">Lucia Heffernan</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">All Print on Demand</a></li>
+                <li><a href="print-on-demand-art.html">State Posters</a></li>
+                <li><a href="print-on-demand-art.html">Canvas Prints</a></li>
+                <li><a href="print-on-demand-art.html">Holiday</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-2.jpg" alt="Print on Demand Art" />
+            <span class="mega-img-label">Print on Demand</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- CHRISTMAS ART -->
+      <li>
+        <a href="christmas-art.html">CHRISTMAS ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Christmas Art</p>
+              <ul>
+                <li><a href="christmas-art.html">All Christmas Art</a></li>
+                <li><a href="christmas-art.html">LED Light Up Art</a></li>
+                <li><a href="christmas-art.html">Holiday Canvas</a></li>
+                <li><a href="christmas-art.html">Seasonal Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-3.jpg" alt="Christmas Art" />
+            <span class="mega-img-label">Christmas Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- JUVENILE ART -->
+      <li>
+        <a href="juvenile-art.html">JUVENILE ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Juvenile Art</p>
+              <ul>
+                <li><a href="juvenile-art.html">All Juvenile Art</a></li>
+                <li><a href="juvenile-art.html">Animals</a></li>
+                <li><a href="juvenile-art.html">Nature &amp; Landscapes</a></li>
+                <li><a href="juvenile-art.html">Inspirational</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-4.jpg" alt="Juvenile Art" />
+            <span class="mega-img-label">Juvenile Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- LAST CALL ART -->
+      <li>
+        <a href="last-call-art.html">LAST CALL ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Last Call</p>
+              <ul>
+                <li><a href="last-call-art.html">All Last Call Art</a></li>
+                <li><a href="last-call-art.html">Clearance Canvas</a></li>
+                <li><a href="last-call-art.html">Discounted Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-5.jpg" alt="Last Call Art" />
+            <span class="mega-img-label">Last Call Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- ACCESSORY ITEMS -->
+      <li>
+        <a href="accessory-items.html">ACCESSORY ITEMS</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Accessories</p>
+              <ul>
+                <li><a href="accessory-items.html">All Accessories</a></li>
+                <li><a href="accessory-items.html">Hanging Hardware</a></li>
+                <li><a href="accessory-items.html">Display Tools</a></li>
+                <li><a href="accessory-items.html">Packaging</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-6.jpg" alt="Accessory Items" />
+            <span class="mega-img-label">Accessory Items</span>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <!-- NAV RIGHT: search + icons -->
+    <div class="nav-right">
+      <!-- Search pill -->
+      <!-- AI Search Bar — PLP pill style, "AI Search" text, spark icon right -->
+      <button class="ai-search-btn" id="aiSearchTrigger" aria-label="AI Search">
+        <!-- Left: search icon (identical to PLP pill) -->
+        <svg class="ai-btn-icon" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <!-- Center: "AI Search" placeholder text -->
+        <span class="ai-btn-text">AI Search</span>
+        <!-- Right: small AI spark icon -->
+        <svg class="ai-btn-spark" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 1 L9.1 6.3 L14 7 L9.8 11 L10.8 16 L8 13.2 L5.2 16 L6.2 11 L2 7 L6.9 6.3 Z"
+                stroke="none"/>
+        </svg>
+      </button>
+      <!-- Wishlist -->
+      <button class="nav-icon-btn" title="Wishlist" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <!-- Cart -->
+      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="nav-cart-badge" id="navCartBadge">0</span>
+      </button>
+      <!-- Account -->
+      <a href="customer-dashboard.html" class="nav-icon-btn" title="My Account" aria-label="My Account" style="text-decoration:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+
+    <!-- SEARCH TAKEOVER OVERLAY -->
+    <div class="search-takeover" id="searchTakeover" role="search">
+      <div class="st-bar">
+        <span class="st-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input class="st-input" id="stInput" type="text" placeholder="Search products, artists, collections..." autocomplete="off" />
+        <button class="st-camera" title="Search by image" aria-label="Search by image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
+                <div class="st-div"></div>
+        <button class="st-clear" id="stClear" aria-label="Clear search">Clear</button>
+        <button class="st-close" id="stClose" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-box-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#275e76" stroke-width="2" width="20" height="20">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search-input" type="text" placeholder="Search by keyword or item number..." id="searchInput" />
+      <button class="search-submit">Search</button>
+    </div>
+    <span class="search-close" id="searchClose">x Close</span>
+  </div>
+</div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" style="height:28px;width:auto;" />
+    <button class="mobile-close" id="mobileClose">x</button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="plp-in-stock-art.html">In Stock Art</a>
+    <a href="print-on-demand-art.html">Print on Demand Art</a>
+    <a href="christmas-art.html">Christmas Art</a>
+    <a href="juvenile-art.html">Juvenile Art</a>
+    <a href="last-call-art.html">Last Call Art</a>
+    <a href="accessory-items.html">Accessory Items</a>
+    <a href="contact-us.html" class="mobile-nav-secondary">Contact Us</a>
+    <a href="https://www.streamlineart.com/customer/account/create/" class="mobile-nav-secondary">Become a Customer</a>
+    <a href="#" onclick="return false;" class="mobile-nav-secondary" style="cursor:default;">Login</a>
+  </nav>
+</div>
+
+<main id="contentarea">
+    <!-- COLLECTIONS HERO: title + count + search -->
+    <div class="coll-pg-hero">
+      <div class="coll-pg-hero-inner">
+        <h1 class="coll-pg-hero-title">All Collections</h1>
+        <p class="coll-pg-hero-count" id="collCount">18 Collections</p>
+        <div class="coll-pg-search-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+               stroke="rgba(255,255,255,0.65)" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input id="collSearch" type="text"
+                 placeholder="Search collections&hellip;"
+                 oninput="collFilter()" autocomplete="off" />
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="coll-pg-tabs">
+      <button class="coll-pg-tab active" onclick="collTab(this,'all')">All</button>
+      <button class="coll-pg-tab" onclick="collTab(this,'new-releases')">New Releases</button>
+      <button class="coll-pg-tab" onclick="collTab(this,'best-sellers')">Best Sellers</button>
+      <button class="coll-pg-tab" onclick="collTab(this,'artists')">Artists</button>
+      <button class="coll-pg-tab" onclick="collTab(this,'color-stories')">Color Stories</button>
+      <button class="coll-pg-tab" onclick="collTab(this,'programs')">Programs</button>
+    </div>
+
+    <!-- COLLECTIONS GRID -->
+    <div class="coll-pg-wrap">
+      <div class="coll-pg-grid" id="collGrid"></div>
+      <div class="coll-pg-empty" id="collEmpty" style="display:none;">
+        No collections match your search.
+      </div>
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img class="footer-logo" src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+      <div class="footer-address">
+        1040 Ronsa Court,<br/>
+        Mississauga, ON, Canada L4W 3Y4
+        <p class="footer-info-group">Hours of operation: M to F, 8 A.M. &ndash; 4:30 P.M. EST</p>
+        <p class="footer-info-group">1.800.656.6408<br/>
+        <a href="mailto:sales@streamlineart.com">SALES@STREAMLINEART.COM</a></p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/streamlineartandframe" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/StreamlineArtTrends/" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/streamline-art-frame/" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Our Company</div>
+      <ul>
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="showrooms-and-events.html">Showrooms and Events</a></li>
+        <li><a href="loyalty-program.html">Loyalty Program</a></li>
+        <li><a href="press-and-media.html">Press &amp; Media</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Customer Care</div>
+      <ul>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="claims-and-credit-forms.html">Claims and Credit Forms</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Resources / Tools</div>
+      <ul>
+        <li><a href="rep-locator.html">Rep Locator</a></li>
+        <li><a href="selling-programs.html">Selling Programs</a></li>
+        <li><a href="freight-programs.html">Freight Programs</a></li>
+        <li><a href="freight-calculator.html">Canadian Dropship Freight Calculator</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">Streamline Art &amp; Frame. All Rights Reserved</span>
+    <div class="footer-legal">
+      <a href="https://www.streamlineart.com/sitemap/">Site Map</a>
+      <a href="https://www.streamlineart.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.streamlineart.com/cookies-policy">Cookies Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- GO UP BUTTON -->
+<button class="go-up-btn" id="goUpBtn" aria-label="Go to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+  GO<br/>UP
+</button>
+
+<script>
+(function () {
+  /* ── Go-up button ── */
+  var goUpBtn = document.getElementById('goUpBtn');
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY || window.pageYOffset;
+    if (goUpBtn) goUpBtn.classList.toggle('visible', y > 300);
+  });
+
+  /* ── Mobile menu ── */
+  var hamburgerBtn  = document.getElementById('hamburgerBtn');
+  var mobileMenu    = document.getElementById('mobileMenu');
+  var mobileOverlay = document.getElementById('mobileOverlay');
+  var mobileClose   = document.getElementById('mobileClose');
+  function openMobile()  { if(mobileMenu){mobileMenu.classList.add('open');} if(mobileOverlay){mobileOverlay.classList.add('open');} document.body.style.overflow='hidden'; }
+  function closeMobile() { if(mobileMenu){mobileMenu.classList.remove('open');} if(mobileOverlay){mobileOverlay.classList.remove('open');} document.body.style.overflow=''; }
+  if (hamburgerBtn)  hamburgerBtn.addEventListener('click', openMobile);
+  if (mobileClose)   mobileClose.addEventListener('click', closeMobile);
+  if (mobileOverlay) mobileOverlay.addEventListener('click', closeMobile);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeMobile(); } });
+
+  /* ── Scroll reveal ── */
+  function initReveal() {
+    var rows  = document.querySelectorAll('.reveal-row');
+    var inds  = document.querySelectorAll('.reveal:not(.reveal-row)');
+    if (!('IntersectionObserver' in window)) {
+      rows.forEach(function(el){ el.classList.add('visible'); });
+      inds.forEach(function(el){ el.classList.add('visible'); });
+      return;
+    }
+
+    /* Row observer — whole grid row fades in together */
+    var rowObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          rowObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    /* Individual heading observer */
+    var indObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          indObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    rows.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        el.classList.add('will-animate');
+        rowObs.observe(el);
+      }
+    });
+
+    inds.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        el.classList.add('will-animate');
+        indObs.observe(el);
+      }
+    });
+  }
+  if (document.readyState === 'complete') { initReveal(); }
+  else { window.addEventListener('load', initReveal); }
+
+})();
+
+/* ── Search takeover — pill click opens overlay ── */
+(function() {
+  var header   = document.getElementById('siteHeader');
+  var pill     = document.querySelector('.nav-search-pill');
+  var takeover = document.getElementById('searchTakeover');
+  var input    = document.getElementById('stInput');
+  var clearBtn = document.getElementById('stClear');
+  var closeBtn = document.getElementById('stClose');
+  if (!header || !pill || !takeover || !input) return;
+
+  function openSearch()  { header.classList.add('search-open'); setTimeout(function(){ input.focus(); }, 80); updateClear(); }
+  function closeSearch() { header.classList.remove('search-open'); input.value = ''; updateClear(); }
+  function updateClear() { if (clearBtn) clearBtn.classList.toggle('visible', input.value.length > 0); }
+
+  pill.addEventListener('click',     function(e){ e.stopPropagation(); openSearch(); });
+  if (clearBtn) clearBtn.addEventListener('click', function(e){ e.stopPropagation(); input.value=''; input.focus(); updateClear(); });
+  if (closeBtn) closeBtn.addEventListener('click', function(e){ e.stopPropagation(); closeSearch(); });
+  input.addEventListener('input', updateClear);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && header.classList.contains('search-open')) closeSearch(); });
+  document.addEventListener('click',   function(e){ if(header.classList.contains('search-open') && !takeover.contains(e.target) && e.target!==pill) closeSearch(); });
+})();
+
+/* ── FAQ accordion ── */
+document.querySelectorAll('.faq-question').forEach(function(q){
+  q.addEventListener('click', function(){ this.closest('.faq-item').classList.toggle('open'); });
+});
+
+/* ══════════════════════════════════════════════════════
+   HERO BANNER CAROUSEL  — 60fps GPU-accelerated
+   ─────────────────────────────────────────────────────
+   All slides pre-rendered in DOM. Only CSS opacity
+   changes drive transitions — pure GPU compositing.
+   No src changes during animation. No layout shifts.
+
+   Edit HERO_BANNERS below to update content.
+   active:false hides a banner; priority sets order.
+══════════════════════════════════════════════════════ */
+var HERO_BANNERS = [
+  {
+    id:'b1', active:true, priority:1,
+    image:'https://www.streamlineart.com/media//wysiwyg/BANNER_JUNE2026.jpg',
+    alt:'Join us at our upcoming markets – Streamline Art',
+    title:'', subtitle:'', ctaText:'', ctaLink:'plp-in-stock-art.html'
+  },
+  {
+    id:'b2', active:true, priority:2, contain:true,
+    image:'banner-2.png',
+    alt:'Farmhouse Chic Art Collection – Streamline Art',
+    title:'Farmhouse Chic Collection',
+    subtitle:'Hand-embellished canvas art with timeless country charm.',
+    ctaText:'Shop Farmhouse Art', ctaLink:'plp-in-stock-art.html'
+  }
+];
+
+(function(){
+  'use strict';
+  var MS=4500, cur=0, total=0, tmr=null, pt=null;
+  var sec, wrap, slides, dots, pb;
+
+  /* ── Build all slides in DOM ── */
+  function build(){
+    sec  = document.getElementById('heroSection');
+    wrap = document.getElementById('heroWrap');
+    if(!sec || !wrap) return;
+
+    var bs = HERO_BANNERS
+      .filter(function(b){ return b.active; })
+      .sort(function(a,b){ return a.priority - b.priority; });
+    total = bs.length;
+    if(!total) return;
+
+    /* Render every slide with its image already in the DOM */
+    var html = '';
+    bs.forEach(function(b, i){
+      var ov = '';
+      if(b.title || b.subtitle || b.ctaText){
+        ov = '<div class="hero-overlay">' +
+          (b.title    ? '<div class="hero-overlay-title">' + b.title + '</div>' : '') +
+          (b.subtitle ? '<div class="hero-overlay-sub">'   + b.subtitle + '</div>' : '') +
+          (b.ctaText  ?
+            '<a href="' + b.ctaLink + '" class="hero-overlay-cta">' + b.ctaText +
+            ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="11" height="11"><polyline points="9 18 15 12 9 6"/></svg></a>'
+          : '') + '</div>';
+      }
+      /* loading="eager" on first, "lazy" on rest — browser preloads all */
+      html +=
+        '<div class="hero-slide' + (i===0 ? ' active' : '') + '"' +
+        (b.contain ? ' data-fit="contain"' : '') + '>' +
+          '<a href="' + b.ctaLink + '">' +
+            '<img src="' + b.image + '" alt="' + (b.alt||'') + '"' +
+            ' loading="eager"' +
+            ' decoding="async" />' +
+          '</a>' + ov + '</div>';
+    });
+
+    wrap.innerHTML = html;
+    slides = wrap.querySelectorAll('.hero-slide');
+
+    /* ── Controls ── */
+    if(total > 1){
+      /* Arrows */
+      var pp = ce('button', 'hero-arrow hero-prev');
+      pp.setAttribute('aria-label','Previous');
+      pp.innerHTML = svgArrow('left');
+      pp.addEventListener('click', function(){ go(cur-1); autoStart(); });
+      sec.appendChild(pp);
+
+      var np = ce('button', 'hero-arrow hero-next');
+      np.setAttribute('aria-label','Next');
+      np.innerHTML = svgArrow('right');
+      np.addEventListener('click', function(){ go(cur+1); autoStart(); });
+      sec.appendChild(np);
+
+      /* Dots */
+      var dd = ce('div', 'hero-dots');
+      for(var i=0; i<total; i++){
+        var d = ce('button', 'hero-dot' + (i===0?' active':''));
+        d.setAttribute('aria-label', 'Banner ' + (i+1));
+        d.dataset.i = i;
+        (function(idx){ d.addEventListener('click', function(){ go(idx); autoStart(); }); })(i);
+        dd.appendChild(d);
+      }
+      sec.appendChild(dd);
+
+      /* Progress bar */
+      pb = ce('div', 'hero-progress');
+      pb.id = 'heroPb';
+      sec.appendChild(pb);
+
+      dots = sec.querySelectorAll('.hero-dot');
+
+      /* Pause on hover */
+      sec.addEventListener('mouseenter', autoPause);
+      sec.addEventListener('mouseleave', autoStart);
+
+      /* Preload ALL images immediately so transitions are instant */
+      bs.forEach(function(b){
+        var img = new Image();
+        img.src = b.image;
+      });
+
+      autoStart();
+    }
+  }
+
+  /* ── Advance to slide n ── */
+  function go(n){
+    if(total < 2) return;
+    var p = cur;
+    cur = ((n % total) + total) % total;
+    if(cur === p) return;
+
+    /* Pure class toggle — CSS does all the animation on GPU */
+    slides[p].classList.remove('active');
+    slides[cur].classList.add('active');
+
+    if(dots){
+      dots[p].classList.remove('active');
+      dots[cur].classList.add('active');
+    }
+    tick();
+  }
+
+  /* ── Progress bar ── */
+  function tick(){
+    if(!pb) return;
+    /* Reset without transition */
+    pb.style.transition = 'none';
+    pb.style.width = '0%';
+    clearTimeout(pt);
+    /* Start fill on next frame (after reset paints) */
+    pt = setTimeout(function(){
+      pb.style.transition = 'width ' + MS + 'ms linear';
+      pb.style.width = '100%';
+    }, 32);
+  }
+
+  function autoPause(){
+    clearInterval(tmr);
+    clearTimeout(pt);
+    if(pb){
+      var w = getComputedStyle(pb).width;
+      pb.style.transition = 'none';
+      pb.style.width = w;
+    }
+  }
+
+  function autoStart(){
+    clearInterval(tmr);
+    tick();
+    tmr = setInterval(function(){ go(cur+1); }, MS);
+  }
+
+  /* ── Helpers ── */
+  function ce(tag, cls){
+    var el = document.createElement(tag);
+    el.className = cls;
+    return el;
+  }
+  function svgArrow(dir){
+    var pts = dir==='left' ? '15 18 9 12 15 6' : '9 18 15 12 9 6';
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="18" height="18"><polyline points="' + pts + '"/></svg>';
+  }
+
+  /* Touch/swipe support for mobile */
+  var touchStartX = 0;
+  document.addEventListener('DOMContentLoaded', function(){
+    var heroEl = document.getElementById('heroSection');
+    if(!heroEl) return;
+    heroEl.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+    heroEl.addEventListener('touchend', function(e){
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 40){ go(dx < 0 ? cur+1 : cur-1); autoStart(); }
+    }, {passive:true});
+  });
+
+  /* Boot — DOM is ready (script is at bottom of body) */
+  build();
+})();
+
+var AI_PRODUCTS = [
+  { name:'Ochre Embers',    img:'https://www.streamlineart.com/media/catalog/category/ABSTRACT_4.jpg',                      price:'$248', sale:null,   cat:'Abstract',  dims:'40×60 in', tags:['abstract','modern','large','blue','office','neutral'], link:'pdp-wdo26243.html' },
+  { name:'Verdant Radiance',img:'https://www.streamlineart.com/media/catalog/category/COASTAL_AND_TROPICAL_TH.jpg',         price:'$235', sale:null,   cat:'Coastal',   dims:'40×60 in', tags:['coastal','blue','tropical','large','living room','bedroom'], link:'pdp-chy26129.html' },
+  { name:'River Dance',     img:'https://www.streamlineart.com/media/catalog/category/FARMHOUSE_CHIC.jpg',                  price:'$185', sale:'$148', cat:'Farmhouse', dims:'40×50 in', tags:['farmhouse','neutral','burlap','country','bedroom','rustic'], link:'pdp-wbg25581.html' },
+  { name:'Teal Petals',     img:'https://www.streamlineart.com/media/catalog/category/SMALL_ACCENT_ART_1.jpg',              price:'$138', sale:null,   cat:'Floral',    dims:'24×36 in', tags:['floral','teal','small','botanical','bedroom','affordable'], link:'pdp-frc26161.html' },
+  { name:'Lovely Pair I',   img:'https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg',                     price:'$215', sale:null,   cat:'Abstract',  dims:'32×48 in', tags:['abstract','modern','new','neutral','office','large'], link:'pdp-agf44513.html' },
+  { name:'Reach Upwards I', img:'https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg',      price:'$155', sale:'$124', cat:'Abstract',  dims:'18×36 in', tags:['abstract','vertical','best seller','affordable','modern'], link:'pdp-aff00664.html' },
+  { name:'Sky Lake',        img:'https://www.streamlineart.com/media/wysiwyg/ronald.jpg',                                  price:'$210', sale:'$168', cat:'Landscape', dims:'40×50 in', tags:['landscape','blue','water','nature','living room','large','coastal'], link:'pdp-wbg24332.html' },
+  { name:'Mystical Horse',  img:'https://www.streamlineart.com/media/catalog/category/lucia.jpg',                          price:'$192', sale:null,   cat:'Animals',   dims:'36×48 in', tags:['animals','horse','white','nature','bedroom','large'], link:'pdp-wbg24279.html' },
+  { name:'Each Morning II', img:'https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg',                price:'$148', sale:null,   cat:'Featured',  dims:'24×30 in', tags:['abstract','morning','warm','featured artist','affordable','small'], link:'pdp-aff00257.html' },
+  { name:'Gallery Wall Art',img:'https://www.streamlineart.com/media/.renditions/wysiwyg/Gallery_Wall_Art_COVER.jpg',      price:'$168', sale:null,   cat:'Collection',dims:'28×36 in', tags:['gallery','wall','modern','neutral','collection','living room'], link:'pdp-nwf25874.html' }
+];
+
+/* ══════════════════════════════════════════════════════
+   AI SEARCH ENGINE  — frontend prototype
+   Simulates intelligent product discovery via keyword
+   matching. No backend required.
+══════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  /* Run after full DOM is parsed (overlay HTML is after this script) */
+  function initAI(){
+  var overlay     = document.getElementById('aiOverlay');
+  var backdrop    = document.getElementById('aiBackdrop');
+  var inputEl     = document.getElementById('aiInput');
+  var clearBtn    = document.getElementById('aiClearBtn');
+  var closeBtn    = document.getElementById('aiCloseBtn');
+  var cameraBtn   = document.getElementById('aiCameraBtn');
+  var sugg        = document.getElementById('aiSuggestions');
+  var results     = document.getElementById('aiResults');
+  var resultsGrid = document.getElementById('aiResultsGrid');
+  var resultCount = document.getElementById('aiResultCount');
+  var noResults   = document.getElementById('aiNoResults');
+  var chipsWrap   = document.getElementById('aiChips');
+  var vsModal     = document.getElementById('aiVsModal');
+  var vsDrop      = document.getElementById('aiVsDrop');
+  var vsClose     = document.getElementById('aiVsClose');
+  var chips       = document.querySelectorAll('.ai-chip');
+  var activeFilter= 'all';
+  var searchTimer = null;
+
+  function openSearch(){
+    overlay.classList.add('open');
+    backdrop.classList.add('open');
+    document.body.style.overflow='hidden';
+    var t=document.getElementById('aiSearchTrigger'); if(t) t.classList.add('active');
+    setTimeout(function(){ if(inputEl) inputEl.focus(); }, 180);
+  }
+  function closeSearch(){
+    overlay.classList.remove('open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow='';
+    var t=document.getElementById('aiSearchTrigger'); if(t) t.classList.remove('active');
+  }
+
+  if(inputEl) inputEl.addEventListener('input', function(){
+    var q = inputEl.value.trim();
+    if(clearBtn) clearBtn.classList.toggle('show', q.length > 0);
+    if(q.length === 0){ showSugg(); }
+    else { clearTimeout(searchTimer); searchTimer=setTimeout(function(){ runSearch(q); }, 280); }
+  });
+
+  if(clearBtn) clearBtn.addEventListener('click', function(){
+    inputEl.value=''; clearBtn.classList.remove('show'); inputEl.focus(); showSugg();
+  });
+  if(closeBtn)  closeBtn.addEventListener('click', closeSearch);
+  if(backdrop)  backdrop.addEventListener('click', closeSearch);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeSearch(); });
+
+  function showSugg(){
+    if(sugg)      sugg.classList.remove('hide');
+    if(results)   results.classList.remove('show');
+    if(chipsWrap) chipsWrap.style.display='none';
+    activeFilter='all';
+    chips.forEach(function(c){ c.classList.toggle('active', c.dataset.filter==='all'); });
+  }
+
+  function runSearch(q){
+    if(sugg)      sugg.classList.add('hide');
+    if(chipsWrap) chipsWrap.style.display='flex';
+    if(results)   results.classList.add('show');
+    if(resultCount) resultCount.innerHTML='<span class="ai-thinking"><span class="ai-thinking-dots"><span></span><span></span><span></span></span>&nbsp;AI is finding matches...</span>';
+    if(resultsGrid) resultsGrid.innerHTML='';
+    if(noResults)   noResults.style.display='none';
+    setTimeout(function(){ renderResults(filterProds(q, activeFilter), q); }, 400);
+  }
+
+  function filterProds(q, f){
+    var ql=q.toLowerCase();
+    return (typeof AI_PRODUCTS!=='undefined'?AI_PRODUCTS:[]).filter(function(p){
+      var mq = ql.split(' ').some(function(w){
+        return w.length>2 && (p.name.toLowerCase().includes(w)||p.cat.toLowerCase().includes(w)||p.tags.some(function(t){return t.includes(w);}));
+      }) || ql.length<3;
+      var mf = f==='all' || p.tags.some(function(t){return t.includes(f);});
+      return mq && mf;
+    });
+  }
+
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function renderResults(prods, q){
+    if(!resultCount||!resultsGrid||!noResults) return;
+    var spark='<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" style="color:var(--primary)"><path d="M12 2l2.09 6.26L20 9.27l-4.55 4.43 1.09 6.30L12 17.27l-4.54 2.73 1.09-6.30L4 9.27l5.91-1.01L12 2z"/></svg>';
+    resultCount.innerHTML = spark + '&nbsp;' + (prods.length>0 ? '<strong>'+prods.length+' AI matches</strong> for &ldquo;'+esc(q)+'&rdquo;' : 'No matches found');
+    if(!prods.length){ resultsGrid.innerHTML=''; noResults.style.display='block'; return; }
+    noResults.style.display='none';
+    resultsGrid.innerHTML = prods.slice(0,10).map(function(p){
+      return '<a class="ai-result-card" href="'+p.link+'">'+
+        '<div class="ai-result-img">'+
+          '<img src="'+esc(p.img)+'" alt="'+esc(p.name)+'" loading="lazy"/>'+
+          '<div class="ai-match-badge">'+spark+' AI Match</div>'+
+        '</div>'+
+        '<div class="ai-result-info">'+
+          '<div class="ai-result-cat">'+esc(p.cat)+'</div>'+
+          '<div class="ai-result-name">'+esc(p.name)+'</div>'+
+          '<div class="ai-result-dims">'+esc(p.dims)+'</div>'+
+          '<div class="ai-result-price">'+(p.sale?'<span class="ai-result-sale">'+esc(p.price)+'</span> '+esc(p.sale):esc(p.price))+'</div>'+
+        '</div>'+
+      '</a>';
+    }).join('');
+  }
+
+  document.querySelectorAll('.ai-sugg-item, .ai-cat-pill').forEach(function(el){
+    el.addEventListener('click', function(){
+      var q=(el.dataset.query||el.textContent).replace(/[^\w\s]/g,' ').trim();
+      if(inputEl){ inputEl.value=q; if(clearBtn) clearBtn.classList.add('show'); }
+      runSearch(q);
+    });
+  });
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      activeFilter=chip.dataset.filter;
+      chips.forEach(function(c){ c.classList.toggle('active',c===chip); });
+      var q=inputEl?inputEl.value.trim():'';
+      if(q) runSearch(q);
+    });
+  });
+
+  if(cameraBtn) cameraBtn.addEventListener('click', function(){ if(vsModal) vsModal.classList.add('open'); });
+  if(vsClose)   vsClose.addEventListener('click',   function(){ if(vsModal) vsModal.classList.remove('open'); });
+  if(vsDrop)    vsDrop.addEventListener('click',    function(){ if(vsModal) vsModal.classList.remove('open'); alert('Visual search coming soon — upload a photo to find similar artwork.'); });
+
+  var trigger=document.getElementById('aiSearchTrigger');
+  if(trigger) trigger.addEventListener('click', openSearch);
+  window.openAISearch=openSearch;
+  } /* end initAI */
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', initAI);
+  } else {
+    initAI();
+  }
+})();
+
+
+  // ── Collections Page ──
+  var _COLLS = [
+    // NEW RELEASES
+    { cat:'new-releases', badge:'New Releases',
+      name:'New Releases-Embellished Import', count:'32 Products',
+      slug:'new-releases-embellished-import',
+      img:'https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg' },
+    { cat:'new-releases', badge:'New Releases',
+      name:'New Releases-POD', count:'24 Products',
+      slug:'new-releases-pod',
+      img:'https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg' },
+    // BEST SELLERS
+    { cat:'best-sellers', badge:'Best Sellers',
+      name:'Best Sellers-Embellished Import', count:'28 Products',
+      slug:'best-sellers-embellished-import',
+      img:'https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg' },
+    { cat:'best-sellers', badge:'Best Sellers',
+      name:'Best Sellers-POD', count:'18 Products',
+      slug:'best-sellers-pod',
+      img:'https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg' },
+    // ARTISTS
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-Dale Ryan', count:'22 Products', slug:'artist-dale-ryan',
+      img:'https://www.streamlineart.com/media/catalog/category/ABSTRACT_4.jpg' },
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-Heather Gauthier', count:'18 Products', slug:'artist-heather-gauthier',
+      img:'https://www.streamlineart.com/media/catalog/category/COASTAL_AND_TROPICAL_TH.jpg' },
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-John Kaltenhauser', count:'20 Products', slug:'artist-john-kaltenhauser',
+      img:'https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg' },
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-Lucia Heffernan', count:'16 Products', slug:'artist-lucia-heffernan',
+      img:'https://www.streamlineart.com/media/catalog/category/lucia.jpg' },
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-Michael Garnier', count:'14 Products', slug:'artist-michael-garnier',
+      img:'https://www.streamlineart.com/media/catalog/category/ANIMALS_1.jpg' },
+    { cat:'artists', badge:'Artist Series',
+      name:'Artist-Ronald West', count:'19 Products', slug:'artist-ronald-west',
+      img:'https://www.streamlineart.com/media/wysiwyg/ronald.jpg' },
+    // PROGRAMS
+    { cat:'programs', badge:'Program',
+      name:'Rack Program', count:'45 Products', slug:'rack-program',
+      img:'https://www.streamlineart.com/media/catalog/category/SMALL_ACCENT_ART_1.jpg' },
+    { cat:'programs', badge:'Program',
+      name:'Last Call', count:'38 Products', slug:'last-call',
+      img:'https://www.streamlineart.com/media/catalog/category/FARMHOUSE_CHIC.jpg' },
+    // COLOR STORIES – hard-stop vertical stripe gradients
+    { cat:'color-stories', badge:'Color Story',
+      name:'Deep Rooted', count:'38 Products', slug:'deep-rooted', img:null,
+      gradient:'linear-gradient(to right,#1c1008 0% 16.6%,#5c3620 16.6% 33.3%,#8a6030 33.3% 50%,#6a6828 50% 66.6%,#2e4830 66.6% 83.3%,#6a1820 83.3% 100%)' },
+    { cat:'color-stories', badge:'Color Story',
+      name:'Etherial Serenity', count:'42 Products', slug:'etherial-serenity', img:null,
+      gradient:'linear-gradient(to right,#6a8595 0% 16.6%,#8ea8b5 16.6% 33.3%,#a0b5a8 33.3% 50%,#7898a8 50% 66.6%,#8898a0 66.6% 83.3%,#6888a0 83.3% 100%)' },
+    { cat:'color-stories', badge:'Color Story',
+      name:'Ivory Whisper', count:'35 Products', slug:'ivory-whisper', img:null,
+      gradient:'linear-gradient(to right,#f0ece0 0% 16.6%,#e8e0d0 16.6% 33.3%,#d8d4c8 33.3% 50%,#ccc8bc 50% 66.6%,#dcdace 66.6% 83.3%,#d4d0c4 83.3% 100%)' },
+    { cat:'color-stories', badge:'Color Story',
+      name:'Saffron Sunset', count:'29 Products', slug:'saffron-sunset', img:null,
+      gradient:'linear-gradient(to right,#c8901e 0% 16.6%,#e8b028 16.6% 33.3%,#d87820 33.3% 50%,#c05820 50% 66.6%,#a02818 66.6% 83.3%,#7a1010 83.3% 100%)' },
+    { cat:'color-stories', badge:'Color Story',
+      name:'Smokey Gems', count:'33 Products', slug:'smokey-gems', img:null,
+      gradient:'linear-gradient(to right,#5a1830 0% 16.6%,#8a1e38 16.6% 33.3%,#1a2858 33.3% 50%,#587828 50% 66.6%,#4a3818 66.6% 83.3%,#6a5030 83.3% 100%)' },
+    { cat:'color-stories', badge:'Color Story',
+      name:'Timeless Teal', count:'40 Products', slug:'timeless-teal', img:null,
+      gradient:'linear-gradient(to right,#0c3838 0% 16.6%,#1a5858 16.6% 33.3%,#287878 33.3% 50%,#389898 50% 66.6%,#48b0b8 66.6% 83.3%,#60c8d0 83.3% 100%)' }
+  ];
+
+  var _collCat    = 'all';
+  var _collSearch = '';
+  var _collObserver = null;
+
+  function collTab(btn, cat) {
+    _collCat = cat;
+    document.querySelectorAll('.coll-pg-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    _renderColls();
+  }
+
+  function collFilter() {
+    _collSearch = (document.getElementById('collSearch').value || '').toLowerCase().trim();
+    _renderColls();
+  }
+
+  /* Build a single card HTML string */
+  function _buildCard(c) {
+    var fb  = 'https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg';
+    var img = c.img
+      ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + fb + '\'" />'
+      : '<div class="coll-pg-color-bg" style="background:' + c.gradient + ';height:100%;"></div>';
+    return (
+      '<a href="plp-in-stock-art.html?collection=' + c.slug + '" class="coll-pg-card">' +
+        '<div class="coll-pg-card-visual">' +
+          '<span class="coll-pg-badge">' + c.badge + '</span>' +
+          img +
+          '<div class="coll-pg-hover-overlay">' +
+            '<span class="coll-pg-hover-cta">Explore Collection' +
+              ' <span class="coll-pg-hover-arrow">&#8594;</span>' +
+            '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="coll-pg-card-info">' +
+          '<div class="coll-pg-card-name">' + c.name + '</div>' +
+          '<div class="coll-pg-card-count">' + c.count + '</div>' +
+        '</div>' +
+      '</a>'
+    );
+  }
+
+  /* Intersection-Observer: reveal cards row by row with stagger */
+  function _initReveal() {
+    if (_collObserver) { _collObserver.disconnect(); }
+
+    var COLS = 4; // matches CSS grid columns (desktop)
+    if (window.innerWidth <= 1100 && window.innerWidth > 800) COLS = 3;
+    if (window.innerWidth <= 800)  COLS = 2;
+
+    _collObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var card  = entry.target;
+        var cards = Array.from(document.querySelectorAll('.coll-pg-card'));
+        var idx   = cards.indexOf(card);
+        var col   = idx % COLS;
+        setTimeout(function() { card.classList.add('is-visible'); }, col * 70);
+        _collObserver.unobserve(card);
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.coll-pg-card').forEach(function(card) {
+      _collObserver.observe(card);
+    });
+  }
+
+  function _renderColls() {
+    var filtered = _COLLS.filter(function(c) {
+      var matchCat    = (_collCat === 'all') || (c.cat === _collCat);
+      var matchSearch = !_collSearch || c.name.toLowerCase().indexOf(_collSearch) !== -1;
+      return matchCat && matchSearch;
+    });
+
+    var grid    = document.getElementById('collGrid');
+    var empty   = document.getElementById('collEmpty');
+    var countEl = document.getElementById('collCount');
+    if (!grid) return;
+
+    if (countEl) {
+      countEl.textContent = filtered.length + ' Collection' + (filtered.length !== 1 ? 's' : '');
+    }
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+
+    grid.innerHTML = filtered.map(_buildCard).join('');
+
+    /* Kick off scroll-reveal after DOM update */
+    setTimeout(_initReveal, 30);
+  }
+
+  // Run on page load
+  _renderColls();
+
+  </script>
+
+
+
+<!-- ═══════════════ AI SEARCH OVERLAY ═══════════════ -->
+<div class="ai-backdrop" id="aiBackdrop"></div>
+<div class="ai-overlay" id="aiOverlay" role="search" aria-label="AI Product Search">
+  <!-- Header row: spark icon + input + close -->
+  <div class="ai-header">
+    <div class="ai-spark-wrap" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.09 6.26L20 9.27l-4.55 4.43 1.09 6.30L12 17.27l-4.54 2.73 1.09-6.30L4 9.27l5.91-1.01L12 2z"/>
+      </svg>
+    </div>
+    <div class="ai-input-wrap">
+      <input class="ai-input" id="aiInput" type="text"
+             placeholder="Ask AI to find artwork... (e.g. blue abstract for office)"
+             autocomplete="off" spellcheck="false" />
+      <div class="ai-input-actions">
+        <button class="ai-clear-btn" id="aiClearBtn" aria-label="Clear search" title="Clear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button class="ai-camera-btn" id="aiCameraBtn" aria-label="Visual search" title="Search by image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button class="ai-close-btn" id="aiCloseBtn" aria-label="Close search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Filter chips (shown during results) -->
+  <div class="ai-chips" id="aiChips" style="display:none;">
+    <span class="ai-chip active" data-filter="all">All</span>
+    <span class="ai-chip" data-filter="abstract">Abstract</span>
+    <span class="ai-chip" data-filter="coastal">Coastal</span>
+    <span class="ai-chip" data-filter="farmhouse">Farmhouse</span>
+    <span class="ai-chip" data-filter="large">Large</span>
+    <span class="ai-chip" data-filter="landscape">Landscape</span>
+    <span class="ai-chip" data-filter="floral">Floral</span>
+    <span class="ai-chip" data-filter="animals">Animals</span>
+  </div>
+
+  <!-- Body -->
+  <div class="ai-body">
+
+    <!-- Suggestions (empty state) -->
+    <div class="ai-suggestions" id="aiSuggestions">
+      <div class="ai-sugg-group">
+        <h4>Suggested Searches</h4>
+        <div class="ai-sugg-list">
+          <div class="ai-sugg-item" data-query="Modern wall art for living room">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Modern wall art for living room</span>
+          </div>
+          <div class="ai-sugg-item" data-query="Large abstract canvas art">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Large abstract canvas art</span>
+          </div>
+          <div class="ai-sugg-item" data-query="Blue coastal artwork">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Blue coastal artwork</span>
+          </div>
+          <div class="ai-sugg-item" data-query="Farmhouse canvas for bedroom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Farmhouse canvas for bedroom</span>
+          </div>
+          <div class="ai-sugg-item" data-query="Affordable art under $200">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Affordable art under $200</span>
+          </div>
+        </div>
+      </div>
+      <div class="ai-sugg-group">
+        <h4>Trending Now</h4>
+        <div class="ai-sugg-list">
+          <div class="ai-sugg-item" data-query="Best Sellers">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+            <span>Best Sellers</span><em>↑ Popular</em>
+          </div>
+          <div class="ai-sugg-item" data-query="New Releases 2026">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>New Releases 2026</span><em>↑ New</em>
+          </div>
+          <div class="ai-sugg-item" data-query="Featured Artists collection">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Featured Artists</span>
+          </div>
+          <div class="ai-sugg-item" data-query="landscape nature art">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span>Landscape art</span>
+          </div>
+        </div>
+      </div>
+      <div class="ai-sugg-group">
+        <h4>Popular Categories</h4>
+        <div class="ai-cat-pills">
+          <div class="ai-cat-pill" data-query="animals art">🐾 Animals</div>
+          <div class="ai-cat-pill" data-query="floral botanical art">🌸 Floral</div>
+          <div class="ai-cat-pill" data-query="landscape nature art">🌿 Landscapes</div>
+          <div class="ai-cat-pill" data-query="abstract modern art">🎨 Abstract</div>
+          <div class="ai-cat-pill" data-query="coastal blue art">🌊 Coastal</div>
+          <div class="ai-cat-pill" data-query="farmhouse country art">🏡 Farmhouse</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results (typing state) -->
+    <div class="ai-results" id="aiResults">
+      <div class="ai-results-meta">
+        <div class="ai-results-label" id="aiResultsLabel">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style="color:var(--primary);">
+            <path d="M12 2l2.09 6.26L20 9.27l-4.55 4.43 1.09 6.30L12 17.27l-4.54 2.73 1.09-6.30L4 9.27l5.91-1.01L12 2z"/>
+          </svg>
+          <span id="aiResultCount">Showing results</span>
+        </div>
+        <a href="plp-in-stock-art.html" class="ai-sugg-item" style="padding:5px 10px;border-radius:6px;font-size:11.5px;font-weight:700;color:var(--primary);text-decoration:none;">
+          Browse all art →
+        </a>
+      </div>
+      <div class="ai-results-grid" id="aiResultsGrid"></div>
+      <div class="ai-no-results" id="aiNoResults" style="display:none;">
+        <h3>No exact matches found</h3>
+        <p>Try different keywords or browse our full collection</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Visual Search Modal -->
+<div class="ai-vs-modal" id="aiVsModal">
+  <div class="ai-vs-box">
+    <div class="ai-vs-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </div>
+    <div class="ai-vs-title">Visual Art Search</div>
+    <div class="ai-vs-sub">Upload a photo of art you love, or a room you want to decorate, and our AI will find matching pieces from our collection.</div>
+    <div class="ai-vs-drop" id="aiVsDrop">
+      <p>📸 &nbsp; Drag &amp; drop an image here, or click to browse</p>
+    </div>
+    <button class="ai-vs-close" id="aiVsClose">Cancel</button>
+  </div>
+</div>
+
+</body>
+</html>
+                             
