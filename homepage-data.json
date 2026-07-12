@@ -1,0 +1,363 @@
+{
+  "_comment": "Streamline Art – Homepage Data Source. Update this file to change homepage content. Future: replace fetch URL in homepage-renderer.js with your API endpoint.",
+  "_version": "1.0.0",
+  "_last_updated": "2026-06-08",
+
+  "hero": [
+    {
+      "id": "hero-1",
+      "image": "https://www.streamlineart.com/media//wysiwyg/BANNER_MARCH2026.jpg",
+      "alt": "Join us at our upcoming markets - Streamline Art",
+      "link": "plp-in-stock-art.html",
+      "loading": "eager"
+    }
+  ],
+
+  "highlights": [
+    {
+      "id": "hl-1",
+      "label": "New Releases",
+      "image": "https://www.streamlineart.com/media/.renditions/wysiwyg/new2026.jpg",
+      "alt": "New Releases",
+      "link": "plp-in-stock-art.html"
+    },
+    {
+      "id": "hl-2",
+      "label": "Best Sellers",
+      "image": "https://www.streamlineart.com/media/.renditions/wysiwyg/BEST_SELLERS_JUNE_2025.jpg",
+      "alt": "Best Sellers",
+      "link": "plp-in-stock-art.html"
+    },
+    {
+      "id": "hl-3",
+      "label": "Featured Artists",
+      "image": "https://www.streamlineart.com/media/catalog/category/FEATURED_ARTIST.jpg",
+      "alt": "Featured Artists",
+      "link": "plp-in-stock-art.html"
+    },
+    {
+      "id": "hl-4",
+      "label": "Trends",
+      "image": "https://www.streamlineart.com/media/.renditions/catalog/category/trends2026a_1.jpg",
+      "alt": "Trends",
+      "link": "plp-in-stock-art.html"
+    }
+  ],
+
+  "catalogs": [
+    {
+      "id": "cat-1",
+      "label": "New Releases 2026",
+      "image": "https://www.streamlineart.com/media//wysiwyg/newrelease2026.jpg",
+      "alt": "New Releases 2026",
+      "link": "https://images.streamlineart.com/image/New_Releases_Spring_2026_NP.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-2",
+      "label": "Trends 2026",
+      "image": "https://www.streamlineart.com/media/.renditions/wysiwyg/Trends2026_1.jpg",
+      "alt": "Trends 2026",
+      "link": "https://images.streamlineart.com/Trends_2026.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-3",
+      "label": "InLine Everyday",
+      "image": "https://www.streamlineart.com/media/wysiwyg/inline.jpg",
+      "alt": "InLine Everyday",
+      "link": "https://images.streamlineart.com/Inline_Everyday.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-4",
+      "label": "Juvenile 2026",
+      "image": "https://www.streamlineart.com/media//wysiwyg/juvenile-2026.jpg",
+      "alt": "Juvenile 2026",
+      "link": "https://images.streamlineart.com/image/JUVENILE_CATALOGUE_COMPLETE_APRIL_2026.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-5",
+      "label": "Christmas 2026",
+      "image": "https://www.streamlineart.com/media/wysiwyg/xmas2026.jpg",
+      "alt": "Christmas 2026",
+      "link": "https://images.streamlineart.com/xmas2026.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-6",
+      "label": "Print on Demand 2025",
+      "image": "https://www.streamlineart.com/media/wysiwyg/pod-2024.jpg",
+      "alt": "Print on Demand 2025",
+      "link": "https://images.streamlineart.com/POD2025.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-7",
+      "label": "Heather Gauthier",
+      "image": "https://www.streamlineart.com/media/wysiwyg/heatherg.jpg",
+      "alt": "Heather Gauthier",
+      "link": "https://images.streamlineart.com/heatherg.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "cat-8",
+      "label": "State Posters 2025",
+      "image": "https://www.streamlineart.com/media/wysiwyg/stateposter.jpg",
+      "alt": "State Posters 2025",
+      "link": "https://images.streamlineart.com/POD_STATE_POSTERS_2024_NP_NC.pdf",
+      "target": "_blank"
+    }
+  ],
+
+  "artists": [
+    {
+      "id": "art-1",
+      "label": "Ronald West",
+      "image": "https://www.streamlineart.com/media/wysiwyg/ronald.jpg",
+      "alt": "Ronald West",
+      "link": "https://images.streamlineart.com/POD_RONALD_WEST_2024_NP_NC.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "art-2",
+      "label": "Lucia Heffernan",
+      "image": "https://www.streamlineart.com/media/catalog/category/lucia.jpg",
+      "alt": "Lucia Heffernan",
+      "link": "https://images.streamlineart.com/POD_LUCIA_HEFFERNAN_2024_NP_NC.pdf",
+      "target": "_blank"
+    },
+    {
+      "id": "art-3",
+      "label": "Gallery Wall Art",
+      "image": "https://www.streamlineart.com/media/.renditions/wysiwyg/Gallery_Wall_Art_COVER.jpg",
+      "alt": "Gallery Wall Art",
+      "link": "https://images.streamlineart.com/gallery_wall_art.pdf",
+      "target": "_blank"
+    }
+  ],
+
+  "mega_menu": [
+    {
+      "id": "menu-in-stock",
+      "label": "IN STOCK ART",
+      "link": "plp-in-stock-art.html",
+      "image": "mega-1.jpg",
+      "image_alt": "In Stock Art",
+      "image_label": "In Stock Art",
+      "columns": [
+        {
+          "heading": "By Theme",
+          "links": [
+            { "label": "New Releases",         "href": "plp-in-stock-art.html" },
+            { "label": "Abstract",              "href": "plp-in-stock-art.html" },
+            { "label": "Western",               "href": "plp-in-stock-art.html" },
+            { "label": "Coastal & Tropical",    "href": "plp-in-stock-art.html" },
+            { "label": "Florals & Botanicals",  "href": "plp-in-stock-art.html" }
+          ]
+        },
+        {
+          "heading": "Collections",
+          "links": [
+            { "label": "Gallery Wall Art",  "href": "plp-in-stock-art.html" },
+            { "label": "Birds & Butterflies","href": "plp-in-stock-art.html" },
+            { "label": "Lakes & Mountains", "href": "plp-in-stock-art.html" },
+            { "label": "Farmhouse Chic",    "href": "plp-in-stock-art.html" },
+            { "label": "Small Accent Art",  "href": "plp-in-stock-art.html" }
+          ]
+        },
+        {
+          "heading": "By Frame",
+          "links": [
+            { "label": "Floating Frame", "href": "plp-in-stock-art.html" },
+            { "label": "Shadow Box",     "href": "plp-in-stock-art.html" },
+            { "label": "Canvas Wrap",    "href": "plp-in-stock-art.html" },
+            { "label": "Barnwood",       "href": "plp-in-stock-art.html" },
+            { "label": "Champagne",      "href": "plp-in-stock-art.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-pod",
+      "label": "PRINT ON DEMAND ART",
+      "link": "print-on-demand-art.html",
+      "image": "mega-2.jpg",
+      "image_alt": "Print on Demand Art",
+      "image_label": "Print on Demand",
+      "columns": [
+        {
+          "heading": "Featured Artists",
+          "links": [
+            { "label": "Ronald West",     "href": "print-on-demand-art.html" },
+            { "label": "Lucia Heffernan", "href": "print-on-demand-art.html" }
+          ]
+        },
+        {
+          "heading": "Collections",
+          "links": [
+            { "label": "All Print on Demand", "href": "print-on-demand-art.html" },
+            { "label": "State Posters",        "href": "print-on-demand-art.html" },
+            { "label": "Canvas Prints",        "href": "print-on-demand-art.html" },
+            { "label": "Holiday",              "href": "print-on-demand-art.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-christmas",
+      "label": "CHRISTMAS ART",
+      "link": "christmas-art.html",
+      "image": "mega-3.jpg",
+      "image_alt": "Christmas Art",
+      "image_label": "Christmas Art",
+      "simple": true,
+      "columns": [
+        {
+          "heading": "Christmas Art",
+          "links": [
+            { "label": "All Christmas Art", "href": "christmas-art.html" },
+            { "label": "LED Light Up Art",  "href": "christmas-art.html" },
+            { "label": "Holiday Canvas",    "href": "christmas-art.html" },
+            { "label": "Seasonal Prints",   "href": "christmas-art.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-juvenile",
+      "label": "JUVENILE ART",
+      "link": "juvenile-art.html",
+      "image": "mega-4.jpg",
+      "image_alt": "Juvenile Art",
+      "image_label": "Juvenile Art",
+      "simple": true,
+      "columns": [
+        {
+          "heading": "Juvenile Art",
+          "links": [
+            { "label": "All Juvenile Art",    "href": "juvenile-art.html" },
+            { "label": "Animals",             "href": "juvenile-art.html" },
+            { "label": "Educational",         "href": "juvenile-art.html" },
+            { "label": "Nursery",             "href": "juvenile-art.html" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "menu-last-call",
+      "label": "LAST CALL ART",
+      "link": "last-call-art.html",
+      "image": "mega-5.jpg",
+      "image_alt": "Last Call Art",
+      "image_label": "Last Call Art",
+      "simple": true,
+      "columns": [
+        {
+          "heading": "Last Call Art",
+          "links": [
+            { "label": "All Last Call Art", "href": "last-call-art.html" },
+            { "label": "Clearance",         "href": "last-call-art.html" },
+            { "label": "Final Sale",        "href": "last-call-art.html" }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "footer": {
+    "logo": {
+      "src": "https://www.streamlineart.com/media/logo/default/Logo.png",
+      "alt": "Streamline Art"
+    },
+    "tagline": "Premium Wholesale Art &amp; Framing",
+    "address": {
+      "street": "1040 Ronsa Court,",
+      "city": "Mississauga, ON, Canada L4W 3Y4",
+      "hours": "M to F, 8 A.M. – 4:30 P.M. EST",
+      "phone": "1.800.656.6408",
+      "email": "sales@streamlineart.com"
+    },
+    "social": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/streamlineartandframe",
+        "label": "Instagram"
+      },
+      {
+        "platform": "facebook",
+        "url": "https://www.facebook.com/StreamlineArtTrends/",
+        "label": "Facebook"
+      },
+      {
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/company/streamline-art-frame/",
+        "label": "LinkedIn"
+      }
+    ],
+    "columns": [
+      {
+        "title": "Our Company",
+        "links": [
+          { "label": "Our Story",              "href": "our-story.html" },
+          { "label": "Showrooms and Events",   "href": "showrooms-and-events.html" },
+          { "label": "Loyalty Program",        "href": "loyalty-program.html" },
+          { "label": "Press & Media",          "href": "press-and-media.html" }
+        ]
+      },
+      {
+        "title": "Customer Care",
+        "links": [
+          { "label": "FAQ",                     "href": "faq.html" },
+          { "label": "Claims and Credit Forms", "href": "forms.html" },
+          { "label": "Contact Us",              "href": "contact-us.html" }
+        ]
+      },
+      {
+        "title": "Resources / Tools",
+        "links": [
+          { "label": "Rep Locator",                         "href": "rep-locator.html" },
+          { "label": "Selling Programs",                    "href": "selling-programs.html" },
+          { "label": "Freight Programs",                    "href": "freight-programs.html" },
+          { "label": "Canadian Dropship Freight Calculator","href": "freight-calculator.html" }
+        ]
+      }
+    ],
+    "legal": {
+      "copyright": "Streamline Art &amp; Frame. All Rights Reserved",
+      "links": [
+        { "label": "Site Map",       "href": "https://www.streamlineart.com/sitemap/" },
+        { "label": "Privacy Policy", "href": "https://www.streamlineart.com/privacy-policy" },
+        { "label": "Cookies Policy", "href": "https://www.streamlineart.com/cookies-policy" }
+      ]
+    }
+  },
+
+  "announcement_bar": [
+    {
+      "icon": "&#128666;",
+      "text": "Free Shipping on Orders Above <strong>$500</strong>",
+      "sub_text": "B2B Wholesale Orders",
+      "sub_color": "rgba(255,255,255,0.55)"
+    },
+    {
+      "icon": "&#11088;",
+      "text": "Earn Exclusive <strong>Loyalty Rewards</strong> with Every Purchase",
+      "sub_text": "Platinum Member Benefits",
+      "sub_color": "#e8c870"
+    },
+    {
+      "icon": "&#128218;",
+      "text": "Explore Our New <strong>Seasonal Catalog</strong> Collections",
+      "sub_link_text": "Download Now &rsaquo;",
+      "sub_link_href": "forms.html"
+    },
+    {
+      "icon": "&#127912;",
+      "text": "Need Assistance? Contact Your <strong>Dedicated Account Representative</strong>",
+      "sub_link_text": "Contact Rep &rsaquo;",
+      "sub_link_href": "customer-dashboard.html"
+    }
+  ]
+}

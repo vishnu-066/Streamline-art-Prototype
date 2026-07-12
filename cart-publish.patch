@@ -1,0 +1,211 @@
+diff --git a/christmas-art.html b/christmas-art.html
+--- a/christmas-art.html
++++ b/christmas-art.html
+@@ -1134,1 +1134,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1501,1 +1501,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/collections.html b/collections.html
+--- a/collections.html
++++ b/collections.html
+@@ -1593,1 +1593,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -2565,1 +2565,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/in-stock-art.html b/in-stock-art.html
+--- a/in-stock-art.html
++++ b/in-stock-art.html
+@@ -1134,1 +1134,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1525,1 +1525,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/index.html b/index.html
+--- a/index.html
++++ b/index.html
+@@ -1423,1 +1423,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -2333,1 +2333,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/juvenile-art.html b/juvenile-art.html
+--- a/juvenile-art.html
++++ b/juvenile-art.html
+@@ -1134,1 +1134,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1501,1 +1501,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/last-call-art.html b/last-call-art.html
+--- a/last-call-art.html
++++ b/last-call-art.html
+@@ -1134,1 +1134,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1482,1 +1482,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-aff00257.html b/pdp-aff00257.html
+--- a/pdp-aff00257.html
++++ b/pdp-aff00257.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-aff00664.html b/pdp-aff00664.html
+--- a/pdp-aff00664.html
++++ b/pdp-aff00664.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-agf44513.html b/pdp-agf44513.html
+--- a/pdp-agf44513.html
++++ b/pdp-agf44513.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-chy26129.html b/pdp-chy26129.html
+--- a/pdp-chy26129.html
++++ b/pdp-chy26129.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-frc26161.html b/pdp-frc26161.html
+--- a/pdp-frc26161.html
++++ b/pdp-frc26161.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-led0441.html b/pdp-led0441.html
+--- a/pdp-led0441.html
++++ b/pdp-led0441.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-nwf25874.html b/pdp-nwf25874.html
+--- a/pdp-nwf25874.html
++++ b/pdp-nwf25874.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-sun26201.html b/pdp-sun26201.html
+--- a/pdp-sun26201.html
++++ b/pdp-sun26201.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-wbg24279.html b/pdp-wbg24279.html
+--- a/pdp-wbg24279.html
++++ b/pdp-wbg24279.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-wbg24332.html b/pdp-wbg24332.html
+--- a/pdp-wbg24332.html
++++ b/pdp-wbg24332.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-wbg25581.html b/pdp-wbg25581.html
+--- a/pdp-wbg25581.html
++++ b/pdp-wbg25581.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pdp-wdo26243.html b/pdp-wdo26243.html
+--- a/pdp-wdo26243.html
++++ b/pdp-wdo26243.html
+@@ -1218,1 +1218,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1932,1 +1932,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/plp-in-stock-art.html b/plp-in-stock-art.html
+--- a/plp-in-stock-art.html
++++ b/plp-in-stock-art.html
+@@ -1524,1 +1524,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -3373,1 +3373,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/pre-login-home-page.html b/pre-login-home-page.html
+--- a/pre-login-home-page.html
++++ b/pre-login-home-page.html
+@@ -814,1 +814,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1194,1 +1194,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+diff --git a/print-on-demand-art.html b/print-on-demand-art.html
+--- a/print-on-demand-art.html
++++ b/print-on-demand-art.html
+@@ -1134,1 +1134,1 @@
+-      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart">
++      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+@@ -1501,1 +1501,2 @@
+-</body>
++<script src="cart-store.js"></script>
++</body>
+

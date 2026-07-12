@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart | Streamline Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#275e76;--ink:#333;--line:#dfe5e8;--soft:#f6f8f9;--nav-h:80px}
+    body{font-family:'Montserrat',sans-serif;color:var(--ink);background:#fff;font-size:14px}
+    a{color:inherit;text-decoration:none} button,input{font:inherit} img{display:block;max-width:100%}
+    .site-header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+    .navbar{height:var(--nav-h);padding:0 40px;display:flex;align-items:center;gap:36px}
+    .nav-logo{min-width:160px}.nav-logo img{height:34px;width:auto}
+    .nav-links{display:flex;align-items:center;justify-content:center;gap:30px;flex:1;list-style:none}
+    .nav-links a{height:var(--nav-h);display:flex;align-items:center;color:var(--primary);font-size:11.5px;font-weight:700;letter-spacing:.8px;white-space:nowrap;border-bottom:2px solid transparent}
+    .nav-links a:hover{border-color:var(--primary)}
+    .nav-right{display:flex;align-items:center;gap:8px}.nav-search{height:36px;border:1.5px solid #d4e2e8;border-radius:50px;background:#f6fafc;color:#8aacba;padding:0 16px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500}
+    .nav-icon{width:38px;height:38px;border:0;background:transparent;color:var(--primary);display:grid;place-items:center;position:relative;cursor:pointer;border-radius:50%}.nav-icon:hover,.nav-icon.active{background:#eef5f7}.nav-icon svg{width:21px;height:21px}.badge{position:absolute;right:0;top:0;min-width:17px;height:17px;padding:0 4px;border-radius:10px;background:var(--primary);color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center;border:2px solid #fff}
+    .mobile-menu{display:none}
+    .crumb{max-width:1240px;margin:0 auto;padding:25px 30px 0;color:#777;font-size:12px}.crumb a{color:var(--primary)}
+    main{max-width:1240px;margin:0 auto;padding:36px 30px 80px;min-height:560px}
+    h1{font-size:28px;font-weight:600;letter-spacing:.2px;color:#252525;margin-bottom:34px}
+    .cart-layout{display:grid;grid-template-columns:minmax(0,1fr) 355px;gap:48px;align-items:start}
+    .cart-head{display:grid;grid-template-columns:minmax(300px,1fr) 115px 125px 44px;gap:18px;padding:0 0 14px;border-bottom:1px solid #bac8ce;color:#666;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}.cart-head span:not(:first-child){text-align:center}
+    .cart-item{display:grid;grid-template-columns:minmax(300px,1fr) 115px 125px 44px;gap:18px;align-items:center;padding:24px 0;border-bottom:1px solid var(--line)}
+    .product{display:flex;gap:22px;align-items:center}.product-img{width:126px;height:106px;object-fit:cover;background:var(--soft)}.product-name{font-size:15px;font-weight:600;color:#222;margin-bottom:8px}.product-sku{font-size:11px;color:#888;letter-spacing:.3px}.unit,.line-total{text-align:center;font-weight:600;color:#222}
+    .qty{display:flex;justify-content:center;align-items:center}.qty button,.qty input{height:34px;border:1px solid #cfd8dc;background:#fff;text-align:center}.qty button{width:30px;color:var(--primary);cursor:pointer;font-size:18px}.qty button:hover{background:#eef5f7}.qty input{width:40px;border-left:0;border-right:0;font-weight:600;font-size:12px;outline:none}
+    .remove{width:34px;height:34px;border:0;background:transparent;color:#89969c;cursor:pointer;font-size:22px;border-radius:50%}.remove:hover{background:#f5eded;color:#a33}
+    .continue{display:inline-flex;align-items:center;gap:8px;margin-top:24px;color:var(--primary);font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
+    .summary{background:var(--soft);padding:28px 26px;border-top:3px solid var(--primary)}.summary h2{font-size:17px;font-weight:600;margin-bottom:24px;color:#222}.sum-row{display:flex;justify-content:space-between;padding:12px 0;font-size:13px}.sum-row.total{border-top:1px solid #cad4d8;margin-top:9px;padding-top:20px;font-size:17px;font-weight:700}.tax-note{font-size:10px;color:#888;line-height:1.5;margin:6px 0 20px}.checkout{width:100%;height:48px;border:0;background:var(--primary);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s}.checkout:hover{background:#1a4a60;transform:translateY(-1px)}.checkout:disabled{opacity:.45;cursor:not-allowed;transform:none}
+    .empty{display:none;text-align:center;padding:68px 20px;border:1px solid var(--line)}.empty.show{display:block}.empty svg{width:54px;color:#9fb5bf;margin-bottom:20px}.empty h2{font-size:20px;font-weight:600;margin-bottom:10px}.empty p{color:#777;margin-bottom:26px}.empty a{display:inline-flex;background:var(--primary);color:#fff;padding:14px 28px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}
+    .site-footer{background:#f7f7f7;border-top:1px solid #e7e7e7}.footer-main{max-width:1240px;margin:auto;padding:52px 30px 42px;display:grid;grid-template-columns:1.35fr 1fr 1fr 1.2fr;gap:48px}.footer-logo{height:32px;width:auto;margin-bottom:20px}.footer-address{font-size:11px;line-height:1.8;color:#666}.footer-title{font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:18px}.footer-col a{display:block;font-size:11px;color:#666;margin:0 0 12px}.footer-col a:hover{color:var(--primary)}.footer-bottom{border-top:1px solid #ddd;max-width:1240px;margin:auto;padding:18px 30px;display:flex;justify-content:space-between;color:#888;font-size:10px}.footer-legal{display:flex;gap:22px}
+    @media(max-width:1050px){.navbar{padding:0 22px}.nav-links{display:none}.nav-search{display:none}.nav-right{margin-left:auto}.cart-layout{grid-template-columns:1fr 310px;gap:28px}.footer-main{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){:root{--nav-h:66px}.navbar{height:66px;padding:0 16px}.nav-logo img{height:28px}.cart-layout{grid-template-columns:1fr}.cart-head{display:none}main{padding:28px 18px 60px}h1{font-size:23px;margin-bottom:24px}.cart-item{grid-template-columns:90px 1fr 34px;gap:14px;align-items:start}.product{display:contents}.product-img{width:90px;height:86px;grid-row:1/4}.product-info{grid-column:2}.unit{display:none}.qty{grid-column:2;justify-content:flex-start}.line-total{grid-column:2;text-align:left}.remove{grid-column:3;grid-row:1}.summary{margin-top:8px}.footer-main{grid-template-columns:1fr;padding:38px 22px}.footer-bottom{padding:18px 22px;gap:15px;flex-direction:column}.footer-legal{flex-wrap:wrap}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <nav class="navbar" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Go to homepage"><img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" /></a>
+    <ul class="nav-links">
+      <li><a href="plp-in-stock-art.html">IN STOCK ART</a></li><li><a href="print-on-demand-art.html">PRINT ON DEMAND ART</a></li><li><a href="christmas-art.html">CHRISTMAS ART</a></li><li><a href="juvenile-art.html">JUVENILE ART</a></li><li><a href="last-call-art.html">LAST CALL ART</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="nav-search" href="plp-in-stock-art.html" aria-label="Search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> AI Search</a>
+      <a class="nav-icon" href="#" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
+      <a class="nav-icon active" href="cart.html" aria-label="Cart" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span class="badge" id="navCartBadge">0</span></a>
+      <a class="nav-icon" href="customer-dashboard.html" aria-label="My Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+    </div>
+  </nav>
+</header>
+<div class="crumb"><a href="index.html">Home</a> &nbsp;&rsaquo;&nbsp; Shopping Cart</div>
+<main>
+  <h1>Shopping Cart</h1>
+  <div class="empty" id="emptyCart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><h2>Your cart is empty</h2><p>Explore our collections and find the perfect artwork for your space.</p><a href="plp-in-stock-art.html">Continue Shopping</a></div>
+  <div class="cart-layout" id="cartLayout">
+    <section aria-label="Cart items"><div class="cart-head"><span>Product</span><span>Price</span><span>Quantity</span><span></span></div><div id="cartItems"></div><a class="continue" href="plp-in-stock-art.html">&larr; Continue Shopping</a></section>
+    <aside class="summary"><h2>Order Summary</h2><div class="sum-row"><span>Subtotal</span><strong id="subtotal">$0.00</strong></div><div class="sum-row"><span>Shipping</span><span>Calculated at checkout</span></div><div class="sum-row total"><span>Order Total</span><span id="total">$0.00</span></div><p class="tax-note">Taxes and shipping will be calculated during checkout.</p><button class="checkout" id="checkoutBtn" type="button">Proceed to Checkout</button></aside>
+  </div>
+</main>
+<footer class="site-footer"><div class="footer-main"><div><img class="footer-logo" src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art"/><div class="footer-address">1040 Ronsa Court,<br>Mississauga, ON, Canada L4W 3Y4<br><br>Hours of operation: M to F, 8 A.M. – 4:30 P.M. EST<br>1.800.656.6408<br>SALES@STREAMLINEART.COM</div></div><div class="footer-col"><div class="footer-title">Our Company</div><a href="our-story.html">Our Story</a><a href="#">Showrooms and Events</a><a href="#">Loyalty Program</a><a href="#">Press &amp; Media</a></div><div class="footer-col"><div class="footer-title">Customer Care</div><a href="#">FAQ</a><a href="forms.html">Claims and Credit Forms</a><a href="#">Contact Us</a></div><div class="footer-col"><div class="footer-title">Resources / Tools</div><a href="#">Rep Locator</a><a href="#">Selling Programs</a><a href="#">Freight Programs</a><a href="#">Canadian Dropship Freight Calculator</a></div></div><div class="footer-bottom"><span>Streamline Art &amp; Frame. All Rights Reserved</span><span class="footer-legal"><a href="#">Site Map</a><a href="#">Privacy Policy</a><a href="#">Cookies Policy</a></span></div></footer>
+<script>
+  var KEY='streamlineCart';
+  function readCart(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
+  function saveCart(items){localStorage.setItem(KEY,JSON.stringify(items));renderCart()}
+  function money(n){return '$'+Number(n||0).toFixed(2)}
+  function renderCart(){
+    var items=readCart(), box=document.getElementById('cartItems'), empty=document.getElementById('emptyCart'), layout=document.getElementById('cartLayout');
+    var count=items.reduce(function(s,i){return s+(+i.qty||1)},0); document.getElementById('navCartBadge').textContent=count;
+    empty.classList.toggle('show',!items.length); layout.style.display=items.length?'grid':'none';
+    box.innerHTML=items.map(function(i,n){return '<article class="cart-item"><div class="product"><img class="product-img" src="'+(i.image||'mega-1.jpg')+'" alt=""><div class="product-info"><a class="product-name" href="'+(i.url||'#')+'">'+(i.name||'Artwork')+'</a><div class="product-sku">SKU: '+(i.sku||'—')+'</div></div></div><div class="unit">'+money(i.price)+'</div><div class="qty"><button onclick="changeQty('+n+',-1)" aria-label="Decrease quantity">−</button><input value="'+(+i.qty||1)+'" readonly aria-label="Quantity"><button onclick="changeQty('+n+',1)" aria-label="Increase quantity">+</button></div><div class="line-total">'+money((+i.price||0)*(+i.qty||1))+'</div><button class="remove" onclick="removeItem('+n+')" aria-label="Remove '+(i.name||'item')+'">×</button></article>'}).join('');
+    var subtotal=items.reduce(function(s,i){return s+(+i.price||0)*(+i.qty||1)},0); document.getElementById('subtotal').textContent=money(subtotal);document.getElementById('total').textContent=money(subtotal);document.getElementById('checkoutBtn').disabled=!items.length;
+  }
+  function changeQty(n,d){var x=readCart();x[n].qty=Math.max(1,(+x[n].qty||1)+d);saveCart(x)}
+  function removeItem(n){var x=readCart();x.splice(n,1);saveCart(x)}
+  renderCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>My Account – Streamline Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+/* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      color: #333333;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    :root {
+      --primary: #275e76;
+      --footer-bg: #f7f7f7;
+      --divider: #c8c8c8;
+      --white: #ffffff;
+      --body-text: #333333;
+      --nav-h: 80px;
+      --transition: 0.25s ease;
+    }
+
+
+    /* ===== STICKY HEADER ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-h);
+      padding: 0 40px;
+      background: #fff;
+    }
+    .nav-logo { display: flex; flex-direction: column; gap: 2px; min-width: 160px; cursor: pointer; transition: opacity 0.2s; }
+    .nav-logo:hover { opacity: 0.82; }
+    .nav-logo img { height: 34px; width: auto; }
+    .nav-logo-tagline { font-size: 9px; color: #999; letter-spacing: 0.3px; font-weight: 400; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 0; flex: 1; justify-content: center; }
+    .nav-links > li { position: static; }
+    .nav-links > li > a {
+      display: block;
+      padding: 0 16px;
+      height: var(--nav-h);
+      line-height: var(--nav-h);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--primary);
+      white-space: nowrap;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links > li > a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 16px; right: 16px;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: center;
+    }
+    .nav-links > li:hover > a { color: #1a4a60; }
+    .nav-links > li:hover > a::after { transform: scaleX(1); }
+
+    /* Dropdown */
+    /* ── MEGA MENU ── */
+    .navbar { position: relative; }
+
+    .mega-menu {
+      position: absolute;
+      top: var(--nav-h);
+      left: 30px; right: 30px;
+      background: #fff;
+      border-top: 2px solid var(--primary);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.13);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      display: flex;
+      align-items: stretch;
+    }
+    .nav-links > li:hover .mega-menu,
+    .mega-menu:hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Left content area */
+    .mega-content {
+      flex: 1;
+      display: flex;
+      gap: 48px;
+      padding: 36px 48px;
+      border-right: 1px solid #eef2f4;
+    }
+    .mega-col { min-width: 160px; }
+    .mega-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8edf0;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .mega-col ul { list-style: none; padding: 0; margin: 0; }
+    .mega-col ul li { margin-bottom: 0; }
+    .mega-col ul li a {
+      display: block;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      letter-spacing: 0.2px;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.18s, padding-left 0.18s;
+      border-bottom: none;
+      text-transform: none;
+    }
+    .mega-col ul li a:hover {
+      color: var(--primary);
+      padding-left: 6px;
+    }
+
+    /* Right image panel */
+    .mega-img {
+      width: 460px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      align-self: stretch;
+      min-height: 240px;
+    }
+    .mega-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .mega-menu:hover .mega-img img { transform: scale(1.06); }
+    /* Gradient overlay for premium label presentation */
+    .mega-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.52) 0%,
+        rgba(0,0,0,0.18) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+    .mega-img-label {
+      position: absolute;
+      bottom: 18px; left: 22px;
+      background: transparent;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      z-index: 2;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.30);
+    }
+
+    /* Simple mega (no columns — single link list) */
+    .mega-simple .mega-content { gap: 0; }
+    .mega-simple .mega-col ul li a { font-size: 13px; }
+
+    /* ── NAV RIGHT ICONS ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      min-width: 280px;
+      justify-content: flex-end;
+    }
+
+    /* ── Simple search pill ── */
+    .nav-search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-search-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 16px;
+      border: 1.5px solid #d4e2e8;
+      border-radius: 50px;
+      background: #f6fafc;
+      cursor: text;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .nav-search-pill:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(39,94,118,0.10);
+    }
+    .nav-search-pill svg {
+      flex-shrink: 0;
+      color: #8aacba;
+      width: 15px; height: 15px;
+    }
+    .nav-search-pill input {
+      border: none; outline: none; background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: #333;
+      width: 148px;
+    }
+    .nav-search-pill input::placeholder { color: #9bb8c4; }
+    .nav-search-pill { cursor: pointer; }
+
+    /* ── SEARCH TAKEOVER — full-navbar overlay ── */
+    .search-takeover {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(18px) saturate(1.9);
+      -webkit-backdrop-filter: blur(18px) saturate(1.9);
+      border-bottom: 1px solid rgba(39,94,118,0.12);
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 40px; gap: 16px;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+      z-index: 300;
+    }
+    .site-header.search-open .search-takeover { opacity:1; pointer-events:auto; transform:translateY(0); }
+    .site-header.search-open .navbar > *:not(.search-takeover) { opacity:0.18; transition:opacity 0.28s ease; pointer-events:none; }
+    .st-bar {
+      flex:1; max-width:680px; height:48px;
+      display:flex; align-items:center;
+      background:rgba(255,255,255,0.96);
+      border:1.5px solid var(--primary); border-radius:50px;
+      box-shadow:0 4px 28px rgba(39,94,118,0.18),0 0 0 5px rgba(39,94,118,0.06);
+      padding:0 6px 0 20px; gap:10px; transition:box-shadow 0.22s ease;
+    }
+    .st-bar:focus-within { box-shadow:0 6px 36px rgba(39,94,118,0.26),0 0 0 5px rgba(39,94,118,0.10); }
+    .st-icon { flex-shrink:0; color:var(--primary); opacity:0.6; display:flex; align-items:center; }
+    .st-icon svg { width:17px; height:17px; }
+    .st-input { flex:1; border:none; outline:none; background:transparent; font-family:'Montserrat',sans-serif; font-size:13px; font-weight:500; color:#1a1a1a; letter-spacing:0.2px; }
+    .st-input::placeholder { color:#aac4ce; font-size:12px; font-weight:400; }
+    .st-div { width:1px; height:22px; background:#d4e2e8; flex-shrink:0; }
+    .st-clear { flex-shrink:0; background:none; border:none; cursor:pointer; font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--primary); opacity:0; pointer-events:none; padding:4px 8px; border-radius:20px; transition:opacity 0.18s ease,background 0.18s ease; }
+    .st-clear.visible { opacity:0.7; pointer-events:auto; }
+    .st-clear.visible:hover { opacity:1; background:rgba(39,94,118,0.07); }
+    .st-close { flex-shrink:0; background:rgba(39,94,118,0.08); border:none; border-radius:50%; cursor:pointer; color:var(--primary); width:32px; height:32px; display:flex; align-items:center; justify-content:center; margin-left:4px; transition:background 0.18s ease,transform 0.18s ease; }
+    .st-close:hover { background:rgba(39,94,118,0.16); transform:rotate(90deg); }
+    .st-close svg { width:14px; height:14px; }
+    .st-camera { flex-shrink:0; background:none; border:none; cursor:pointer; color:var(--primary); opacity:0.55; display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; transition:opacity 0.18s,background 0.18s; }
+    .st-camera:hover { opacity:1; background:rgba(39,94,118,0.08); }
+    .st-camera svg { width:15px; height:15px; }
+
+
+    /* Icon buttons (wishlist, cart, user) */
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      transition: background 0.18s, color 0.18s;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-icon-btn:hover { background: rgba(39,94,118,0.08); color: #1a4a60; }
+    .nav-icon-btn svg { width: 19px; height: 19px; }
+
+    /* Cart badge */
+    .nav-cart-badge {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 13px; height: 13px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 7.5px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      pointer-events: none;
+    }
+
+    /* Search button (kept for overlay trigger fallback) */
+    .nav-search-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--primary); transition: opacity 0.2s; min-width: 36px; display: none;
+    }
+    .nav-search-btn:hover { opacity: 0.7; }
+    .nav-search-btn svg { width: 20px; height: 20px; }
+
+    /* Search overlay */
+    .search-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 120px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .search-overlay.active { opacity: 1; pointer-events: auto; }
+    .search-box {
+      background: #fff; width: 600px; max-width: 90%; padding: 28px; border-radius: 2px;
+      transform: translateY(-20px); transition: transform 0.25s;
+    }
+    .search-overlay.active .search-box { transform: translateY(0); }
+    .search-box-inner {
+      display: flex; border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px; gap: 10px; align-items: center;
+    }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font-family: 'Montserrat', sans-serif; font-size: 16px;
+      color: var(--body-text); background: transparent;
+    }
+    .search-input::placeholder { color: #aaa; font-size: 14px; }
+    .search-submit {
+      background: none; border: none; cursor: pointer;
+      color: var(--primary); font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .search-close {
+      display: block; text-align: right; margin-top: 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+      color: #888; cursor: pointer; text-transform: uppercase;
+    }
+    .search-close:hover { color: var(--primary); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--primary); transition: 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 85%; max-width: 320px; height: 100vh; background: #fff;
+      z-index: 3000; padding: 24px 0; overflow-y: auto;
+      transform: translateX(-100%); transition: transform 0.3s ease;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 2999; opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-menu-overlay.show { opacity: 1; }
+    .mobile-menu-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px 20px; border-bottom: 1px solid #eee;
+    }
+    .mobile-close { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--primary); line-height: 1; }
+    .mobile-nav a {
+      display: block; padding: 14px 24px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--primary); border-bottom: 1px solid #f0f0f0; transition: background 0.2s;
+    }
+    .mobile-nav a:hover { background: #f8f8f8; }
+    .mobile-nav .mobile-nav-secondary { font-weight: 500; color: #555; letter-spacing: 0.6px; font-size: 11px; }
+
+    /* ===== HERO ===== */
+    .hero-section {
+      margin: 0 30px;          /* left/right outer spacing */
+      position: relative;
+      overflow: hidden;
+      line-height: 0;
+      border-radius: 2px;
+    }
+    .hero-section a { display: block; width: 100%; }
+    .hero-section img { width: 100%; height: auto; display: block; transition: transform 0.6s ease; }
+    .hero-section:hover img { transform: scale(1.01); }
+
+    /* ===== SECTION HEADING ===== */
+    .section-heading {
+      text-align: center; font-size: 22px; font-weight: 700;
+      letter-spacing: 2.4px; text-transform: uppercase;
+      color: var(--primary); padding: 48px 0 30px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights-section { padding: 0 30px 50px; max-width: 1440px; margin: 0 auto; }
+    .highlights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .highlight-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .highlight-card-img { overflow: hidden; position: relative; aspect-ratio: 5/6; }
+    .highlight-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+    .highlight-card:hover .highlight-card-img img { transform: scale(1.05); }
+    .highlight-card-label {
+      text-align: center; padding: 14px 8px 6px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .highlight-card:hover .highlight-card-label { color: #1a4a60; }
+
+    /* ===== DIVIDER ===== */
+    .section-divider { margin: 0 30px; border: none; border-top: 1px solid var(--divider); }
+
+    /* ===== CATALOGS ===== */
+    .catalogs-section { padding: 0 60px 50px; max-width: 1440px; margin: 0 auto; }
+    .catalogs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px; }
+    .catalog-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .catalog-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .catalog-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .catalog-card:hover .catalog-card-img img { transform: scale(1.04); }
+    .catalog-card-label {
+      text-align: center; padding: 12px 8px 4px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .catalog-card:hover .catalog-card-label { color: #1a4a60; }
+
+    /* ===== FEATURED ARTISTS ===== */
+    .artists-section { padding: 0 30px 60px; max-width: 1440px; margin: 0 auto; }
+    .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .artist-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; }
+    .artist-card-img { overflow: hidden; position: relative; aspect-ratio: 3/4; }
+    .artist-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.45s ease; }
+    .artist-card:hover .artist-card-img img { transform: scale(1.04); }
+    .artist-card-label {
+      text-align: center; padding: 14px 8px 4px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .artist-card:hover .artist-card-label { color: #1a4a60; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--footer-bg); padding: 36px 40px 0; }
+    .footer-main {
+      display: grid; grid-template-columns: 200px 1fr 1fr 1fr; column-gap: 40px;
+      max-width: 1440px; margin: 0 auto; padding-bottom: 28px;
+    }
+    .footer-logo { height: 38px; width: auto; margin-bottom: 6px; }
+    .footer-brand { padding-right: 24px; }
+    .footer-tagline { font-size: 10px; color: #888; letter-spacing: 0.3px; margin-bottom: 10px; }
+    .footer-address { font-size: 12px; color: var(--body-text); line-height: 1.5; margin-bottom: 6px; }
+    .footer-info-group { margin-top: 8px; }
+    .footer-address a { color: var(--primary); font-size: 12px; letter-spacing: 0.4px; font-weight: 500; }
+    .footer-address a:hover { text-decoration: underline; }
+    .footer-social { display: flex; gap: 12px; margin-top: 10px; }
+    .footer-social a {
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: #e0e0e0;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .footer-social a:hover { background: var(--primary); transform: scale(1.1); }
+    .footer-social a:hover svg { color: #fff; }
+    .footer-social svg { width: 18px; height: 18px; color: var(--primary); transition: color 0.25s; }
+    .footer-col-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px solid #ddd;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 11.5px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s, padding-left 0.2s; display: inline-block;
+    }
+    .footer-col ul li a:hover { color: #1a4a60; padding-left: 4px; }
+    .footer-bottom {
+      border-top: 1px solid #ddd; padding: 16px 0;
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copyright { font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: #888; }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase;
+      color: var(--primary); transition: color 0.2s;
+    }
+    .footer-legal a:hover { color: #1a4a60; }
+
+    /* ===== GO UP ===== */
+    .go-up-btn {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 56px; height: 56px; background: var(--primary); color: #fff;
+      border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.3;
+      z-index: 500; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    }
+    .go-up-btn.visible { opacity: 1; transform: translateY(0); }
+    .go-up-btn:hover { background: #1a4a60; }
+    .go-up-btn svg { width: 16px; height: 16px; margin-bottom: 2px; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Row-based reveal: whole grid row enters together ── */
+    .reveal-row {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-row.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      .nav-links > li > a { padding: 0 11px; font-size: 11px; }
+    }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .mobile-menu-overlay { display: block; }
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); }
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .navbar { padding: 0 20px; }
+      .highlights-section, .catalogs-section, .artists-section { padding-left: 16px; padding-right: 16px; }
+      .highlights-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .catalogs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .artists-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .section-heading { font-size: 16px; letter-spacing: 2px; padding: 32px 0 20px; }
+      .site-footer { padding: 28px 20px 0; }
+    }
+
+/* ═══════════════════════════════════════════════════
+   DASHBOARD  —  ENTERPRISE CLEAN UI  v3
+═══════════════════════════════════════════════════ */
+:root {
+  --br:    #275e76;
+  --br-dk: #1a4a60;
+  --br-lt: #e8f2f6;
+  --bg:    #f5f7f9;
+  --bg-w:  #ffffff;
+  --bd:    #e4e8ec;
+  --bd-lt: #f0f3f5;
+  --tx:    #1a2632;
+  --tx-2:  #4a6070;
+  --tx-3:  #8aa0ae;
+  --grn:   #16a34a;
+  --grn-bg:#f0fdf4;
+  --amb:   #d97706;
+  --amb-bg:#fffbeb;
+  --red:   #dc2626;
+  --red-bg:#fef2f2;
+  --blu:   #2563eb;
+  --blu-bg:#eff6ff;
+  --rad:   8px;
+  --rad-sm:6px;
+  --sh:    0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  --sh-md: 0 4px 14px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--bg); color: var(--tx); }
+
+/* ── Compact hero strip ── */
+.dh-strip {
+  background: var(--br);
+  padding: 13px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.dh-strip-left { display: flex; align-items: center; gap: 12px; }
+.dh-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.30);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0;
+}
+.dh-name  { font-size: 14px; font-weight: 700; color: #fff; }
+.dh-meta  { font-size: 10.5px; color: rgba(255,255,255,0.60); margin-top: 1px; font-weight: 500; }
+.dh-chip  {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px;
+  border-radius: 50px; font-size: 9px; font-weight: 800;
+  letter-spacing: 0.8px; text-transform: uppercase; border: 1.5px solid transparent;
+}
+.dh-chip-active { background: rgba(22,163,74,0.16); color: #86efac; border-color: rgba(22,163,74,0.22); }
+.dh-chip-active::before {
+  content:''; width:5px; height:5px; border-radius:50%; background:#4ade80; animation: blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+.dh-chip-tier { background: rgba(201,168,76,0.16); color: #fcd34d; border-color: rgba(201,168,76,0.25); }
+
+/* ── Two-column shell ── */
+.db-shell {
+  display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 200px); align-items: start;
+}
+
+/* ── Sidebar ── */
+.db-sidebar {
+  position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto;
+  background: var(--bg-w); border-right: 1px solid var(--bd);
+  padding: 16px 0 40px; display: flex; flex-direction: column;
+  scrollbar-width: thin; scrollbar-color: var(--bd) transparent;
+}
+.db-sidebar::-webkit-scrollbar { width: 3px; }
+.db-sidebar::-webkit-scrollbar-thumb { background: var(--bd); }
+
+.db-nav-group { font-size: 8px; font-weight: 800; letter-spacing: 1.6px; text-transform: uppercase; color: var(--tx-3); padding: 16px 18px 5px; }
+.db-nav-group:first-child { padding-top: 4px; }
+
+.db-nav-item {
+  display: flex; align-items: center; gap: 9px; padding: 8px 18px;
+  cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--tx-2); text-decoration: none; border-left: 3px solid transparent;
+  transition: background 0.14s, color 0.14s;
+}
+.db-nav-item:hover { background: var(--bg); color: var(--br); }
+.db-nav-item.active { background: var(--br-lt); color: var(--br); border-left-color: var(--br); font-weight: 700; }
+.db-nav-item svg { width: 14px; height: 14px; flex-shrink: 0; opacity: 0.7; }
+.db-nav-item.active svg, .db-nav-item:hover svg { opacity: 1; }
+.db-nav-badge {
+  margin-left: auto; background: var(--br); color: #fff;
+  border-radius: 50px; font-size: 8.5px; font-weight: 800; padding: 1px 7px;
+}
+
+/* ── Content ── */
+.db-content { padding: 24px 28px 56px; min-height: 600px; }
+
+/* ── Breadcrumb ── */
+.db-bc { font-size: 10.5px; font-weight: 600; color: var(--tx-3); display: flex; align-items: center; gap: 5px; margin-bottom: 18px; }
+.db-bc svg { width: 11px; height: 11px; }
+.db-bc span { color: var(--br); font-weight: 700; }
+
+/* ── Section header ── */
+.db-sh { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; gap: 12px; flex-wrap: wrap; }
+.db-sh-title { font-size: 18px; font-weight: 800; color: var(--tx); letter-spacing: -0.2px; }
+.db-sh-sub   { font-size: 11.5px; color: var(--tx-3); margin-top: 2px; font-weight: 500; }
+
+/* ── Panel show/hide ── */
+.db-panel { display: none; }
+.db-panel.active { display: block; }
+
+/* ── Base card ── */
+.dc { background: var(--bg-w); border: 1px solid var(--bd); border-radius: var(--rad); box-shadow: var(--sh); }
+.dc-hd {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 12px; border-bottom: 1px solid var(--bd-lt); gap: 10px; flex-wrap: wrap;
+}
+.dc-title { font-size: 12px; font-weight: 700; color: var(--tx); display: flex; align-items: center; gap: 7px; }
+.dc-title svg { width: 14px; height: 14px; color: var(--br); flex-shrink: 0; }
+.dc-body { padding: 16px 18px; }
+.dc-foot { padding: 12px 18px; border-top: 1px solid var(--bd-lt); display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ── Snapshot cards (overview) ── */
+.snap-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 16px; }
+.snap-card {
+  background: var(--bg-w); border: 1px solid var(--bd);
+  border-radius: var(--rad); box-shadow: var(--sh); overflow: hidden;
+}
+.snap-hd {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px 10px; border-bottom: 1px solid var(--bd-lt);
+  font-size: 9px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--tx-3);
+}
+.snap-hd svg { width: 13px; height: 13px; color: var(--br); }
+.snap-body { padding: 0; }
+.snap-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 16px; border-bottom: 1px solid var(--bd-lt); gap: 12px;
+}
+.snap-row:last-child { border-bottom: none; }
+.snap-k { font-size: 10px; font-weight: 700; color: var(--tx-3); letter-spacing: 0.3px; flex-shrink: 0; }
+.snap-v { font-size: 12px; font-weight: 700; color: var(--tx); text-align: right; }
+.snap-v.brand { color: var(--br); }
+.snap-v.green { color: var(--grn); }
+.snap-v.amber { color: var(--amb); }
+.snap-v.mono  { font-family: 'Courier New', monospace; font-size: 11px; letter-spacing: 0.3px; }
+
+/* KPI row (overview) */
+.kpi-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+.kpi {
+  background: var(--bg-w); border: 1px solid var(--bd); border-radius: var(--rad);
+  box-shadow: var(--sh); padding: 16px 18px;
+}
+.kpi-lbl { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx-3); margin-bottom: 8px; }
+.kpi-num { font-size: 24px; font-weight: 800; color: var(--tx); line-height: 1; }
+.kpi-num.brand { color: var(--br); }
+.kpi-num.green { color: var(--grn); }
+.kpi-num.amber { color: var(--amb); }
+.kpi-sub { font-size: 10.5px; color: var(--tx-3); margin-top: 5px; font-weight: 500; }
+.kpi-delta { font-size: 10px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; gap: 3px; }
+.kpi-delta.up { color: var(--grn); }
+.kpi-delta.nt { color: var(--tx-3); }
+
+/* ── Info grid (label/value) ── */
+.ig { display: grid; grid-template-columns: repeat(2,1fr); }
+.ig-cell { padding: 11px 0; border-bottom: 1px solid var(--bd-lt); }
+.ig-cell:nth-last-child(-n+2) { border-bottom: none; }
+.ig-cell:nth-child(odd)  { padding-right: 20px; }
+.ig-cell:nth-child(even) { padding-left: 20px; border-left: 1px solid var(--bd-lt); }
+.ig-lbl { font-size: 9px; font-weight: 800; letter-spacing: 0.7px; text-transform: uppercase; color: var(--tx-3); margin-bottom: 3px; }
+.ig-val { font-size: 12.5px; font-weight: 600; color: var(--tx); line-height: 1.4; }
+.ig-val.brand { color: var(--br); font-weight: 700; }
+.ig-val.green { color: var(--grn); }
+.ig-val.amber { color: var(--amb); }
+.ig-val.mono  { font-family: 'Courier New', monospace; font-size: 11.5px; }
+/* single-col variant */
+.ig.col1 .ig-cell:nth-child(even) { padding-left: 0; border-left: none; }
+.ig.col1 .ig-cell:last-child { border-bottom: none; }
+.ig.col1 .ig-cell:nth-last-child(-n+2) { border-bottom: 1px solid var(--bd-lt); }
+.ig.col1 .ig-cell:last-child { border-bottom: none; }
+
+/* ── Status / tier badges ── */
+.sp {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 50px; font-size: 9.5px; font-weight: 700;
+}
+.sp::before { content:''; width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+.sp-green  { background:var(--grn-bg); color:var(--grn); }
+.sp-green::before  { background:var(--grn); }
+.sp-amber  { background:var(--amb-bg); color:var(--amb); }
+.sp-amber::before  { background:var(--amb); }
+.sp-red    { background:var(--red-bg); color:var(--red); }
+.sp-red::before    { background:var(--red); }
+.sp-blue   { background:var(--blu-bg); color:var(--blu); }
+.sp-blue::before   { background:var(--blu); }
+.sp-brand  { background:var(--br-lt); color:var(--br); }
+.sp-brand::before  { background:var(--br); }
+.sp-grey   { background:#f1f3f5; color:#64748b; }
+.sp-grey::before   { background:#94a3b8; }
+
+.tier { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:50px; font-size:9.5px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase; }
+.tier-pt { background:#f0f7fa; color:#1a4a60; border:1.5px solid #8ab4c2; }
+.tier-gd { background:#fffbeb; color:#92400e; border:1.5px solid #c9a84c; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--rad-sm); border: none;
+  font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+  cursor: pointer; text-decoration: none; transition: all 0.14s; white-space: nowrap;
+}
+.btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+.btn-primary  { background: var(--br); color: #fff; }
+.btn-primary:hover  { background: var(--br-dk); }
+.btn-outline  { background: var(--bg-w); color: var(--br); border: 1.5px solid var(--bd); }
+.btn-outline:hover  { border-color: var(--br); background: var(--br-lt); }
+.btn-ghost    { background: var(--bg); color: var(--tx-2); border: 1.5px solid var(--bd); }
+.btn-ghost:hover    { background: #eaecef; color: var(--tx); }
+.btn-danger   { background: var(--red-bg); color: var(--red); border: 1.5px solid #fca5a5; }
+.btn-danger:hover   { background: var(--red); color: #fff; border-color: var(--red); }
+.btn-sm { padding: 5px 10px; font-size: 10px; }
+
+/* ── Grid helpers ── */
+.g2  { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.g3  { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.g4  { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.mb  { margin-bottom: 16px; }
+.mb2 { margin-bottom: 24px; }
+
+/* ── Table ── */
+.dt { width: 100%; border-collapse: collapse; }
+.dt th { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--tx-3); padding: 0 14px 10px; text-align: left; border-bottom: 2px solid var(--bd); }
+.dt td { font-size: 12px; font-weight: 500; color: var(--tx); padding: 12px 14px; border-bottom: 1px solid var(--bd-lt); vertical-align: middle; }
+.dt tbody tr:last-child td { border-bottom: none; }
+.dt tbody tr:hover td { background: #fafbfc; }
+
+/* ── Address card ── */
+.addr {
+  background: var(--bg-w); border: 1px solid var(--bd); border-radius: var(--rad);
+  padding: 16px 18px; position: relative;
+}
+.addr.default { border-color: var(--br); }
+.addr.default::before {
+  content:'Default'; position:absolute; top:-1px; right:12px;
+  background:var(--br); color:#fff; font-size:8px; font-weight:800;
+  letter-spacing:0.8px; text-transform:uppercase; padding:2px 8px; border-radius:0 0 5px 5px;
+}
+.addr-name  { font-size:13px; font-weight:700; color:var(--tx); margin-bottom:5px; }
+.addr-body  { font-size:12px; color:var(--tx-2); line-height:1.75; margin-bottom:12px; font-weight:500; }
+.addr-acts  { display:flex; gap:7px; }
+
+/* ── Quick actions ── */
+.qa-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.qa {
+  display:flex; flex-direction:column; align-items:flex-start; gap:9px;
+  padding:16px 14px; background:var(--bg-w); border:1px solid var(--bd);
+  border-radius:var(--rad); cursor:pointer; text-decoration:none; color:var(--tx);
+  transition:border-color 0.14s, box-shadow 0.14s, transform 0.14s;
+}
+.qa:hover { border-color:var(--br); box-shadow:var(--sh-md); transform:translateY(-1px); }
+.qa-ico {
+  width:36px; height:36px; border-radius:var(--rad-sm);
+  background:var(--br-lt); color:var(--br);
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.14s;
+}
+.qa-ico svg { width:17px; height:17px; }
+.qa:hover .qa-ico { background:var(--br); color:#fff; }
+.qa-lbl { font-size:11px; font-weight:700; color:var(--tx-2); line-height:1.3; }
+.qa:hover .qa-lbl { color:var(--br); }
+
+/* ── Rep contact ── */
+.rep-row { display:flex; align-items:center; gap:9px; font-size:12px; color:var(--tx-2); font-weight:500; margin-bottom:9px; }
+.rep-row:last-child { margin-bottom:0; }
+.rep-row svg { width:13px; height:13px; color:var(--br); flex-shrink:0; }
+.rep-av {
+  width:48px; height:48px; border-radius:50%; background:var(--br); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; font-weight:800; flex-shrink:0;
+}
+
+/* ── Toggle switch ── */
+.toggle-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0; border-bottom:1px solid var(--bd-lt);
+}
+.toggle-row:last-child { border-bottom:none; padding-bottom:0; }
+.toggle-info { flex:1; }
+.toggle-label { font-size:12.5px; font-weight:700; color:var(--tx); margin-bottom:2px; }
+.toggle-desc  { font-size:11px; color:var(--tx-3); }
+.toggle {
+  position:relative; flex-shrink:0; width:40px; height:22px; cursor:pointer;
+}
+.toggle input { opacity:0; width:0; height:0; }
+.toggle-track {
+  position:absolute; inset:0; background:#d1d5db; border-radius:11px;
+  transition:background 0.2s;
+}
+.toggle input:checked + .toggle-track { background:var(--br); }
+.toggle-thumb {
+  position:absolute; top:3px; left:3px; width:16px; height:16px;
+  background:#fff; border-radius:50%; box-shadow:0 1px 3px rgba(0,0,0,0.2);
+  transition:left 0.2s;
+}
+.toggle input:checked ~ .toggle-thumb { left:21px; }
+
+/* ── Invoice row ── */
+.inv-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--bd-lt); gap:12px; }
+.inv-row:last-child { border-bottom:none; padding-bottom:0; }
+.inv-num { font-size:12px; font-weight:700; color:var(--tx); }
+.inv-date { font-size:10px; color:var(--tx-3); margin-top:1px; }
+.inv-amt { font-size:13px; font-weight:800; color:var(--tx); white-space:nowrap; }
+
+/* ── Notification ── */
+.notif {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:13px 18px; border-bottom:1px solid var(--bd-lt); transition:background 0.12s;
+}
+.notif:last-child { border-bottom:none; }
+.notif:hover { background:#fafbfc; }
+.notif.unread { background:#f9fbff; }
+.n-ico {
+  width:34px; height:34px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+}
+.n-ico svg { width:14px; height:14px; }
+.notif-body { flex:1; }
+.notif-title { font-size:12.5px; font-weight:700; color:var(--tx); margin-bottom:2px; }
+.notif-msg   { font-size:11px; color:var(--tx-2); line-height:1.5; }
+.notif-meta  { font-size:9.5px; color:var(--tx-3); margin-top:3px; }
+.notif-dot   { width:7px; height:7px; border-radius:50%; background:var(--br); flex-shrink:0; margin-top:4px; }
+.n-time      { font-size:10px; color:var(--tx-3); font-weight:600; white-space:nowrap; flex-shrink:0; }
+
+/* ── Progress bar ── */
+.prog-wrap { margin-bottom:12px; }
+.prog-lbl  { display:flex; justify-content:space-between; font-size:10.5px; font-weight:600; color:var(--tx-2); margin-bottom:5px; }
+.prog-track{ height:6px; background:var(--bd); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:var(--br); width:0; transition:width 1s cubic-bezier(.4,0,.2,1); }
+
+/* ── Divider ── */
+.hr { border:none; border-top:1px solid var(--bd-lt); margin:18px 0; }
+
+/* ── Responsive ── */
+@media(max-width:960px) {
+  .db-shell { grid-template-columns:1fr; }
+  .db-sidebar {
+    position:fixed; top:0; left:-244px; z-index:150;
+    width:244px; height:100vh; transition:left 0.26s ease;
+    box-shadow:none;
+  }
+  .db-sidebar.open { left:0; box-shadow:4px 0 20px rgba(0,0,0,0.12); }
+  .db-content { padding:18px 16px 50px; }
+  .ig { grid-template-columns:1fr; }
+  .ig-cell:nth-child(even) { padding-left:0; border-left:none; }
+  .ig-cell:nth-last-child(-n+2) { border-bottom:1px solid var(--bd-lt); }
+  .ig-cell:last-child { border-bottom:none; }
+  .snap-grid,.g2 { grid-template-columns:1fr; }
+  .kpi-row,.g4 { grid-template-columns:repeat(2,1fr); }
+  .qa-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:600px) {
+  .kpi-row { grid-template-columns:1fr 1fr; }
+  .dh-strip { padding:10px 14px; }
+  .g3 { grid-template-columns:1fr; }
+}
+
+/* ── Mobile sidebar toggle button ── */
+.sb-toggle {
+  display:none; position:fixed; bottom:18px; right:18px; z-index:200;
+  width:46px; height:46px; border-radius:50%; background:var(--br); color:#fff;
+  border:none; box-shadow:0 4px 16px rgba(39,94,118,0.38); cursor:pointer;
+  align-items:center; justify-content:center;
+}
+@media(max-width:960px) { .sb-toggle { display:flex; } }
+
+/* ══════════════════════════════════════════════════════════
+   ORDERS REDESIGN — Enterprise Order Management v1
+══════════════════════════════════════════════════════════ */
+
+/* 6-col KPI grid */
+.ord-kpi-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:16px; }
+.ord-kpi {
+  background:var(--bg-w); border:1px solid var(--bd); border-radius:var(--rad);
+  box-shadow:var(--sh); padding:14px 16px; cursor:pointer; position:relative; overflow:hidden;
+  transition:border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.ord-kpi::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:var(--br); transform:scaleX(0); transition:transform 0.22s; transform-origin:left;
+}
+.ord-kpi:hover { border-color:var(--br); box-shadow:var(--sh-md); transform:translateY(-1px); }
+.ord-kpi:hover::after, .ord-kpi.akf::after { transform:scaleX(1); }
+.ord-kpi.akf { border-color:var(--br); background:var(--br-lt); }
+.ord-kpi-lbl { font-size:8.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--tx-3); margin-bottom:7px; }
+.ord-kpi-num { font-size:22px; font-weight:800; color:var(--tx); line-height:1; }
+.ord-kpi-num.ck-grn { color:var(--grn); }
+.ord-kpi-num.ck-amb { color:var(--amb); }
+.ord-kpi-num.ck-blu { color:var(--blu); }
+.ord-kpi-num.ck-red { color:var(--red); }
+.ord-kpi-num.ck-br  { color:var(--br); }
+.ord-kpi-sub { font-size:10px; color:var(--tx-3); margin-top:5px; font-weight:500; }
+
+/* Quick actions strip */
+.ord-qa-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+.ord-qa-card {
+  display:flex; align-items:center; gap:10px; padding:12px 14px;
+  background:var(--bg-w); border:1px solid var(--bd); border-radius:var(--rad);
+  cursor:pointer; text-decoration:none; color:var(--tx);
+  transition:border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.ord-qa-card:hover { border-color:var(--br); box-shadow:var(--sh-md); transform:translateY(-1px); }
+.ord-qa-ico {
+  width:34px; height:34px; border-radius:var(--rad-sm);
+  background:var(--br-lt); color:var(--br);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  transition:background 0.18s, color 0.18s;
+}
+.ord-qa-ico svg { width:16px; height:16px; }
+.ord-qa-card:hover .ord-qa-ico { background:var(--br); color:#fff; }
+.ord-qa-label { font-size:11.5px; font-weight:700; color:var(--tx); }
+.ord-qa-desc  { font-size:10px; color:var(--tx-3); font-weight:500; margin-top:1px; }
+
+/* Toolbar: search + filter chips */
+.ord-toolbar { display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+.ord-search-wrap {
+  flex:1; min-width:220px; display:flex; align-items:center; gap:8px;
+  height:38px; padding:0 14px;
+  background:var(--bg-w); border:1.5px solid var(--bd); border-radius:var(--rad);
+  transition:border-color 0.18s, box-shadow 0.18s;
+}
+.ord-search-wrap:focus-within { border-color:var(--br); box-shadow:0 0 0 3px rgba(39,94,118,0.08); }
+.ord-search-ico { width:14px; height:14px; color:var(--tx-3); flex-shrink:0; }
+.ord-search-inp {
+  flex:1; border:none; outline:none; background:transparent;
+  font-family:'Montserrat',sans-serif; font-size:12px; font-weight:500; color:var(--tx);
+}
+.ord-search-inp::placeholder { color:var(--tx-3); }
+.ord-filters { display:flex; gap:6px; flex-wrap:wrap; }
+.ord-chip {
+  display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:50px;
+  font-size:11px; font-weight:700; font-family:'Montserrat',sans-serif;
+  border:1.5px solid var(--bd); background:var(--bg-w); color:var(--tx-2);
+  cursor:pointer; transition:all 0.14s; white-space:nowrap;
+}
+.ord-chip:hover { border-color:var(--br); color:var(--br); background:var(--br-lt); }
+.ord-chip.active { background:var(--br); color:#fff; border-color:var(--br); }
+.ord-chip-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.ord-chip.active .ord-chip-dot { background:#fff !important; }
+
+/* Order cards */
+.ord-list { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
+.ord-card {
+  background:var(--bg-w); border:1px solid var(--bd); border-radius:var(--rad);
+  box-shadow:var(--sh); overflow:hidden; transition:border-color 0.18s, box-shadow 0.18s;
+}
+.ord-card:hover { border-color:#c0d4de; box-shadow:var(--sh-md); }
+.ord-card-main { display:flex; align-items:center; gap:16px; padding:16px 18px; }
+.ord-card-icon {
+  width:44px; height:44px; border-radius:var(--rad); flex-shrink:0;
+  background:var(--br-lt); display:flex; align-items:center; justify-content:center; color:var(--br);
+}
+.ord-card-icon svg { width:20px; height:20px; }
+.ord-card-info { flex:1; min-width:0; }
+.ord-card-num { font-size:14px; font-weight:800; color:var(--br); margin-bottom:3px; }
+.ord-card-meta { font-size:11px; color:var(--tx-3); font-weight:500; }
+.ord-card-meta b { color:var(--tx-2); font-weight:700; }
+.ord-card-amount { text-align:right; flex-shrink:0; }
+.ord-card-total { font-size:16px; font-weight:800; color:var(--tx); }
+.ord-card-items { font-size:10px; color:var(--tx-3); font-weight:500; margin-top:2px; }
+.ord-card-prog { height:3px; background:var(--bd); margin:0 18px; border-radius:2px; overflow:hidden; }
+.ord-card-prog-fill { height:100%; border-radius:2px; width:0; transition:width 1.1s cubic-bezier(.4,0,.2,1) 0.1s; }
+.ord-card-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 18px 12px; border-top:1px solid var(--bd-lt); gap:10px; flex-wrap:wrap;
+}
+.ord-card-delivery { font-size:11px; color:var(--tx-3); font-weight:500; display:flex; align-items:center; gap:5px; }
+.ord-card-delivery svg { width:12px; height:12px; flex-shrink:0; }
+.ord-card-actions { display:flex; gap:6px; }
+
+/* Status badges (richer than .sp) */
+.os-badge {
+  display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:50px;
+  font-size:10px; font-weight:700; white-space:nowrap;
+}
+.os-badge svg { width:11px; height:11px; flex-shrink:0; }
+.os-processing  { background:#fffbeb; color:#d97706; border:1px solid #fde68a; }
+.os-shipped     { background:#eff6ff; color:#2563eb; border:1px solid #bfdbfe; }
+.os-delivered   { background:var(--grn-bg); color:var(--grn); border:1px solid #bbf7d0; }
+.os-open        { background:#f8fafc; color:#475569; border:1px solid #e2e8f0; }
+.os-backordered { background:var(--red-bg); color:var(--red); border:1px solid #fecaca; }
+.os-cancelled   { background:#f8fafc; color:#94a3b8; border:1px solid #e2e8f0; }
+
+/* Recent Activity */
+.ord-activity { background:var(--bg-w); border:1px solid var(--bd); border-radius:var(--rad); box-shadow:var(--sh); margin-bottom:16px; }
+.ord-act-item { display:flex; align-items:center; gap:12px; padding:11px 18px; border-bottom:1px solid var(--bd-lt); }
+.ord-act-item:last-child { border-bottom:none; }
+.ord-act-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.ord-act-txt { flex:1; font-size:11.5px; font-weight:600; color:var(--tx-2); line-height:1.4; }
+.ord-act-txt span { color:var(--br); font-weight:700; }
+.ord-act-time { font-size:10px; color:var(--tx-3); font-weight:500; white-space:nowrap; }
+
+/* Order Detail Drawer */
+.ord-ov {
+  position:fixed; inset:0; background:rgba(15,25,35,0.42); z-index:4000;
+  opacity:0; pointer-events:none; transition:opacity 0.28s;
+}
+.ord-ov.open { opacity:1; pointer-events:auto; }
+.ord-drawer {
+  position:fixed; top:0; right:0; bottom:0; width:500px; max-width:95vw;
+  background:var(--bg-w); z-index:4001;
+  transform:translateX(102%); transition:transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  display:flex; flex-direction:column;
+  box-shadow:-8px 0 40px rgba(0,0,0,0.13);
+}
+.ord-drawer.open { transform:translateX(0); }
+.ord-drawer-hd {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  padding:18px 22px 16px; border-bottom:1px solid var(--bd); flex-shrink:0;
+}
+.ord-drawer-title { font-size:15px; font-weight:800; color:var(--tx); }
+.ord-drawer-sub   { font-size:11px; color:var(--tx-3); margin-top:3px; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+.ord-drawer-close {
+  width:30px; height:30px; border-radius:50%; background:var(--bg); border:none;
+  cursor:pointer; color:var(--tx-2); display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; transition:background 0.14s; margin-top:2px;
+}
+.ord-drawer-close:hover { background:var(--bd); }
+.ord-drawer-body {
+  flex:1; overflow-y:auto; padding:20px 22px;
+  scrollbar-width:thin; scrollbar-color:var(--bd) transparent;
+}
+.ord-drawer-body::-webkit-scrollbar { width:3px; }
+.ord-drawer-body::-webkit-scrollbar-thumb { background:var(--bd); }
+.ord-drawer-foot {
+  padding:14px 22px; border-top:1px solid var(--bd);
+  display:flex; gap:8px; flex-shrink:0; flex-wrap:wrap;
+}
+/* Drawer section labels */
+.ord-dsec { font-size:9px; font-weight:800; letter-spacing:1.4px; text-transform:uppercase; color:var(--tx-3); margin:20px 0 10px; }
+.ord-dsec:first-child { margin-top:0; }
+
+/* Order timeline */
+.ord-timeline { margin:4px 0 6px; }
+.ord-tl-step { display:flex; gap:12px; position:relative; }
+.ord-tl-vline {
+  position:absolute; left:10px; top:22px; bottom:-4px;
+  width:2px; background:var(--bd); z-index:0;
+}
+.ord-tl-vline.done { background:var(--grn); }
+.ord-tl-dot {
+  width:22px; height:22px; border-radius:50%; flex-shrink:0;
+  border:2px solid var(--bd); background:var(--bg-w);
+  display:flex; align-items:center; justify-content:center; margin-top:1px; z-index:1;
+  position:relative;
+}
+.ord-tl-dot.done    { background:var(--grn); border-color:var(--grn); }
+.ord-tl-dot.current { background:var(--br); border-color:var(--br); box-shadow:0 0 0 4px rgba(39,94,118,0.14); }
+.ord-tl-dot svg { width:11px; height:11px; color:#fff; }
+.ord-tl-content { flex:1; padding-bottom:20px; }
+.ord-tl-label { font-size:12.5px; font-weight:700; color:var(--tx-3); }
+.ord-tl-label.done    { color:var(--tx); }
+.ord-tl-label.current { color:var(--br); }
+.ord-tl-date { font-size:10.5px; color:var(--tx-3); margin-top:1px; }
+
+/* Drawer info grid */
+.ord-ig { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--bd); border-radius:var(--rad); overflow:hidden; margin-bottom:16px; }
+.ord-ig-cell { padding:10px 14px; border-bottom:1px solid var(--bd-lt); }
+.ord-ig-cell:nth-child(odd) { border-right:1px solid var(--bd-lt); }
+.ord-ig-cell:nth-last-child(-n+2) { border-bottom:none; }
+.ord-ig-cell.full { grid-column:1/-1; border-right:none; }
+.ord-ig-lbl { font-size:9px; font-weight:800; letter-spacing:0.7px; text-transform:uppercase; color:var(--tx-3); margin-bottom:3px; }
+.ord-ig-val { font-size:12px; font-weight:600; color:var(--tx); line-height:1.4; }
+.ord-ig-val.c-br  { color:var(--br); }
+.ord-ig-val.c-grn { color:var(--grn); }
+.ord-ig-val.mono  { font-family:'Courier New',monospace; font-size:11px; letter-spacing:0.3px; }
+.ord-ig-val.big   { font-size:15px; font-weight:800; }
+
+/* Drawer product rows */
+.ord-prod-list { margin-bottom:16px; }
+.ord-prod-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--bd-lt); }
+.ord-prod-row:last-child { border-bottom:none; }
+.ord-prod-thumb {
+  width:44px; height:44px; border-radius:6px; background:var(--bg);
+  border:1px solid var(--bd); display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; color:var(--tx-3);
+}
+.ord-prod-thumb svg { width:20px; height:20px; }
+.ord-prod-info { flex:1; }
+.ord-prod-name { font-size:12px; font-weight:700; color:var(--tx); margin-bottom:2px; }
+.ord-prod-sku  { font-size:10px; color:var(--tx-3); font-weight:500; }
+.ord-prod-right { text-align:right; }
+.ord-prod-price { font-size:13px; font-weight:800; color:var(--tx); }
+.ord-prod-qty   { font-size:10px; color:var(--tx-3); }
+
+/* Responsive */
+@media(max-width:1100px) { .ord-kpi-grid { grid-template-columns:repeat(3,1fr); } }
+@media(max-width:960px)  {
+  .ord-kpi-grid  { grid-template-columns:repeat(3,1fr); }
+  .ord-qa-strip  { grid-template-columns:repeat(2,1fr); }
+  .ord-card-main { flex-wrap:wrap; }
+}
+@media(max-width:600px)  {
+  .ord-kpi-grid { grid-template-columns:repeat(2,1fr); }
+  .ord-drawer   { width:100%; max-width:100%; }
+}
+  </style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<header class="site-header" id="siteHeader">
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo" aria-label="Go to homepage">
+      <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+    </a>
+    <ul class="nav-links">
+
+      <!-- IN STOCK ART -->
+      <li>
+        <a href="plp-in-stock-art.html">IN STOCK ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">By Theme</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">New Releases</a></li>
+                <li><a href="plp-in-stock-art.html">Abstract</a></li>
+                <li><a href="plp-in-stock-art.html">Western</a></li>
+                <li><a href="plp-in-stock-art.html">Coastal &amp; Tropical</a></li>
+                <li><a href="plp-in-stock-art.html">Florals &amp; Botanicals</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Gallery Wall Art</a></li>
+                <li><a href="plp-in-stock-art.html">Birds &amp; Butterflies</a></li>
+                <li><a href="plp-in-stock-art.html">Lakes &amp; Mountains</a></li>
+                <li><a href="plp-in-stock-art.html">Farmhouse Chic</a></li>
+                <li><a href="plp-in-stock-art.html">Small Accent Art</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">By Frame</p>
+              <ul>
+                <li><a href="plp-in-stock-art.html">Floating Frame</a></li>
+                <li><a href="plp-in-stock-art.html">Shadow Box</a></li>
+                <li><a href="plp-in-stock-art.html">Canvas Wrap</a></li>
+                <li><a href="plp-in-stock-art.html">Barnwood</a></li>
+                <li><a href="plp-in-stock-art.html">Champagne</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-1.jpg" alt="In Stock Art" />
+            <span class="mega-img-label">In Stock Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- PRINT ON DEMAND ART -->
+      <li>
+        <a href="print-on-demand-art.html">PRINT ON DEMAND ART</a>
+        <div class="mega-menu">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Featured Artists</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">Ronald West</a></li>
+                <li><a href="print-on-demand-art.html">Lucia Heffernan</a></li>
+              </ul>
+            </div>
+            <div class="mega-col">
+              <p class="mega-heading">Collections</p>
+              <ul>
+                <li><a href="print-on-demand-art.html">All Print on Demand</a></li>
+                <li><a href="print-on-demand-art.html">State Posters</a></li>
+                <li><a href="print-on-demand-art.html">Canvas Prints</a></li>
+                <li><a href="print-on-demand-art.html">Holiday</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-2.jpg" alt="Print on Demand Art" />
+            <span class="mega-img-label">Print on Demand</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- CHRISTMAS ART -->
+      <li>
+        <a href="christmas-art.html">CHRISTMAS ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Christmas Art</p>
+              <ul>
+                <li><a href="christmas-art.html">All Christmas Art</a></li>
+                <li><a href="christmas-art.html">LED Light Up Art</a></li>
+                <li><a href="christmas-art.html">Holiday Canvas</a></li>
+                <li><a href="christmas-art.html">Seasonal Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-3.jpg" alt="Christmas Art" />
+            <span class="mega-img-label">Christmas Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- JUVENILE ART -->
+      <li>
+        <a href="juvenile-art.html">JUVENILE ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Juvenile Art</p>
+              <ul>
+                <li><a href="juvenile-art.html">All Juvenile Art</a></li>
+                <li><a href="juvenile-art.html">Animals</a></li>
+                <li><a href="juvenile-art.html">Nature &amp; Landscapes</a></li>
+                <li><a href="juvenile-art.html">Inspirational</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-4.jpg" alt="Juvenile Art" />
+            <span class="mega-img-label">Juvenile Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- LAST CALL ART -->
+      <li>
+        <a href="last-call-art.html">LAST CALL ART</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Last Call</p>
+              <ul>
+                <li><a href="last-call-art.html">All Last Call Art</a></li>
+                <li><a href="last-call-art.html">Clearance Canvas</a></li>
+                <li><a href="last-call-art.html">Discounted Prints</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-5.jpg" alt="Last Call Art" />
+            <span class="mega-img-label">Last Call Art</span>
+          </div>
+        </div>
+      </li>
+
+      <!-- ACCESSORY ITEMS -->
+      <li>
+        <a href="accessory-items.html">ACCESSORY ITEMS</a>
+        <div class="mega-menu mega-simple">
+          <div class="mega-content">
+            <div class="mega-col">
+              <p class="mega-heading">Accessories</p>
+              <ul>
+                <li><a href="accessory-items.html">All Accessories</a></li>
+                <li><a href="accessory-items.html">Hanging Hardware</a></li>
+                <li><a href="accessory-items.html">Display Tools</a></li>
+                <li><a href="accessory-items.html">Packaging</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mega-img">
+            <img src="mega-6.jpg" alt="Accessory Items" />
+            <span class="mega-img-label">Accessory Items</span>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <!-- NAV RIGHT: search + icons -->
+    <div class="nav-right">
+      <!-- Search pill -->
+      <div class="nav-search-wrap">
+        <div class="nav-search-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" placeholder="Search Products" autocomplete="off" aria-label="Search products" />
+        </div>
+      </div>
+      <!-- Wishlist -->
+      <button class="nav-icon-btn" title="Wishlist" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <!-- Cart -->
+      <button class="nav-icon-btn nav-cart-btn" title="Cart" aria-label="Cart" onclick="window.location.href='cart.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <span class="nav-cart-badge" id="navCartBadge">0</span>
+      </button>
+      <!-- Account -->
+      <a href="customer-dashboard.html" class="nav-icon-btn" title="My Account" aria-label="My Account" style="text-decoration:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+
+    <!-- SEARCH TAKEOVER OVERLAY -->
+    <div class="search-takeover" id="searchTakeover" role="search">
+      <div class="st-bar">
+        <span class="st-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input class="st-input" id="stInput" type="text" placeholder="Search products, artists, collections..." autocomplete="off" />
+        <button class="st-camera" title="Search by image" aria-label="Search by image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </button>
+                <div class="st-div"></div>
+        <button class="st-clear" id="stClear" aria-label="Clear search">Clear</button>
+        <button class="st-close" id="stClose" aria-label="Close search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-box-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#275e76" stroke-width="2" width="20" height="20">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input class="search-input" type="text" placeholder="Search by keyword or item number..." id="searchInput" />
+      <button class="search-submit">Search</button>
+    </div>
+    <span class="search-close" id="searchClose">x Close</span>
+  </div>
+</div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <img src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" style="height:28px;width:auto;" />
+    <button class="mobile-close" id="mobileClose">x</button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="plp-in-stock-art.html">In Stock Art</a>
+    <a href="print-on-demand-art.html">Print on Demand Art</a>
+    <a href="christmas-art.html">Christmas Art</a>
+    <a href="juvenile-art.html">Juvenile Art</a>
+    <a href="last-call-art.html">Last Call Art</a>
+    <a href="accessory-items.html">Accessory Items</a>
+    <a href="contact-us.html" class="mobile-nav-secondary">Contact Us</a>
+    <a href="https://www.streamlineart.com/customer/account/create/" class="mobile-nav-secondary">Become a Customer</a>
+    <a href="#" onclick="return false;" class="mobile-nav-secondary" style="cursor:default;">Login</a>
+  </nav>
+</div>
+
+<!-- Compact hero strip -->
+<div class="dh-strip">
+  <div class="dh-strip-left">
+    <div class="dh-avatar">JS</div>
+    <div>
+      <div class="dh-name">John Smith &nbsp;&middot;&nbsp; Smith Interior Design Group</div>
+      <div class="dh-meta">Account #STR-102458 &nbsp;&middot;&nbsp; Customer since January 2020</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+    <span class="dh-chip dh-chip-active">Active</span>
+    <span class="dh-chip dh-chip-tier">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="9" height="9"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Platinum
+    </span>
+  </div>
+</div>
+
+<main id="contentarea">
+<div class="db-shell">
+
+<!-- ════════ SIDEBAR ════════ -->
+<nav class="db-sidebar" id="dbSidebar">
+
+  <div class="db-nav-group">Account</div>
+  <button class="db-nav-item active" data-panel="overview">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Dashboard Overview
+  </button>
+  <button class="db-nav-item" data-panel="account">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Account Information
+  </button>
+  <button class="db-nav-item" data-panel="addresses">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Addresses
+  </button>
+  <button class="db-nav-item" data-panel="rep">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    Representative
+  </button>
+  <button class="db-nav-item" data-panel="acctdetails">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    Account Details
+  </button>
+
+  <div class="db-nav-group" style="margin-top:6px;">Orders &amp; Billing</div>
+  <button class="db-nav-item" data-panel="orders">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+    Orders
+    <span class="db-nav-badge">5</span>
+  </button>
+  <button class="db-nav-item" data-panel="invoices">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+    Invoices
+    <span class="db-nav-badge">3</span>
+  </button>
+
+  <div class="db-nav-group" style="margin-top:6px;">More</div>
+  <a href="forms.html" class="db-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+    Claims &amp; Credit Forms
+  </a>
+  <button class="db-nav-item" data-panel="notifications">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+    Notifications
+    <span class="db-nav-badge">6</span>
+  </button>
+  <button class="db-nav-item" data-panel="settings">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09"/></svg>
+    Account Settings
+  </button>
+
+</nav>
+
+<!-- ════════ CONTENT ════════ -->
+<div class="db-content">
+
+<!-- ══════ OVERVIEW (default) ══════ -->
+<div class="db-panel active" id="panel-overview">
+  <div class="db-bc">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    <span>Dashboard Overview</span>
+  </div>
+  <div class="db-sh">
+    <div>
+      <div class="db-sh-title">Dashboard Overview</div>
+      <div class="db-sh-sub">Good morning, John. Here is your account summary.</div>
+    </div>
+    <div style="font-size:11px;color:var(--tx-3);font-weight:600;align-self:flex-end;">Last updated: Today, 9:14 AM CT</div>
+  </div>
+
+  <!-- KPI strip -->
+  <div class="kpi-row mb">
+    <div class="kpi">
+      <div class="kpi-lbl">Total Orders</div>
+      <div class="kpi-num brand" data-count="248">0</div>
+      <div class="kpi-sub">All&#8209;time</div>
+      <div class="kpi-delta up">&#9650; 12% YTD</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Open Orders</div>
+      <div class="kpi-num amber" data-count="5">0</div>
+      <div class="kpi-sub">In progress</div>
+      <div class="kpi-delta nt">3 require action</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Available Credit</div>
+      <div class="kpi-num green" data-count-dollar="34250">$0</div>
+      <div class="kpi-sub">of $50,000</div>
+      <div class="kpi-delta up">68.5% remaining</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Loyalty Points</div>
+      <div class="kpi-num" style="color:#c9a84c;" data-count="18450">0</div>
+      <div class="kpi-sub">Redeemable</div>
+      <div class="kpi-delta nt">&#9733; Platinum tier</div>
+    </div>
+  </div>
+
+  <!-- Four snapshot cards -->
+  <div class="snap-grid mb">
+
+    <!-- Account snapshot -->
+    <div class="snap-card">
+      <div class="snap-hd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Account
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:9px;" data-panel="account" onclick="showPanel('account')">View &rsaquo;</button>
+      </div>
+      <div class="snap-body">
+        <div class="snap-row"><span class="snap-k">Customer Name</span><span class="snap-v">John Smith</span></div>
+        <div class="snap-row"><span class="snap-k">Company</span><span class="snap-v">Smith Interior Design Group</span></div>
+        <div class="snap-row"><span class="snap-k">Account #</span><span class="snap-v mono brand">STR-102458</span></div>
+        <div class="snap-row"><span class="snap-k">Status</span><span class="snap-v"><span class="sp sp-green">Active</span></span></div>
+        <div class="snap-row"><span class="snap-k">Tier</span><span class="snap-v"><span class="tier tier-pt">&#9733; Platinum</span></span></div>
+        <div class="snap-row"><span class="snap-k">Customer Since</span><span class="snap-v">January 2020</span></div>
+      </div>
+    </div>
+
+    <!-- Business snapshot -->
+    <div class="snap-card">
+      <div class="snap-hd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Business Details
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:9px;" onclick="showPanel('acctdetails')">View &rsaquo;</button>
+      </div>
+      <div class="snap-body">
+        <div class="snap-row"><span class="snap-k">Available Credit</span><span class="snap-v green">$34,250.00</span></div>
+        <div class="snap-row"><span class="snap-k">Credit Limit</span><span class="snap-v">$50,000.00</span></div>
+        <div class="snap-row"><span class="snap-k">Payment Terms</span><span class="snap-v brand">Net 30</span></div>
+        <div class="snap-row"><span class="snap-k">Account Type</span><span class="snap-v">Wholesale Customer</span></div>
+        <div class="snap-row"><span class="snap-k">Preferred Carrier</span><span class="snap-v">FedEx Ground</span></div>
+        <div class="snap-row"><span class="snap-k">Currency</span><span class="snap-v">USD &mdash; US Dollar</span></div>
+      </div>
+    </div>
+
+    <!-- Order snapshot -->
+    <div class="snap-card">
+      <div class="snap-hd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        Orders &amp; Invoices
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:9px;" onclick="showPanel('orders')">View &rsaquo;</button>
+      </div>
+      <div class="snap-body">
+        <div class="snap-row"><span class="snap-k">Open Orders</span><span class="snap-v amber">5 orders</span></div>
+        <div class="snap-row"><span class="snap-k">Pending Approval</span><span class="snap-v">2 orders</span></div>
+        <div class="snap-row"><span class="snap-k">Recently Shipped</span><span class="snap-v brand">#SO-10548</span></div>
+        <div class="snap-row"><span class="snap-k">Backordered Items</span><span class="snap-v" style="color:var(--red);">3 items</span></div>
+        <div class="snap-row"><span class="snap-k">Outstanding Invoices</span><span class="snap-v amber">3 invoices</span></div>
+        <div class="snap-row"><span class="snap-k">Current Balance</span><span class="snap-v amber">$5,780.00</span></div>
+      </div>
+    </div>
+
+    <!-- Rep snapshot -->
+    <div class="snap-card">
+      <div class="snap-hd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        Your Representative
+        <button class="btn btn-ghost btn-sm" style="margin-left:auto;font-size:9px;" onclick="showPanel('rep')">View &rsaquo;</button>
+      </div>
+      <div class="snap-body">
+        <div class="snap-row"><span class="snap-k">Name</span><span class="snap-v">Sarah Johnson</span></div>
+        <div class="snap-row"><span class="snap-k">Title</span><span class="snap-v">Sr. Account Executive</span></div>
+        <div class="snap-row"><span class="snap-k">Email</span><span class="snap-v" style="font-size:10.5px;">sarah.johnson@streamlineart.com</span></div>
+        <div class="snap-row"><span class="snap-k">Office</span><span class="snap-v">(800) 656-6408 x214</span></div>
+        <div class="snap-row"><span class="snap-k">Mobile</span><span class="snap-v">(469) 555-3812</span></div>
+        <div class="snap-row"><span class="snap-k">Territory</span><span class="snap-v">Texas South Region</span></div>
+      </div>
+    </div>
+
+  </div><!-- /snap-grid -->
+
+  <!-- Quick actions -->
+  <div style="font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx-3);margin-bottom:12px;">Quick Actions</div>
+  <div class="qa-grid mb2">
+    <a href="plp-in-stock-art.html" class="qa"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span class="qa-lbl">Browse Products</span></a>
+    <button class="qa" onclick="showPanel('orders')"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><span class="qa-lbl">View Orders</span></button>
+    <button class="qa" onclick="showPanel('invoices')"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><span class="qa-lbl">Invoices</span></button>
+    <a href="forms.html" class="qa"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div><span class="qa-lbl">Claims &amp; Forms</span></a>
+    <button class="qa" onclick="showPanel('rep')"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><span class="qa-lbl">Contact Rep</span></button>
+    <button class="qa" onclick="dbToast('Catalog download starting…')"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><span class="qa-lbl">View Catalogs</span></button>
+    <button class="qa" onclick="dbToast('Download starting…')"><div class="qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><span class="qa-lbl">Download Resources</span></button>
+  </div>
+
+  <!-- Recent orders mini table -->
+  <div style="font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--tx-3);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;">
+    Recent Orders
+    <button class="btn btn-ghost btn-sm" onclick="showPanel('orders')">View All</button>
+  </div>
+  <div class="dc mb2">
+    <div style="overflow-x:auto;">
+      <table class="dt">
+        <thead><tr><th>Order #</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:var(--br);">#SO-10548</strong></td><td>Jun 15, 2026</td><td><strong>$2,350.00</strong></td><td><span class="sp sp-blue">Shipped</span></td><td><button class="btn btn-ghost btn-sm" onclick="dbToast('Opening #SO-10548…')">View</button></td></tr>
+          <tr><td><strong style="color:var(--br);">#SO-10512</strong></td><td>Jun 10, 2026</td><td><strong>$1,875.00</strong></td><td><span class="sp sp-amber">Processing</span></td><td><button class="btn btn-ghost btn-sm" onclick="dbToast('Opening #SO-10512…')">View</button></td></tr>
+          <tr><td><strong style="color:var(--br);">#SO-10487</strong></td><td>Jun 05, 2026</td><td><strong>$3,420.00</strong></td><td><span class="sp sp-green">Delivered</span></td><td><button class="btn btn-ghost btn-sm" onclick="dbToast('Opening #SO-10487…')">View</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ACCOUNT INFORMATION ══════ -->
+<div class="db-panel" id="panel-account">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Account Information</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Account Information</div><div class="db-sh-sub">Your customer profile and contact details.</div></div>
+    <button class="btn btn-primary" onclick="dbToast('Account editor coming soon')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Manage Account
+    </button>
+  </div>
+  <div class="dc mb">
+    <div class="dc-hd">
+      <div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Customer Profile</div>
+      <span class="sp sp-green">Active Account</span>
+    </div>
+    <div class="dc-body">
+      <div style="display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--bd-lt);margin-bottom:16px;">
+        <div style="width:52px;height:52px;border-radius:50%;background:var(--br);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0;">JS</div>
+        <div>
+          <div style="font-size:17px;font-weight:800;color:var(--tx);">John Smith</div>
+          <div style="font-size:11.5px;color:var(--tx-3);margin-top:2px;font-weight:500;">Smith Interior Design Group</div>
+        </div>
+        <div style="margin-left:auto;"><span class="tier tier-pt">&#9733; Platinum</span></div>
+      </div>
+      <div class="ig">
+        <div class="ig-cell"><div class="ig-lbl">Customer Name</div><div class="ig-val">John Smith</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Company Name</div><div class="ig-val">Smith Interior Design Group</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Account Number</div><div class="ig-val mono brand">STR-102458</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Customer Since</div><div class="ig-val">January 2020</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Email Address</div><div class="ig-val">john.smith@smithinteriors.com</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Phone Number</div><div class="ig-val">(214) 555-7284</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Account Status</div><div class="ig-val green">&#9679; Active</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Tax ID / Resale #</div><div class="ig-val mono">TX-8821-94C</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ADDRESSES ══════ -->
+<div class="db-panel" id="panel-addresses">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Addresses</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Addresses</div><div class="db-sh-sub">Shipping, billing, and tax information.</div></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-primary" onclick="dbToast('Add address form coming soon')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Address
+      </button>
+      <button class="btn btn-ghost" onclick="dbToast('Manage tax information coming soon')">Manage Tax</button>
+    </div>
+  </div>
+
+  <!-- Shipping -->
+  <div style="font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx-3);margin-bottom:12px;">Shipping Addresses</div>
+  <div class="g2 mb2">
+    <div class="addr default">
+      <div class="addr-name">Smith Interior Design Group</div>
+      <div class="addr-body">2450 Commerce Drive, Suite 100<br>Dallas, TX 75201<br>United States</div>
+      <div class="addr-acts">
+        <button class="btn btn-outline btn-sm" onclick="dbToast('Edit address form coming soon')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </div>
+    </div>
+    <div class="addr">
+      <div class="addr-name">Warehouse &mdash; Irving</div>
+      <div class="addr-body">9100 Industrial Pkwy, Suite B<br>Irving, TX 75063<br>United States</div>
+      <div class="addr-acts">
+        <button class="btn btn-outline btn-sm" onclick="dbToast('Edit address form coming soon')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="dbToast('Confirm delete coming soon')">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Billing -->
+  <div style="font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx-3);margin-bottom:12px;">Billing Address</div>
+  <div class="g2 mb2">
+    <div class="addr default">
+      <div class="addr-name">Smith Interior Design Group</div>
+      <div class="addr-body">2450 Commerce Drive, Suite 100<br>Dallas, TX 75201<br>United States</div>
+      <div class="addr-acts">
+        <button class="btn btn-outline btn-sm" onclick="dbToast('Edit billing address coming soon')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit Billing Address
+        </button>
+      </div>
+    </div>
+    <div class="dc" style="padding:0;">
+      <div class="dc-hd">
+        <div class="dc-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Billing Contact
+        </div>
+      </div>
+      <div class="dc-body" style="padding:12px 16px;">
+        <div class="ig col1">
+          <div class="ig-cell"><div class="ig-lbl">Contact Name</div><div class="ig-val">John Smith</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Email</div><div class="ig-val" style="font-size:11.5px;">john.smith@smithinteriors.com</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Phone</div><div class="ig-val">(214) 555-7284</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tax information -->
+  <div style="font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx-3);margin-bottom:12px;">Tax Information</div>
+  <div class="dc mb2">
+    <div class="dc-hd">
+      <div class="dc-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Tax &amp; Exemption Details
+      </div>
+      <span class="sp sp-green">Verified</span>
+    </div>
+    <div class="dc-body">
+      <div class="ig">
+        <div class="ig-cell"><div class="ig-lbl">Tax Name</div><div class="ig-val">Texas Sales &amp; Use Tax</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Tax ID / Tax Number</div><div class="ig-val mono">TX-8821-94C</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Tax Exempt Status</div><div class="ig-val green">&#10003; Verified &amp; Active</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Certificate Expires</div><div class="ig-val">December 31, 2027</div></div>
+      </div>
+    </div>
+    <div class="dc-foot">
+      <button class="btn btn-outline btn-sm" onclick="dbToast('Tax certificate update coming soon')">Update Tax Certificate</button>
+      <button class="btn btn-ghost btn-sm" onclick="dbToast('Downloading tax certificate…')">Download Certificate</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ REPRESENTATIVE ══════ -->
+<div class="db-panel" id="panel-rep">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Representative</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Your Sales Representative</div><div class="db-sh-sub">Direct contact for orders, quotes, and account support.</div></div>
+  </div>
+  <div class="dc mb" style="max-width:600px;">
+    <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Representative Details</div><span class="sp sp-green">Available</span></div>
+    <div class="dc-body">
+      <div style="display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--bd-lt);margin-bottom:16px;">
+        <div class="rep-av">SJ</div>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--tx);">Sarah Johnson</div>
+          <div style="font-size:11px;color:var(--tx-3);font-weight:600;margin-top:3px;">Senior Account Executive &nbsp;&middot;&nbsp; Texas South Region</div>
+        </div>
+      </div>
+      <div class="rep-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 2 2 0 012 .01h3a2 2 0 012 1.72c.18.96.45 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.25 1.85.52 2.81.7A2 2 0 0122 14.1z"/></svg><strong>Office:</strong>&nbsp; (800) 656-6408 Ext 214</div>
+      <div class="rep-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 2 2 0 012 .01h3a2 2 0 012 1.72c.18.96.45 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.25 1.85.52 2.81.7A2 2 0 0122 14.1z"/></svg><strong>Mobile:</strong>&nbsp; (469) 555-3812</div>
+      <div class="rep-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>sarah.johnson@streamlineart.com</div>
+      <div class="rep-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Texas South Region (TX, LA, MS, AR)</div>
+      <div class="hr"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="tel:+18006566408" class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 2 2 0 012 .01h3a2 2 0 012 1.72c.18.96.45 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.25 1.85.52 2.81.7A2 2 0 0122 14.1z"/></svg>Call Representative</a>
+        <a href="mailto:sarah.johnson@streamlineart.com" class="btn btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Representative</a>
+        <button class="btn btn-ghost" onclick="dbToast('Meeting scheduler — contact Sarah at (469) 555-3812')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule Meeting</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ACCOUNT DETAILS ══════ -->
+<div class="db-panel" id="panel-acctdetails">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><span>Account Details</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Account Details</div><div class="db-sh-sub">Payment terms, shipping preferences, credit, and loyalty information.</div></div>
+    <button class="btn btn-primary" onclick="dbToast('Account settings coming soon')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09"/></svg>
+      Manage Account Details
+    </button>
+  </div>
+
+  <div class="g2 mb">
+    <!-- Payment & Credit -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Payment &amp; Credit</div></div>
+      <div class="dc-body">
+        <div class="ig col1">
+          <div class="ig-cell"><div class="ig-lbl">Payment Terms</div><div class="ig-val brand">Net 30</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Credit Limit</div><div class="ig-val">$50,000.00</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Available Credit</div><div class="ig-val green">$34,250.00</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Currency</div><div class="ig-val">USD &mdash; US Dollar</div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--bd-lt);">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--tx-3);margin-bottom:8px;">Credit Utilization</div>
+          <div class="prog-track" style="height:8px;">
+            <div class="prog-fill" style="width:31.5%;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10.5px;color:var(--tx-3);font-weight:600;">
+            <span>$15,750 used (31.5%)</span><span style="color:var(--grn);">$34,250 available</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Shipping preferences -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Shipping Preferences</div></div>
+      <div class="dc-body">
+        <div class="ig col1">
+          <div class="ig-cell"><div class="ig-lbl">Preferred Carrier</div><div class="ig-val">FedEx Ground</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Shipping Method</div><div class="ig-val">Standard Freight</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Account Type</div><div class="ig-val">Wholesale Customer</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Customer Tier</div><div class="ig-val amber">Preferred Partner</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loyalty -->
+  <div class="dc mb">
+    <div class="dc-hd">
+      <div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Loyalty &amp; Tier Status</div>
+      <span class="tier tier-pt">&#9733; Platinum Member</span>
+    </div>
+    <div class="dc-body">
+      <div class="ig">
+        <div class="ig-cell"><div class="ig-lbl">Loyalty Level</div><div class="ig-val">Platinum Member</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Customer Tier</div><div class="ig-val">Preferred Partner</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Loyalty Points</div><div class="ig-val" style="color:#c9a84c;font-weight:700;">18,450 pts &mdash; $184.50 value</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Platinum Benefit</div><div class="ig-val green">20% Net + Priority Processing</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Lifetime Spend</div><div class="ig-val">$185,450.00</div></div>
+        <div class="ig-cell"><div class="ig-lbl">Tax Exempt</div><div class="ig-val green">&#10003; Verified &amp; Active</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ ORDERS ══════ -->
+<div class="db-panel" id="panel-orders">
+  <div class="db-bc">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+    <span>Orders</span>
+  </div>
+  <div class="db-sh">
+    <div>
+      <div class="db-sh-title">Order Management</div>
+      <div class="db-sh-sub">Track, manage and review all your wholesale orders in one place.</div>
+    </div>
+    <button class="btn btn-primary" onclick="dbToast('New order form coming soon')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Place New Order
+    </button>
+  </div>
+
+  <!-- ── 6 KPI Cards ── -->
+  <div class="ord-kpi-grid">
+    <div class="ord-kpi" data-of="all" onclick="ordFilter('all',this)">
+      <div class="ord-kpi-lbl">Total Orders</div>
+      <div class="ord-kpi-num ck-br" data-count="8">8</div>
+      <div class="ord-kpi-sub">YTD 2026</div>
+    </div>
+    <div class="ord-kpi" data-of="open" onclick="ordFilter('open',this)">
+      <div class="ord-kpi-lbl">Open</div>
+      <div class="ord-kpi-num ck-br" data-count="2">2</div>
+      <div class="ord-kpi-sub">Active orders</div>
+    </div>
+    <div class="ord-kpi" data-of="processing" onclick="ordFilter('processing',this)">
+      <div class="ord-kpi-lbl">Processing</div>
+      <div class="ord-kpi-num ck-amb" data-count="1">1</div>
+      <div class="ord-kpi-sub">Being prepared</div>
+    </div>
+    <div class="ord-kpi" data-of="shipped" onclick="ordFilter('shipped',this)">
+      <div class="ord-kpi-lbl">Shipped</div>
+      <div class="ord-kpi-num ck-blu" data-count="1">1</div>
+      <div class="ord-kpi-sub">In transit</div>
+    </div>
+    <div class="ord-kpi" data-of="delivered" onclick="ordFilter('delivered',this)">
+      <div class="ord-kpi-lbl">Delivered</div>
+      <div class="ord-kpi-num ck-grn" data-count="3">3</div>
+      <div class="ord-kpi-sub">Completed</div>
+    </div>
+    <div class="ord-kpi" data-of="cancelled" onclick="ordFilter('cancelled',this)">
+      <div class="ord-kpi-lbl">Cancelled</div>
+      <div class="ord-kpi-num ck-red" data-count="1">1</div>
+      <div class="ord-kpi-sub">This year</div>
+    </div>
+  </div>
+
+  <!-- ── Quick Actions ── -->
+  <div class="ord-qa-strip">
+    <div class="ord-qa-card" onclick="dbToast('New order form coming soon')">
+      <div class="ord-qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div><div class="ord-qa-label">Place New Order</div><div class="ord-qa-desc">Start a wholesale order</div></div>
+    </div>
+    <div class="ord-qa-card" onclick="dbToast('Loading previous items for reorder…')">
+      <div class="ord-qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></div>
+      <div><div class="ord-qa-label">Reorder Items</div><div class="ord-qa-desc">Repeat a past purchase</div></div>
+    </div>
+    <div class="ord-qa-card" onclick="dbToast('Preparing account statement download…')">
+      <div class="ord-qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <div><div class="ord-qa-label">Download Statements</div><div class="ord-qa-desc">Export PDF or CSV</div></div>
+    </div>
+    <div class="ord-qa-card" onclick="showPanel('invoices')">
+      <div class="ord-qa-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <div><div class="ord-qa-label">View Invoices</div><div class="ord-qa-desc">3 open invoices</div></div>
+    </div>
+  </div>
+
+  <!-- ── Search & Filter Toolbar ── -->
+  <div class="ord-toolbar">
+    <div class="ord-search-wrap">
+      <svg class="ord-search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="ord-search-inp" id="ordSearchInp" type="text" placeholder="Search order #, product, SKU or invoice…" oninput="ordSearch(this.value)"/>
+    </div>
+    <div class="ord-filters">
+      <button class="ord-chip active" data-of="all"        onclick="ordFilter('all',this)"><span class="ord-chip-dot" style="background:var(--br)"></span>All Orders</button>
+      <button class="ord-chip"        data-of="open"       onclick="ordFilter('open',this)"><span class="ord-chip-dot" style="background:#64748b"></span>Open</button>
+      <button class="ord-chip"        data-of="processing" onclick="ordFilter('processing',this)"><span class="ord-chip-dot" style="background:#d97706"></span>Processing</button>
+      <button class="ord-chip"        data-of="shipped"    onclick="ordFilter('shipped',this)"><span class="ord-chip-dot" style="background:#2563eb"></span>Shipped</button>
+      <button class="ord-chip"        data-of="delivered"  onclick="ordFilter('delivered',this)"><span class="ord-chip-dot" style="background:#16a34a"></span>Delivered</button>
+      <button class="ord-chip"        data-of="cancelled"  onclick="ordFilter('cancelled',this)"><span class="ord-chip-dot" style="background:#dc2626"></span>Cancelled</button>
+    </div>
+  </div>
+
+  <!-- ── Order Cards ── -->
+  <div class="ord-list" id="ordList"></div>
+
+  <!-- ── Recent Activity ── -->
+  <div class="ord-activity">
+    <div class="dc-hd">
+      <div class="dc-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Recent Activity
+      </div>
+    </div>
+    <div class="ord-act-item">
+      <div class="ord-act-dot" style="background:var(--blu)"></div>
+      <div class="ord-act-txt">Order <span>#SO-10548</span> shipped via FedEx Ground &mdash; tracking <b>1Z999AA1123456</b></div>
+      <div class="ord-act-time">2h ago</div>
+    </div>
+    <div class="ord-act-item">
+      <div class="ord-act-dot" style="background:var(--grn)"></div>
+      <div class="ord-act-txt">Invoice <span>INV-2026-1142</span> generated for order #SO-10548</div>
+      <div class="ord-act-time">2h ago</div>
+    </div>
+    <div class="ord-act-item">
+      <div class="ord-act-dot" style="background:var(--amb)"></div>
+      <div class="ord-act-txt">Order <span>#SO-10512</span> moved to Processing status</div>
+      <div class="ord-act-time">1d ago</div>
+    </div>
+    <div class="ord-act-item">
+      <div class="ord-act-dot" style="background:var(--grn)"></div>
+      <div class="ord-act-txt">Order <span>#SO-10487</span> delivered — 12 items confirmed received</div>
+      <div class="ord-act-time">5d ago</div>
+    </div>
+    <div class="ord-act-item">
+      <div class="ord-act-dot" style="background:var(--br)"></div>
+      <div class="ord-act-txt">Payment of <span>$2,500.00</span> received and applied to outstanding balance</div>
+      <div class="ord-act-time">Jun 12</div>
+    </div>
+  </div>
+
+</div><!-- /panel-orders -->
+
+<!-- ══════ INVOICES ══════ -->
+<div class="db-panel" id="panel-invoices">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Invoices</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Invoices &amp; Financials</div><div class="db-sh-sub">Manage payments and download statements.</div></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-primary" onclick="dbToast('Downloading account statement…')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Statement
+      </button>
+      <button class="btn btn-ghost" onclick="dbToast('Opening payment history…')">Payment History</button>
+    </div>
+  </div>
+  <div class="g4 mb">
+    <div class="kpi"><div class="kpi-lbl">Current Balance</div><div class="kpi-num amber">$5,780</div><div class="kpi-sub">Outstanding</div></div>
+    <div class="kpi"><div class="kpi-lbl">Open Invoices</div><div class="kpi-num brand">3</div><div class="kpi-sub">Awaiting payment</div></div>
+    <div class="kpi"><div class="kpi-lbl">Past Due</div><div class="kpi-num green" style="font-size:18px;">None</div><div class="kpi-sub">All current &#10003;</div></div>
+    <div class="kpi"><div class="kpi-lbl">Last Payment</div><div class="kpi-num green" style="font-size:18px;">$2,500</div><div class="kpi-sub">June 12, 2026</div></div>
+  </div>
+  <div class="dc mb">
+    <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Outstanding Invoices</div><span class="sp sp-amber">3 Open</span></div>
+    <div class="dc-body">
+      <div class="inv-row">
+        <div><div class="inv-num">INV-2026-1142</div><div class="inv-date">Issued Jun 15 &nbsp;&middot;&nbsp; <span style="color:var(--red);font-weight:700;">Due Jun 30, 2026 — 11 days remaining</span></div></div>
+        <div class="inv-amt">$2,350.00</div>
+        <div style="display:flex;gap:6px;"><button class="btn btn-outline btn-sm" onclick="dbToast('Downloading INV-2026-1142…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>PDF</button></div>
+      </div>
+      <div class="inv-row">
+        <div><div class="inv-num">INV-2026-1098</div><div class="inv-date">Issued Jun 10 &nbsp;&middot;&nbsp; Due Jul 10, 2026</div></div>
+        <div class="inv-amt">$1,875.00</div>
+        <div style="display:flex;gap:6px;"><button class="btn btn-outline btn-sm" onclick="dbToast('Downloading INV-2026-1098…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>PDF</button></div>
+      </div>
+      <div class="inv-row">
+        <div><div class="inv-num">INV-2026-1054</div><div class="inv-date">Issued Jun 05 &nbsp;&middot;&nbsp; Due Jul 05, 2026</div></div>
+        <div class="inv-amt">$1,555.00</div>
+        <div style="display:flex;gap:6px;"><button class="btn btn-outline btn-sm" onclick="dbToast('Downloading INV-2026-1054…')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>PDF</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ NOTIFICATIONS ══════ -->
+<div class="db-panel" id="panel-notifications">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span>Notifications</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Notifications</div><div class="db-sh-sub">6 unread notifications.</div></div>
+    <button class="btn btn-ghost" onclick="dbToast('All notifications marked as read')">Mark all read</button>
+  </div>
+  <div class="dc">
+    <div class="notif unread"><div class="notif-dot"></div><div class="n-ico" style="background:var(--blu-bg);color:var(--blu);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div class="notif-body"><div class="notif-title">Order #SO-10548 Has Shipped</div><div class="notif-msg">Your 8-item order shipped via FedEx Ground. Tracking: 1Z999AA1123456. Est. delivery Jun 19.</div><div class="notif-meta"><span class="sp sp-blue" style="font-size:8.5px;padding:2px 7px;">Shipping</span></div></div><div class="n-time">2h ago</div></div>
+    <div class="notif unread"><div class="notif-dot"></div><div class="n-ico" style="background:var(--grn-bg);color:var(--grn);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="notif-body"><div class="notif-title">New Summer Collection Released</div><div class="notif-msg">60+ new in-stock pieces now available — Summer Botanicals and Coastal 2026 series.</div><div class="notif-meta"><span class="sp sp-green" style="font-size:8.5px;padding:2px 7px;">New Products</span></div></div><div class="n-time">1d ago</div></div>
+    <div class="notif unread"><div class="notif-dot"></div><div class="n-ico" style="background:var(--br-lt);color:var(--br);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div><div class="notif-body"><div class="notif-title">2026 Wholesale Catalog Available</div><div class="notif-msg">Your updated 2026 Streamline Art wholesale catalog is ready to download.</div><div class="notif-meta"><span class="sp sp-brand" style="font-size:8.5px;padding:2px 7px;">Catalog</span></div></div><div class="n-time">2d ago</div></div>
+    <div class="notif unread"><div class="notif-dot"></div><div class="n-ico" style="background:#f5f3ff;color:#7c3aed;"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="notif-body"><div class="notif-title">Loyalty Tier Upgraded to Platinum &#127881;</div><div class="notif-msg">Congratulations! Enjoy priority processing, 20% net pricing, and dedicated support.</div><div class="notif-meta"><span class="sp" style="background:#f5f3ff;color:#7c3aed;font-size:8.5px;padding:2px 7px;">Account</span></div></div><div class="n-time">3d ago</div></div>
+    <div class="notif"><div class="n-ico" style="background:var(--grn-bg);color:var(--grn);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/></svg></div><div class="notif-body"><div class="notif-title">Payment Received — Thank You</div><div class="notif-msg">We received your payment of $2,500.00 on June 12, 2026.</div><div class="notif-meta"><span class="sp sp-green" style="font-size:8.5px;padding:2px 7px;">Financial</span></div></div><div class="n-time">4d ago</div></div>
+    <div class="notif"><div class="n-ico" style="background:var(--amb-bg);color:var(--amb);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="notif-body"><div class="notif-title">Platinum Exclusive Offer</div><div class="notif-msg">Additional 5% off all abstract and coastal collections through July 31, 2026.</div><div class="notif-meta"><span class="sp sp-amber" style="font-size:8.5px;padding:2px 7px;">Promotion &middot; Expires Jul 31</span></div></div><div class="n-time">5d ago</div></div>
+  </div>
+</div>
+
+<!-- ══════ SETTINGS ══════ -->
+<div class="db-panel" id="panel-settings">
+  <div class="db-bc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg><span>Account Settings</span></div>
+  <div class="db-sh">
+    <div><div class="db-sh-title">Account Settings</div><div class="db-sh-sub">Manage notification preferences, security, and communication settings.</div></div>
+    <button class="btn btn-primary" onclick="dbToast('Preferences saved successfully')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>
+      Save All Changes
+    </button>
+  </div>
+
+  <div class="g2 mb">
+    <!-- Notification Preferences -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Notification Preferences</div></div>
+      <div class="dc-body">
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Order Updates</div><div class="toggle-desc">Shipment tracking, status changes</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Invoice Reminders</div><div class="toggle-desc">Due dates, payment confirmations</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">New Product Releases</div><div class="toggle-desc">Collections, restocks, exclusives</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Credit &amp; Account Alerts</div><div class="toggle-desc">Credit limit, balance notifications</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Communication Preferences -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Preferences</div></div>
+      <div class="dc-body">
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Promotional Emails</div><div class="toggle-desc">Special offers, seasonal promotions</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Catalog Updates</div><div class="toggle-desc">New catalogs, product lines</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Account Statements</div><div class="toggle-desc">Monthly statement delivery</div></div>
+          <label class="toggle"><input type="checkbox" checked/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info"><div class="toggle-label">Representative Newsletters</div><div class="toggle-desc">Updates from your sales rep</div></div>
+          <label class="toggle"><input type="checkbox"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <!-- Shipping Preferences -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/></svg>Shipping Preferences</div><button class="btn btn-ghost btn-sm" onclick="dbToast('Shipping preferences saved')">Save</button></div>
+      <div class="dc-body">
+        <div class="ig col1">
+          <div class="ig-cell"><div class="ig-lbl">Preferred Carrier</div><div class="ig-val">FedEx Ground</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Shipping Method</div><div class="ig-val">Standard Freight</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Delivery Instructions</div><div class="ig-val" style="color:var(--tx-3);">None set</div></div>
+        </div>
+        <div style="margin-top:12px;"><button class="btn btn-outline btn-sm" onclick="dbToast('Shipping preferences editor coming soon')">Update Shipping Preferences</button></div>
+      </div>
+    </div>
+
+    <!-- Account Security -->
+    <div class="dc">
+      <div class="dc-hd"><div class="dc-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Account Security</div><span class="sp sp-green">Secure</span></div>
+      <div class="dc-body">
+        <div class="ig col1">
+          <div class="ig-cell"><div class="ig-lbl">Password</div><div class="ig-val">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull; &nbsp;<span style="font-size:10.5px;color:var(--tx-3);">Last changed 90 days ago</span></div></div>
+          <div class="ig-cell"><div class="ig-lbl">Two-Factor Auth</div><div class="ig-val green">&#10003; Enabled</div></div>
+          <div class="ig-cell"><div class="ig-lbl">Last Login</div><div class="ig-val">Today, 9:14 AM &mdash; Dallas, TX</div></div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="dbToast('Password reset email sent to john.smith@smithinteriors.com')">Change Password</button>
+          <button class="btn btn-ghost btn-sm" onclick="dbToast('Session history coming soon')">View Login History</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /panel-settings -->
+
+</div><!-- /db-content -->
+</div><!-- /db-shell -->
+</main>
+
+<button class="sb-toggle" id="sbToggle" onclick="document.getElementById('dbSidebar').classList.toggle('open')">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+
+<!-- ORDER DETAIL DRAWER -->
+<div class="ord-ov" id="ordOv" onclick="ordCloseDrawer()"></div>
+<div class="ord-drawer" id="ordDrawer">
+  <div class="ord-drawer-hd">
+    <div>
+      <div class="ord-drawer-title" id="ordDrawerTitle">Order Detail</div>
+      <div class="ord-drawer-sub" id="ordDrawerSub"></div>
+    </div>
+    <button class="ord-drawer-close" onclick="ordCloseDrawer()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="ord-drawer-body" id="ordDrawerBody"></div>
+  <div class="ord-drawer-foot">
+    <button class="btn btn-primary" id="ordDlInvoice" onclick="dbToast('Invoice PDF downloading…')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Invoice
+    </button>
+    <button class="btn btn-outline" id="ordTrackBtn" style="display:none" onclick="dbToast('Opening shipment tracking page…')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Track Shipment
+    </button>
+    <button class="btn btn-ghost" onclick="dbToast('Reorder items loaded…')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Reorder
+    </button>
+    <button class="btn btn-ghost" onclick="ordCloseDrawer()" style="margin-left:auto;">Close</button>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <img class="footer-logo" src="https://www.streamlineart.com/media/logo/default/Logo.png" alt="Streamline Art" />
+      <div class="footer-address">
+        1040 Ronsa Court,<br/>
+        Mississauga, ON, Canada L4W 3Y4
+        <p class="footer-info-group">Hours of operation: M to F, 8 A.M. &#8211; 4:30 P.M. EST</p>
+        <p class="footer-info-group">1.800.656.6408<br/>
+        <a href="mailto:sales@streamlineart.com">SALES@STREAMLINEART.COM</a></p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/streamlineartandframe" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.facebook.com/StreamlineArtTrends/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/streamline-art-frame/" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Our Company</h4>
+      <ul class="footer-col-links">
+        <li><a href="our-story.html">Our Story</a></li>
+        <li><a href="showrooms-and-events.html">Showrooms and Events</a></li>
+        <li><a href="loyalty-program.html">Loyalty Program</a></li>
+        <li><a href="press-and-media.html">Press &amp; Media</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Customer Care</h4>
+      <ul class="footer-col-links">
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="forms.html">Claims and Credit Forms</a></li>
+        <li><a href="contact-us.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 class="footer-col-heading">Resources / Tools</h4>
+      <ul class="footer-col-links">
+        <li><a href="rep-locator.html">Rep Locator</a></li>
+        <li><a href="selling-programs.html">Selling Programs</a></li>
+        <li><a href="freight-programs.html">Freight Programs</a></li>
+        <li><a href="freight-calculator.html">Canadian Dropship Freight Calculator</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">&copy; 2026 Streamline Art &amp; Frame. All Rights Reserved</div>
+    <div class="footer-legal-links">
+      <a href="https://www.streamlineart.com/sitemap/">Site Map</a>
+      <a href="https://www.streamlineart.com/privacy-policy">Privacy Policy</a>
+      <a href="https://www.streamlineart.com/cookies-policy">Cookies Policy</a>
+    </div>
+  </div>
+</footer>
+<script>
+/* ── Mega menu hover ── */
+(function() {
+  var items = document.querySelectorAll('.nav-links > li');
+  items.forEach(function(li) {
+    var menu = li.querySelector('.mega-menu');
+    if (!menu) return;
+    var timer;
+    li.addEventListener('mouseenter', function() { clearTimeout(timer); menu.style.opacity='1'; menu.style.pointerEvents='auto'; });
+    li.addEventListener('mouseleave', function() { timer = setTimeout(function(){ menu.style.opacity='0'; menu.style.pointerEvents='none'; }, 120); });
+    menu.addEventListener('mouseenter', function() { clearTimeout(timer); });
+    menu.addEventListener('mouseleave', function() { timer = setTimeout(function(){ menu.style.opacity='0'; menu.style.pointerEvents='none'; }, 120); });
+  });
+})();
+
+/* ── Scroll reveal ── */
+(function() {
+  var revealEls = document.querySelectorAll('.reveal, .reveal-row');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { obs.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+})();
+
+/* Search takeover */
+(function() {
+  var header   = document.getElementById('siteHeader');
+  var pill     = document.querySelector('.nav-search-pill');
+  var takeover = document.getElementById('searchTakeover');
+  var input    = document.getElementById('stInput');
+  var clearBtn = document.getElementById('stClear');
+  var closeBtn = document.getElementById('stClose');
+  if (!header || !pill || !takeover || !input) return;
+  function openSearch() { header.classList.add('search-open'); setTimeout(function(){ input.focus(); }, 80); updateClear(); }
+  function closeSearch() { header.classList.remove('search-open'); input.value = ''; updateClear(); }
+  function updateClear() { if (clearBtn) clearBtn.classList.toggle('visible', input.value.length > 0); }
+  pill.addEventListener('click', function(e) { e.stopPropagation(); openSearch(); });
+  if (clearBtn) clearBtn.addEventListener('click', function(e) { e.stopPropagation(); input.value=''; input.focus(); updateClear(); });
+  if (closeBtn) closeBtn.addEventListener('click', function(e) { e.stopPropagation(); closeSearch(); });
+  input.addEventListener('input', updateClear);
+  document.addEventListener('keydown', function(e) { if (e.key==='Escape' && header.classList.contains('search-open')) closeSearch(); });
+  document.addEventListener('click', function(e) { if (header.classList.contains('search-open') && !takeover.contains(e.target) && e.target !== pill) closeSearch(); });
+})();
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-question').forEach(function(q) {
+  q.addEventListener('click', function() { this.closest('.faq-item').classList.toggle('open'); });
+});
+
+/* ── Panel switcher ── */
+function showPanel(id) {
+  document.querySelectorAll('.db-panel').forEach(function(p) { p.classList.remove('active'); });
+  var panel = document.getElementById('panel-' + id);
+  if (panel) { panel.classList.add('active'); }
+  document.querySelectorAll('.db-nav-item[data-panel]').forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.panel === id);
+  });
+  document.getElementById('dbSidebar').classList.remove('open');
+  if (id === 'orders') { setTimeout(ordRenderList, 20); }
+  countersRun = false;
+  setTimeout(runCounters, 60);
+  setTimeout(function() {
+    panel && panel.querySelectorAll('.prog-fill').forEach(function(el) {
+      var t = el.getAttribute('data-w') || el.style.width;
+      if (!el.getAttribute('data-w')) el.setAttribute('data-w', el.style.width);
+      el.style.width = '0';
+      requestAnimationFrame(function() { requestAnimationFrame(function() { el.style.width = t; }); });
+    });
+  }, 60);
+}
+
+/* Wire nav buttons */
+document.querySelectorAll('.db-nav-item[data-panel]').forEach(function(btn) {
+  btn.addEventListener('click', function() { showPanel(btn.dataset.panel); });
+});
+
+/* ── Counter animation ── */
+var countersRun = false;
+function runCounters() {
+  if (countersRun) return; countersRun = true;
+  var activePanel = document.querySelector('.db-panel.active');
+  if (!activePanel) return;
+  activePanel.querySelectorAll('[data-count]').forEach(function(el) {
+    var t = +el.dataset.count, st = null;
+    (function step(ts) {
+      if (!st) st = ts;
+      var p = Math.min((ts-st)/1100,1), e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(e*t).toLocaleString();
+      if (p<1) requestAnimationFrame(step);
+    })(performance.now());
+  });
+  activePanel.querySelectorAll('[data-count-dollar]').forEach(function(el) {
+    var t = +el.dataset.countDollar, st = null;
+    (function step(ts) {
+      if (!st) st = ts;
+      var p = Math.min((ts-st)/1300,1), e = 1-Math.pow(1-p,3);
+      el.textContent = '$' + Math.round(e*t).toLocaleString();
+      if (p<1) requestAnimationFrame(step);
+    })(performance.now());
+  });
+}
+runCounters();
+
+/* ── Progress bars ── */
+(function() {
+  document.querySelectorAll('.prog-fill').forEach(function(el) {
+    var t = el.style.width;
+    el.setAttribute('data-w', t); el.style.width = '0';
+    setTimeout(function() { el.style.width = t; }, 280);
+  });
+})();
+
+/* ── Entrance fade-up ── */
+(function() {
+  var els = document.querySelectorAll('.dc, .kpi, .snap-card, .qa, .addr');
+  els.forEach(function(el, i) {
+    el.style.opacity='0'; el.style.transform='translateY(10px)';
+    el.style.transition='opacity 0.36s ease '+(i*0.03)+'s,transform 0.36s ease '+(i*0.03)+'s';
+  });
+  requestAnimationFrame(function() { requestAnimationFrame(function() {
+    els.forEach(function(el) { el.style.opacity='1'; el.style.transform='translateY(0)'; });
+  }); });
+})();
+
+/* ══════════════════════════════════════════════════
+   ORDERS — Enterprise Order Management
+══════════════════════════════════════════════════ */
+var ORD_DATA = [
+  {
+    id:'SO-10548', num:'#SO-10548', date:'Jun 15, 2026', items:8, total:2350,
+    status:'shipped', tracking:'1Z999AA1123456', est_delivery:'Jun 19, 2026', invoice:'INV-2026-1142',
+    products:[
+      {name:'Abstract Serenity – Blue Wash',  sku:'STR-40218', qty:2, price:340},
+      {name:'Coastal Horizon No. 3',          sku:'STR-40106', qty:3, price:510},
+      {name:'Farmhouse Botanicals Set',       sku:'STR-40334', qty:1, price:240},
+      {name:'Gallery Wall Accent – Gold',     sku:'STR-40512', qty:2, price:320}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'Jun 15, 9:14 AM',  done:true},
+      {label:'Payment Confirmed', date:'Jun 15, 10:02 AM', done:true},
+      {label:'Processing',        date:'Jun 15, 2:30 PM',  done:true},
+      {label:'Shipped',           date:'Jun 16, 8:45 AM',  done:true},
+      {label:'Out for Delivery',  date:'Expected Jun 19',  done:false, current:true},
+      {label:'Delivered',         date:'Expected Jun 19',  done:false}
+    ]
+  },
+  {
+    id:'SO-10512', num:'#SO-10512', date:'Jun 10, 2026', items:5, total:1875,
+    status:'processing', tracking:null, est_delivery:'Jun 18, 2026', invoice:'INV-2026-1098',
+    products:[
+      {name:'Western Canyon Sunset',      sku:'STR-40821', qty:2, price:750},
+      {name:'Wildflower Meadow Triptych', sku:'STR-40694', qty:3, price:1125}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'Jun 10, 11:22 AM', done:true},
+      {label:'Payment Confirmed', date:'Jun 10, 11:55 AM', done:true},
+      {label:'Processing',        date:'Jun 11, 9:00 AM',  done:false, current:true},
+      {label:'Shipped',           date:'Expected Jun 13',  done:false},
+      {label:'Out for Delivery',  date:'Expected Jun 17',  done:false},
+      {label:'Delivered',         date:'Expected Jun 18',  done:false}
+    ]
+  },
+  {
+    id:'SO-10487', num:'#SO-10487', date:'Jun 05, 2026', items:12, total:3420,
+    status:'delivered', tracking:'1Z999BB7654321', est_delivery:'Jun 10, 2026', invoice:'INV-2026-1054',
+    products:[
+      {name:'Coastal Dreams Collection',  sku:'STR-40102', qty:4, price:960},
+      {name:'Abstract Horizon Series',    sku:'STR-40205', qty:4, price:880},
+      {name:'Gallery Wall Set – Neutral', sku:'STR-40507', qty:4, price:760}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'Jun 05, 3:42 PM',  done:true},
+      {label:'Payment Confirmed', date:'Jun 05, 4:10 PM',  done:true},
+      {label:'Processing',        date:'Jun 06, 9:00 AM',  done:true},
+      {label:'Shipped',           date:'Jun 07, 7:30 AM',  done:true},
+      {label:'Out for Delivery',  date:'Jun 10, 8:15 AM',  done:true},
+      {label:'Delivered',         date:'Jun 10, 2:44 PM',  done:true}
+    ]
+  },
+  {
+    id:'SO-10461', num:'#SO-10461', date:'May 28, 2026', items:3, total:890,
+    status:'open', tracking:null, est_delivery:'Jun 14, 2026', invoice:null,
+    products:[
+      {name:'Juvenile Safari Set',  sku:'STR-40901', qty:2, price:560},
+      {name:'Holiday Mini Prints',  sku:'STR-41002', qty:1, price:190}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'May 28, 10:05 AM', done:true},
+      {label:'Payment Confirmed', date:'May 28, 10:30 AM', done:false, current:true},
+      {label:'Processing',        date:'Pending',          done:false},
+      {label:'Shipped',           date:'Pending',          done:false},
+      {label:'Out for Delivery',  date:'Pending',          done:false},
+      {label:'Delivered',         date:'Pending',          done:false}
+    ]
+  },
+  {
+    id:'SO-10430', num:'#SO-10430', date:'May 14, 2026', items:7, total:2105,
+    status:'backordered', tracking:null, est_delivery:'Jul 20, 2026', invoice:null,
+    products:[
+      {name:'Southwest Desert Series', sku:'STR-40843', qty:4, price:1200},
+      {name:'Abstract Earth Tones',    sku:'STR-40230', qty:3, price:720}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'May 14, 9:15 AM',      done:true},
+      {label:'Payment Confirmed', date:'May 14, 9:45 AM',      done:true},
+      {label:'Processing',        date:'May 15',               done:true},
+      {label:'Backordered',       date:'May 16 — ETA Jul 20',  done:false, current:true},
+      {label:'Shipped',           date:'Expected Jul 20',      done:false},
+      {label:'Delivered',         date:'Expected Jul 22',      done:false}
+    ]
+  },
+  {
+    id:'SO-10398', num:'#SO-10398', date:'May 02, 2026', items:9, total:2780,
+    status:'delivered', tracking:'1Z999CC1192837', est_delivery:'May 08, 2026', invoice:'INV-2026-0978',
+    products:[
+      {name:'Coastal Botanical Mix', sku:'STR-40109', qty:5, price:1500},
+      {name:'Ocean Breeze Series',   sku:'STR-40122', qty:4, price:1080}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'Standard Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'May 02, 2:00 PM', done:true},
+      {label:'Payment Confirmed', date:'May 02, 2:30 PM', done:true},
+      {label:'Processing',        date:'May 03',          done:true},
+      {label:'Shipped',           date:'May 04',          done:true},
+      {label:'Out for Delivery',  date:'May 08',          done:true},
+      {label:'Delivered',         date:'May 08, 3:15 PM', done:true}
+    ]
+  },
+  {
+    id:'SO-10361', num:'#SO-10361', date:'Apr 18, 2026', items:15, total:4125,
+    status:'delivered', tracking:'1Z999DD1234567', est_delivery:'Apr 24, 2026', invoice:'INV-2026-0852',
+    products:[
+      {name:'Spring Abstract Collection', sku:'STR-40218', qty:5, price:1250},
+      {name:'Gallery Wall Mega Set',      sku:'STR-40511', qty:5, price:1500},
+      {name:'Coastal Premium Series',     sku:'STR-40103', qty:5, price:1200}
+    ],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'FedEx Ground',method:'LTL Freight'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'Apr 18, 10:00 AM', done:true},
+      {label:'Payment Confirmed', date:'Apr 18, 10:30 AM', done:true},
+      {label:'Processing',        date:'Apr 19',           done:true},
+      {label:'Shipped',           date:'Apr 20',           done:true},
+      {label:'Out for Delivery',  date:'Apr 24',           done:true},
+      {label:'Delivered',         date:'Apr 24, 1:20 PM',  done:true}
+    ]
+  },
+  {
+    id:'SO-10312', num:'#SO-10312', date:'Apr 03, 2026', items:4, total:1240,
+    status:'cancelled', tracking:null, est_delivery:null, invoice:null,
+    products:[{name:'Christmas Holiday Series', sku:'STR-41101', qty:4, price:1240}],
+    ship:{name:'Smith Interiors',addr:'1422 Commerce Blvd, Suite 400',city:'Dallas, TX 75201',carrier:'—',method:'—'},
+    bill:{name:'Smith Interiors LLC',terms:'Net 30'},
+    timeline:[
+      {label:'Order Placed',      date:'Apr 03, 9:00 AM',           done:true},
+      {label:'Payment Confirmed', date:'Apr 03, 9:30 AM',           done:true},
+      {label:'Cancelled',         date:'Apr 04 — Customer request', done:false, current:true},
+      {label:'Refund Processed',  date:'Apr 05',                    done:false}
+    ]
+  }
+];
+
+var _ordFilter = 'all';
+var _ordSearch = '';
+
+function _ordBadge(s) {
+  var m = {
+    shipped:     {c:'os-shipped',     i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',     l:'Shipped'},
+    processing:  {c:'os-processing',  i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',                                                                                         l:'Processing'},
+    delivered:   {c:'os-delivered',   i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',                                                                                                                            l:'Delivered'},
+    open:        {c:'os-open',        i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',                                            l:'Open'},
+    backordered: {c:'os-backordered', i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>', l:'Backordered'},
+    cancelled:   {c:'os-cancelled',   i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',                                                  l:'Cancelled'}
+  };
+  var d = m[s] || m.open;
+  return '<span class="os-badge ' + d.c + '">' + d.i + d.l + '</span>';
+}
+
+function ordRenderList() {
+  var el = document.getElementById('ordList');
+  if (!el) return;
+  var q = _ordSearch.toLowerCase();
+  var rows = ORD_DATA.filter(function(o) {
+    var fm = _ordFilter === 'all' || o.status === _ordFilter;
+    var sm = !q || o.id.toLowerCase().includes(q) ||
+      (o.invoice && o.invoice.toLowerCase().includes(q)) ||
+      o.products.some(function(p){ return p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q); });
+    return fm && sm;
+  });
+  if (!rows.length) {
+    el.innerHTML = '<div style="text-align:center;padding:44px 20px;color:var(--tx-3);font-size:13px;font-weight:600;background:var(--bg-w);border:1px solid var(--bd);border-radius:var(--rad);">No orders match your current filter or search.</div>';
+    return;
+  }
+  var pcts = {open:8,processing:32,shipped:65,delivered:100,backordered:22,cancelled:0};
+  var bclrs = {open:'var(--tx-3)',processing:'var(--amb)',shipped:'var(--blu)',delivered:'var(--grn)',backordered:'var(--red)',cancelled:'transparent'};
+  el.innerHTML = rows.map(function(o) {
+    var pct  = pcts[o.status]  || 0;
+    var bclr = bclrs[o.status] || 'var(--br)';
+    var delLine = '';
+    if (o.status === 'delivered') {
+      delLine = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:var(--grn);width:12px;height:12px"><polyline points="20 6 9 17 4 12"/></svg><b style="color:var(--grn)">Delivered</b>&nbsp;' + o.est_delivery;
+    } else if (o.status === 'cancelled') {
+      delLine = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--red);width:12px;height:12px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span style="color:var(--red)">Cancelled</span>';
+    } else if (o.est_delivery) {
+      delLine = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--tx-3);width:12px;height:12px"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><b>Est.&nbsp;Delivery:</b>&nbsp;' + o.est_delivery;
+    }
+    var trkBtn = o.tracking ? '<button class="btn btn-ghost btn-sm" onclick="ordOpenDrawer(\''+o.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Track</button>' : '';
+    var invBtn = o.invoice ? '<button class="btn btn-ghost btn-sm" onclick="dbToast(\'Downloading '+o.invoice+'…\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>Invoice</button>' : '';
+    return '<div class="ord-card">'+
+      '<div class="ord-card-main">'+
+        '<div class="ord-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="16" y1="10" x2="8" y2="10"/><line x1="16" y1="14" x2="8" y2="14"/></svg></div>'+
+        '<div class="ord-card-info">'+
+          '<div class="ord-card-num">'+o.num+'</div>'+
+          '<div class="ord-card-meta"><b>'+o.date+'</b>&nbsp;&middot;&nbsp;'+o.items+' items&nbsp;&middot;&nbsp;'+(o.invoice||'<span style="color:var(--tx-3)">No invoice yet</span>')+'</div>'+
+        '</div>'+
+        '<div style="flex-shrink:0">'+_ordBadge(o.status)+'</div>'+
+        '<div class="ord-card-amount"><div class="ord-card-total">$'+o.total.toLocaleString()+'.00</div><div class="ord-card-items">'+o.items+'&nbsp;pieces</div></div>'+
+      '</div>'+
+      (o.status!=='cancelled'?'<div class="ord-card-prog"><div class="ord-card-prog-fill" style="width:'+pct+'%;background:'+bclr+'"></div></div>':'')+
+      '<div class="ord-card-footer">'+
+        '<div class="ord-card-delivery">'+delLine+'</div>'+
+        '<div class="ord-card-actions">'+trkBtn+invBtn+
+          '<button class="btn btn-primary btn-sm" onclick="ordOpenDrawer(\''+o.id+'\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>View Order</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  el.querySelectorAll('.ord-card-prog-fill').forEach(function(b) {
+    var w = b.style.width; b.style.width='0';
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ b.style.width=w; }); });
+  });
+}
+
+function ordSearch(q) { _ordSearch = q; ordRenderList(); }
+
+function ordFilter(f, el) {
+  _ordFilter = f;
+  document.querySelectorAll('.ord-kpi').forEach(function(k){ k.classList.remove('akf'); });
+  var kp = document.querySelector('.ord-kpi[data-of="'+f+'"]');
+  if (kp) kp.classList.add('akf');
+  document.querySelectorAll('.ord-chip').forEach(function(c){ c.classList.remove('active'); });
+  var ch = document.querySelector('.ord-chip[data-of="'+f+'"]');
+  if (ch) ch.classList.add('active');
+  ordRenderList();
+}
+
+function ordOpenDrawer(ordId) {
+  var o = ORD_DATA.find(function(x){ return x.id===ordId; });
+  if (!o) return;
+  document.getElementById('ordDrawerTitle').textContent = o.num;
+  document.getElementById('ordDrawerSub').innerHTML = o.date + ' &nbsp;&middot;&nbsp; ' + o.items + ' items &nbsp;&nbsp;' + _ordBadge(o.status);
+  var tb = document.getElementById('ordTrackBtn');
+  if (tb) tb.style.display = o.tracking ? '' : 'none';
+  var ib = document.getElementById('ordDlInvoice');
+  if (ib) ib.style.display = o.invoice ? '' : 'none';
+  var h = '';
+  /* Timeline */
+  h += '<div class="ord-dsec">Order Journey</div><div class="ord-timeline">';
+  o.timeline.forEach(function(s, i) {
+    var dc = s.done?'done':(s.current?'current':'');
+    var lc = s.done?'done':(s.current?'current':'');
+    var ico = s.done?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':(s.current?'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg>':'');
+    var line = (i<o.timeline.length-1)?'<div class="ord-tl-vline'+(s.done?' done':'')+'"></div>':'';
+    h += '<div class="ord-tl-step">'+line+'<div class="ord-tl-dot '+dc+'">'+ico+'</div><div class="ord-tl-content"><div class="ord-tl-label '+lc+'">'+s.label+'</div><div class="ord-tl-date">'+s.date+'</div></div></div>';
+  });
+  h += '</div>';
+  /* Shipping */
+  h += '<div class="ord-dsec">Shipping &amp; Tracking</div><div class="ord-ig">';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Carrier</div><div class="ord-ig-val">'+o.ship.carrier+'</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Method</div><div class="ord-ig-val">'+o.ship.method+'</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Tracking #</div><div class="ord-ig-val mono c-br">'+(o.tracking||'—')+'</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Est. Delivery</div><div class="ord-ig-val c-grn">'+(o.est_delivery||'—')+'</div></div>';
+  h += '</div>';
+  /* Products */
+  h += '<div class="ord-dsec">Ordered Items ('+o.items+')</div><div class="ord-prod-list">';
+  o.products.forEach(function(p) {
+    h += '<div class="ord-prod-row"><div class="ord-prod-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="ord-prod-info"><div class="ord-prod-name">'+p.name+'</div><div class="ord-prod-sku">SKU: '+p.sku+'</div></div><div class="ord-prod-right"><div class="ord-prod-price">$'+p.price.toLocaleString()+'</div><div class="ord-prod-qty">Qty: '+p.qty+'</div></div></div>';
+  });
+  h += '</div>';
+  /* Ship address */
+  h += '<div class="ord-dsec">Shipping Address</div><div class="dc" style="padding:14px 16px;font-size:12px;line-height:1.85;color:var(--tx-2);font-weight:500;margin-bottom:16px;"><strong style="color:var(--tx);font-size:13px;">'+o.ship.name+'</strong><br>'+o.ship.addr+'<br>'+o.ship.city+'</div>';
+  /* Billing */
+  h += '<div class="ord-dsec">Billing &amp; Payment</div><div class="ord-ig">';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Bill To</div><div class="ord-ig-val">'+o.bill.name+'</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Payment Terms</div><div class="ord-ig-val c-br">'+o.bill.terms+'</div></div>';
+  h += '<div class="ord-ig-cell full"><div class="ord-ig-lbl">Invoice</div><div class="ord-ig-val">'+(o.invoice||'<span style="color:var(--tx-3)">Not yet generated</span>')+'</div></div>';
+  h += '</div>';
+  /* Summary */
+  h += '<div class="ord-dsec" style="margin-top:20px">Order Summary</div><div class="ord-ig">';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Subtotal</div><div class="ord-ig-val">$'+o.total.toLocaleString()+'.00</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Shipping</div><div class="ord-ig-val c-grn">Free</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Order Total</div><div class="ord-ig-val big">$'+o.total.toLocaleString()+'.00</div></div>';
+  h += '<div class="ord-ig-cell"><div class="ord-ig-lbl">Items</div><div class="ord-ig-val">'+o.items+' pieces</div></div>';
+  h += '</div>';
+  document.getElementById('ordDrawerBody').innerHTML = h;
+  document.getElementById('ordDrawer').classList.add('open');
+  document.getElementById('ordOv').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function ordCloseDrawer() {
+  document.getElementById('ordDrawer').classList.remove('open');
+  document.getElementById('ordOv').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('panel-orders') && document.getElementById('panel-orders').classList.contains('active')) {
+    ordRenderList();
+  }
+});
+
+/* ── Toast ── */
+function dbToast(msg) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  Object.assign(t.style, {
+    position:'fixed', bottom:'22px', left:'50%', transform:'translateX(-50%) translateY(14px)',
+    background:'#1a2632', color:'#fff', padding:'9px 20px', borderRadius:'7px',
+    fontSize:'11.5px', fontFamily:'Montserrat,sans-serif', fontWeight:'600',
+    zIndex:'9999', opacity:'0', transition:'opacity 0.18s, transform 0.18s',
+    pointerEvents:'none', boxShadow:'0 4px 14px rgba(0,0,0,0.18)'
+  });
+  document.body.appendChild(t);
+  requestAnimationFrame(function() {
+    t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)';
+  });
+  setTimeout(function() {
+    t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(8px)';
+    setTimeout(function() { t.remove(); }, 200);
+  }, 2500);
+}
+</script>
+<script src="cart-store.js"></script>
+</body>
+</html>
